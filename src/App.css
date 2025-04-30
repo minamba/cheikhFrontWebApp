@@ -1,38 +1,302 @@
-.App {
+/* .App {
   text-align: center;
+} */
+
+/* Home.css */
+
+:root {
+  --main-blue: #066b78;
+  --accent-green: #3bc2b5;
+  --light-gray: #f5f5f5;
+  --white: #ffffff;
+  --footer-title-color: #1cb0a4;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Général */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--light-gray);
+  color: var(--main-blue);
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Navbar personnalisée */
+.custom-navbar-light {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 15px 30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar-logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-navbar-light.sticky-top {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #f8f9fa; /* sécurité pour être sûr */
+}
+
+
+/* Marque / logo */
+.custom-navbar-light .navbar-brand {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #1f2d3d !important; /* ✅ Foncé et lisible */
+}
+
+/* Liens de navigation */
+.custom-navbar-light .nav-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  margin-left: 20px;
+  font-size: 1rem;
+  color: #1f2d3d !important; /* ✅ Forcer du texte foncé */
+  transition: color 0.3s, border-bottom 0.3s;
+}
+
+.custom-navbar-light .nav-link:hover {
+  color: #3bc2b5 !important;
+}
+
+.custom-navbar-light .nav-link.active {
+  color: #3bc2b5 !important;
+  border-bottom: 2px solid #3bc2b5;
+}
+
+/* Icône burger (menu mobile) */
+.navbar-toggler {
+  border-color: #3bc2b5;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%233bc2b5' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+
+
+/* Hero section (section 1 plein écran) */
+.hero-section {
+  height: 100vh;
+  background: linear-gradient(135deg, var(--main-blue), var(--accent-green));
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  color: var(--white);
+  text-align: center;
+  padding: 0 20px;
+}
+
+
+.hero-section-with-image {
+  height: 100vh;
+  background-image: url("../public/Images/channels4_banner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 1;
+}
+
+/* Optionnel : superposition sombre pour améliorer la lisibilité */
+.hero-section-with-image::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 30, 40, 0.5); /* couche assombrie */
+  z-index: 2;
+}
+
+.hero-section-with-image .container {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  color: var(--white);
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #e8fafa;
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+/* CTA Button */
+.hero-section .btn-light {
+  background-color: var(--white);
+  color: var(--main-blue);
+  font-weight: 600;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.hero-section .btn-light:hover {
+  background-color: var(--accent-green);
+  color: var(--white);
+}
+
+/* Sections suivantes */
+section {
+  padding: 60px 0;
+}
+
+section:nth-of-type(even) {
+  background-color: var(--white);
+}
+
+section:nth-of-type(odd) {
+  background-color: var(--light-gray);
+}
+
+/* Titres */
+h1, h2, h5 {
+  color: var(--main-blue);
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Vidéos */
+.ratio iframe {
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Bouton inscription */
+button.btn-primary {
+  background-color: var(--accent-green);
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 50px;
   color: white;
+  transition: all 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+button.btn-primary:hover {
+  background-color: var(--main-blue);
+  transform: scale(1.05);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Footer */
+footer {
+  background-color: var(--main-blue);
+  color: var(--white);
+}
+
+footer h5 {
+  color: var(--footer-title-color);
+  font-weight: 600;
+}
+
+footer a {
+  color: var(--white);
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: var(--accent-green);
+  text-decoration: none;
+}
+
+footer .bi {
+  font-size: 1.5rem;
+  transition: transform 0.3s, color 0.3s;
+}
+
+footer .bi:hover {
+  color: var(--accent-green);
+  transform: scale(1.2);
+}
+
+/* Bouton personnalisé "S'inscrire maintenant" */
+.subscribe-btn {
+  background-color: var(--accent-green); /* vert clair */
+  color: white;
+  font-weight: 600;
+  padding: 14px 32px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 50px; /* bien arrondi */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.subscribe-btn:hover {
+  background-color: #2aa89d; /* un peu plus foncé au hover */
+  transform: translateY(-2px);
+}
+
+
+
+
+/* Card de témoignages */
+/* Description en italique */
+.testimonial-desc {
+  font-style: italic;
+  color: #535353;
+}
+
+/* Ombre plus forte sur chaque card */
+.testimonial-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* Formulaire contact */
+.contact-form input {
+  border-radius: 30px;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form input:focus {
+  outline: none;
+  border: 2px solid var(--accent-green);
+  box-shadow: 0 0 0 0.2rem rgba(56, 59, 59, 0.466);
+}
+
+.vertical-divider {
+  width: 2px;
+  background-color: rgba(20, 139, 155, 0.158); /* ton bleu principal en transparent */
+  height: 100%;
+  min-height: 300px;
+}
+
+
+/* shadow video section 1 */
+.shadowed-video iframe {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
 }
