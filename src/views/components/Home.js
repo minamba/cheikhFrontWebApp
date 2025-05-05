@@ -62,7 +62,7 @@ export const Home = () => {
 
       {/* Bouton entre sections */}
       <div className="text-center position-relative" style={{ marginTop: '-60px', zIndex: 2 }}>
-        <Link to="/seminaire" className="btn subscribe-btn btn-lg mt-4 animated-button">S'inscrire maintenant</Link>
+      <Link to="/CloseInscriptions" className="btn subscribe-btn btn-lg mt-4 animated-button">S'inscrire maintenant</Link>
       </div>
 
       {/* Section 3: Témoignages avec Swiper */}
@@ -108,7 +108,7 @@ export const Home = () => {
               <div className="testimonial-card p-4 h-100 rounded">
                 <div className="ratio ratio-16x9 mb-3">
                   <video controls className="w-100 rounded shadowed-video">
-                    <source src="/Vidéos/video3.mp4" type="video/mp4" />
+                    <source src="/Vidéos/video2.mp4" type="video/mp4" />
                   </video>
                 </div>
                 <h5 className="mb-1">Aïcha</h5>
