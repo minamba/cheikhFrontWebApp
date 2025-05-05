@@ -12,7 +12,7 @@ export const Home = () => {
       {/* Section 1 : Hero avec vidéo */}
       <section className="hero-section-with-image d-flex align-items-center text-white">
         <div className="container text-center">
-          <h1 className="hero-title calligraphic-glow mb-5">INSTITUT MALIK IBN ANAS</h1>
+          <h1 className="calligraphic-glow mb-5">INSTITUT MALIK IBN ANAS</h1>
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
             <iframe
               src="https://www.youtube.com/embed/hQEr_8MPcEg?si=SeEe5_SVzGG1eKgn"

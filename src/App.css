@@ -140,7 +140,7 @@ body {
 }
 
 .hero-title {
-  font-size: 5rem;
+  font-size: 5vw;
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   color: var(--white);
@@ -150,12 +150,15 @@ body {
 
 .calligraphic-glow {
   font-family: 'Great Vibes', cursive; /* ou une autre police calligraphique */
-  font-size: 4rem;
+  font-size: 4vw;
+  color: var(--white);
   text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(59,194,181,0.3);
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .hero-title-seminaire {
-  font-size: 4rem;
+  font-size: 4.5vw;
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
