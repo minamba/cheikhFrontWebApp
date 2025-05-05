@@ -49,9 +49,9 @@ export const Footer = () => {
                   <div className="col-md-4 mb-4 text-center">
                     <h5>Liens utiles</h5>
                     <ul className="list-unstyled mt-3">
-                      <li><a href="#" className="text-white text-decoration-none">Accueil</a></li>
-                      <li><a href="#" className="text-white text-decoration-none">À propos</a></li>
-                      <li><a href="#" className="text-white text-decoration-none">Nous contacter</a></li>
+                    <li><Link to="/" className="text-white text-decoration-none" aria-current="page">Accueil</Link></li>
+                    <li><Link to="/" className="text-white text-decoration-none" aria-current="page">À propos</Link></li>
+                    <li><Link to="/" className="text-white text-decoration-none" aria-current="page">Nous contacter</Link></li>
                     </ul>
                   </div>
 
