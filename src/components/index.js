@@ -6,9 +6,9 @@ export const Navbar = () => {
   return (
   <nav className="navbar navbar-expand-lg custom-navbar-light sticky-top">
     <div className="container-fluid">
-      <a className="navbar-brand" href="#">
+      <Link to="/" className="navbar-brand" aria-current="page">
       <img src="/Images/channels4_profile.jpg" alt="Logo" className="navbar-logo"/>
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -24,7 +24,7 @@ export const Navbar = () => {
         <div className="navbar-nav ms-auto">
         <Link to="/" className="nav-link active" aria-current="page">Accueil</Link>
         <Link to="/inscription" className="nav-link" aria-current="page">Inscriptions</Link>
-          <a className="nav-link" href="#">Nous rejoindre</a>
+        <Link to="/" className="nav-link" aria-current="page">Nous rejoindre</Link>
         </div>
       </div>
     </div>
