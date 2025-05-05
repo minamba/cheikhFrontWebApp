@@ -149,7 +149,7 @@ body {
 }
 
 .calligraphic-glow {
-  font-family: 'Great Vibes', cursive; /* ou une autre police calligraphique */
+  font-family: 'Poppins', sans-serif;
   font-size: clamp(2rem, 5vw, 5rem);
   color: var(--white);
   text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(59,194,181,0.3);
