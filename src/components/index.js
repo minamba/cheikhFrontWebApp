@@ -2,6 +2,8 @@ import { useLocation, Link } from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {updateRegistrationRequest, deleteRegistrationRequest } from '../lib/actions/RegistrationActions';
+import {updateSeminaireRequest, deleteSeminaireRequest } from '../lib/actions/SeminaireActions';
+import {updatePaymentRequest, deletePaymentRequest } from '../lib/actions/PaymentActions';  
 
 export const Navbar = () => {
 
@@ -212,6 +214,326 @@ export const RegistrationTable = ({ searchTerm }) => {
   </div>
   );
 };
+
+export const SeminaireTable = ({ searchTerm }) => {
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedSeminaire, setSelectedSeminaire] = useState(null);
+  const dispatch = useDispatch();
+  const datas = useSelector((state) => state.seminaires) || [];
+
+  const filteredData = datas?.seminaires?.filter((data) => {
+    return data.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           data.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           data.email.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  return (
+    <div className="table-responsive">
+    <table className="table table-bordered table-hover shadow-sm text-nowrap">
+      <thead className="table-dark">
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Date</th>
+          <th>MailEnvoyé</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredData.map((data, index) => (
+        <tr key={data.id}>
+          <td>{data.lastName}</td>
+          <td>{data.firstName}</td>
+          <td>{data.email}</td>
+          <td>{data.date}</td>
+          <td>{data.isMailSend ? "Oui" : "Non"}</td>
+          <td>
+            <button className="btn btn-sm btn-outline-warning me-2">
+              <i className="bi bi-pencil-fill" onClick={() => {
+                setSelectedSeminaire(data);
+                setShowEditModal(true);
+              }}></i>
+            </button>
+            <button className="btn btn-sm btn-outline-danger me-2">
+              <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteSeminaireRequest(data.id))}></i>
+            </button>
+            <button className="btn btn-sm btn-outline-primary">
+              <i className="bi bi-envelope-fill"></i>
+            </button>
+          </td>
+        </tr>
+        ))}
+      </tbody>
+    </table>
+    {showEditModal && selectedSeminaire && (
+  <>
+    <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+      <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Modifier une inscription</h5>
+            <button type="button" className="btn-close" onClick={() => setShowEditModal(false)}></button>
+          </div>
+          <div className="modal-body">
+            <form>
+              <div className="mb-3">
+                <label className="form-label">Nom</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={selectedSeminaire.lastName}
+                  onChange={(e) =>
+                    setSelectedSeminaire({
+                      ...selectedSeminaire,
+                      lastName: e.target.value
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Prénom</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={selectedSeminaire.firstName}
+                  onChange={(e) =>
+                    setSelectedSeminaire({
+                      ...selectedSeminaire,
+                      firstName: e.target.value
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  value={selectedSeminaire.email}
+                  onChange={(e) =>
+                    setSelectedSeminaire({
+                      ...selectedSeminaire,
+                      email: e.target.value
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="mailEnvoyeCheck"
+                  checked={selectedSeminaire.isMailSend}
+                  onChange={(e) =>
+                    setSelectedSeminaire({
+                      ...selectedSeminaire,
+                      isMailSend: e.target.checked
+                    })
+                  }
+                />
+                <label className="form-check-label" htmlFor="mailEnvoyeCheck">
+                  Mail envoyé
+                </label>
+              </div>
+            </form>
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => {
+                dispatch(updateSeminaireRequest(selectedSeminaire));
+                setShowEditModal(false);
+              }}
+            >
+              Modifier
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setShowEditModal(false)}
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="modal-backdrop fade show"></div>
+  </>
+)}
+{showEditModal && <div className="modal-backdrop fade show"></div>}
+  </div>
+  )
+}
+
+export const PaymentTable = () => {
+  const [filterType, setFilterType] = useState('');
+  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const dispatch = useDispatch();
+  const datas = useSelector((state) => state.payments) || [];
+  const filteredPayments = filterType
+  ? datas.payments.filter(p => p.type === filterType)
+  : datas.payments;
+return (
+
+  <div className="table-responsive">
+  <table className="table table-bordered table-hover shadow-sm text-nowrap">
+    <thead className="table-dark">
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>N° téléphone</th>
+        <th>Email</th>
+        <th>Montant</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {datas.payments.map((p, index) => (
+        <tr key={p.id}>
+          <td>{p.lastName}</td>
+          <td>{p.firstName}</td>
+          <td>{p.phoneNumber}</td>
+          <td>{p.mail}</td>
+          <td>{p.amount}</td>
+          <td>{p.paymentMode}</td>
+          <td>{p.date}</td>
+          <td>
+            <button className="btn btn-sm btn-outline-warning me-2">
+              <i className="bi bi-pencil-fill" onClick={() => {
+                setSelectedPayment(p);
+                setShowEditModal(true);
+              }}></i>
+            </button>
+            <button className="btn btn-sm btn-outline-danger me-2">
+              <i className="bi bi-x-circle-fill" onClick={() => dispatch(deletePaymentRequest(p.id))}></i>
+            </button>
+            <button className="btn btn-sm btn-outline-primary">
+              <i className="bi bi-envelope-fill"></i>
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  {showEditModal && selectedPayment && (
+  <>
+    <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+      <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Modifier un paiement</h5>
+            <button type="button" className="btn-close" onClick={() => setShowEditModal(false)}></button>
+          </div>
+          <div className="modal-body">
+            <form>
+              <div className="mb-3">
+                <label className="form-label">Nom</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={selectedPayment.lastName}
+                  onChange={(e) =>
+                    setSelectedPayment({ ...selectedPayment, lastName: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Prénom</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={selectedPayment.firstName}
+                  onChange={(e) =>
+                    setSelectedPayment({ ...selectedPayment, firstName: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">N° téléphone</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={selectedPayment.phoneNumber}
+                  onChange={(e) =>
+                    setSelectedPayment({ ...selectedPayment, phoneNumber: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  value={selectedPayment.mail}
+                  onChange={(e) =>
+                    setSelectedPayment({ ...selectedPayment, mail: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Montant</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={selectedPayment.amount}
+                  onChange={(e) =>
+                    setSelectedPayment({ ...selectedPayment, amount: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Type</label>
+                <select
+                  className="form-select"
+                  value={selectedPayment.paymentMode}
+                  onChange={(e) =>
+                    setSelectedPayment({ ...selectedPayment, paymentMode: e.target.value })
+                  }
+                >
+                  <option value="">-- Sélectionner un type --</option>
+                  <option value="CB">CB</option>
+                  <option value="Paypal">Paypal</option>
+                  <option value="Google Pay">Google Pay</option>
+                  <option value="Espèces">Espèces</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => {
+                // Exemple : dispatch(updatePaymentRequest(selectedPayment));
+                console.log("Paiement modifié :", selectedPayment);
+                setShowEditModal(false);
+              }}
+            >
+              Modifier
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setShowEditModal(false)}
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="modal-backdrop fade show"></div>
+  </>
+)}
+</div>
+) 
+}
 
 
 

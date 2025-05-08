@@ -14,16 +14,24 @@ import {PaymentAdmin} from './PaymentAdmin';
 import { ScrollToTop } from '../../components/index';
 import { useEffect } from 'react';
 import {getRegistrationsRequest} from '../../lib/actions/RegistrationActions';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSeminairesRequest } from '../../lib/actions/SeminaireActions';
+import { getPaymentsRequest } from '../../lib/actions/PaymentActions';
 
 export const BaseApp = props => {
 const datas = useSelector((state) => state.registrations);
+const datas2 = useSelector((state) => state.seminaires);
 const dispatch = useDispatch();
 
 useEffect(() => {
   dispatch(getRegistrationsRequest());
+  dispatch(getSeminairesRequest()); 
+  dispatch(getPaymentsRequest());
 },[]);
+
+// useEffect(() => {
+ 
+// },[]);
 
   return (
     <Fragment>

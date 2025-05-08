@@ -1,19 +1,44 @@
 import { useState } from 'react';
+import { PaymentTable } from '../../components/index';
+import { useDispatch } from 'react-redux';
+import { addPaymentRequest } from '../../lib/actions/PaymentActions';
 
 export const PaymentAdmin = () => {
   const [showModal, setShowModal] = useState(false);
-  const [filterType, setFilterType] = useState('');
-
-  // Exemple statique - à remplacer par une vraie source de données si besoin
-  const payments = [
-    { nom: 'Ali', prenom: 'Kamil', tel: '06 12 34 56 78', email: 'kamil.ali@example.com', montant: '75€', type: 'CB', date: '07/05/2025' },
-    { nom: 'Fatima', prenom: 'Zahra', tel: '06 78 90 12 34', email: 'fatima.z@example.com', montant: '50€', type: 'Paypal', date: '06/05/2025' },
-    { nom: 'Yassine', prenom: 'Ben Ali', tel: '06 23 45 67 89', email: 'yassine.b@example.com', montant: '90€', type: 'Google Pay', date: '05/05/2025' },
-  ];
-
-  const filteredPayments = filterType
-    ? payments.filter(p => p.type === filterType)
-    : payments;
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+      lastName: '',
+      firstName: '',
+      phoneNumber: '',
+      mail: '',
+      amount: '',
+      paymentMode: '', 
+      date: new Date().toISOString(),
+    });
+  
+    const handleChange = (e) => {
+      const { name, value, type, checked } = e.target;
+      setFormData({
+        ...formData,
+        [name]: type === 'checkbox' ? checked : value
+      });
+    };
+  
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      dispatch(addPaymentRequest(formData));
+      setFormData({
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        mail: '',
+        amount: '',
+        paymentMode: '', 
+        date: new Date().toISOString(),
+      },[]);
+      setShowModal(false);
+    };
 
   return (
     <div className="container py-5">
@@ -28,11 +53,12 @@ export const PaymentAdmin = () => {
             />
           </div>
           <div className="col-6 col-md-3">
-            <select className="form-select" value={filterType} onChange={e => setFilterType(e.target.value)}>
+             <select className="form-select" /*value={filterType} onChange={e => setFilterType(e.target.value)}*/>
               <option value="">Tous les types</option>
               <option value="Paypal">Paypal</option>
               <option value="CB">CB</option>
               <option value="Google Pay">Google Pay</option>
+              <option value="Espèces">Espèces</option>
             </select>
           </div>
           <div className="col-6 col-md-3 text-end">
@@ -51,46 +77,7 @@ export const PaymentAdmin = () => {
 
       {/* Section 2 : Tableau */}
       <section>
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover shadow-sm text-nowrap">
-            <thead className="table-dark">
-              <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>N° téléphone</th>
-                <th>Email</th>
-                <th>Montant</th>
-                <th>Type</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredPayments.map((p, index) => (
-                <tr key={index}>
-                  <td>{p.nom}</td>
-                  <td>{p.prenom}</td>
-                  <td>{p.tel}</td>
-                  <td>{p.email}</td>
-                  <td>{p.montant}</td>
-                  <td>{p.type}</td>
-                  <td>{p.date}</td>
-                  <td>
-                    <button className="btn btn-sm btn-outline-warning me-2">
-                      <i className="bi bi-pencil-fill"></i>
-                    </button>
-                    <button className="btn btn-sm btn-outline-danger me-2">
-                      <i className="bi bi-x-circle-fill"></i>
-                    </button>
-                    <button className="btn btn-sm btn-outline-primary">
-                      <i className="bi bi-envelope-fill"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <PaymentTable/>
       </section>
 
       {/* Modal pour ajouter un paiement */}
@@ -103,41 +90,42 @@ export const PaymentAdmin = () => {
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label className="form-label">Nom</label>
-                    <input type="text" className="form-control" placeholder="Nom" />
+                    <input type="text" className="form-control" placeholder="Nom" name="lastName" value={formData.lastName} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Prénom</label>
-                    <input type="text" className="form-control" placeholder="Prénom" />
+                    <input type="text" className="form-control" placeholder="Prénom" name="firstName" value={formData.firstName} onChange={handleChange}/>
                   </div>
                   <div className="mb-3">
                     <label className="form-label">N° téléphone</label>
-                    <input type="tel" className="form-control" placeholder="06 00 00 00 00" />
+                    <input type="tel" className="form-control" placeholder="06 00 00 00 00" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange}/>
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Email</label>
-                    <input type="email" className="form-control" placeholder="email@example.com" />
+                    <input type="email" className="form-control" placeholder="email@example.com" name="mail" value={formData.mail} onChange={handleChange}/>
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Montant</label>
-                    <input type="text" className="form-control" placeholder="Ex: 75€" />
+                    <input type="text" className="form-control" placeholder="Ex: 75€" name="amount" value={formData.amount} onChange={handleChange}/>
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Type</label>
-                    <select className="form-select">
+                    <select className="form-select" name="paymentMode" value={formData.paymentMode} onChange={handleChange}>
                       <option value="">Sélectionnez un type</option>
                       <option value="CB">CB</option>
                       <option value="Paypal">Paypal</option>
                       <option value="Google Pay">Google Pay</option>
+                      <option value="Espèces">Espèces</option>
                     </select>
                   </div>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-success">Ajouter</button>
+                  <div className="modal-footer">
+                <button type="submit" className="btn btn-success">Ajouter</button>
                 <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Fermer</button>
+              </div>
+                </form>
               </div>
             </div>
           </div>

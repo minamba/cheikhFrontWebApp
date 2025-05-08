@@ -8,15 +8,9 @@ import {addRegistrationSuccess, updateRegistrationSuccess, deleteRegistrationSuc
 export const AppContainer = connect(
      function mapStateToProps(state){
         return {
-            registrations : state.registrations
-        }
-    },
-     function mapDispatchToProps(dispatch){
-        return {    
-            getRegistrationsSuccess : (registrations) => dispatch(getRegistrationsSuccess(registrations)),
-            addRegistrationSuccess : (registration) => dispatch(addRegistrationSuccess(registration)),
-            updateRegistrationSuccess : (registration) => dispatch(updateRegistrationSuccess(registration)),
-            deleteRegistrationSuccess : (idRegistration) => dispatch(deleteRegistrationSuccess(idRegistration))
+            registrations : state.registrations,
+            seminaires : state.seminaires,
+            payments : state.payments
         }
     })
     (BaseApp);

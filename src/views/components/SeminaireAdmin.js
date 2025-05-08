@@ -1,7 +1,42 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { SeminaireTable } from '../../components/index';
+import { addSeminaireRequest } from '../../lib/actions/SeminaireActions';
 
 export const SeminaireAdmin = () => {
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+  
+    const [formData, setFormData] = useState({
+      lastName: '',
+      firstName: '',
+      email: '', 
+      date: new Date().toISOString(),
+      mailSent: false
+    });
+  
+    const handleChange = (e) => {
+      const { name, value, type, checked } = e.target;
+      setFormData({
+        ...formData,
+        [name]: type === 'checkbox' ? checked : value
+      });
+    };
+  
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      dispatch(addSeminaireRequest(formData));
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        date: new Date().toISOString(),
+        mailSent: false
+      },[]);
+      setShowModal(false);
+    };
 
   return (
     <div className="container py-5">
@@ -17,6 +52,8 @@ export const SeminaireAdmin = () => {
               type="text"
               className="form-control"
               placeholder="Rechercher par nom, prénom, email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <div className="col-12 col-md-4 text-md-end">
@@ -29,41 +66,7 @@ export const SeminaireAdmin = () => {
 
       {/* Section 2 : Tableau */}
       <section>
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover shadow-sm text-nowrap">
-            <thead className="table-dark">
-              <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Date</th>
-                <th>MailEnvoyé</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Exemple statique - à remplacer par map si besoin */}
-              <tr>
-                <td>Ali</td>
-                <td>Kamil</td>
-                <td>kamil.ali@example.com</td>
-                <td>07/05/2025</td>
-                <td>Non</td>
-                <td>
-                  <button className="btn btn-sm btn-outline-warning me-2">
-                    <i className="bi bi-pencil-fill"></i>
-                  </button>
-                  <button className="btn btn-sm btn-outline-danger me-2">
-                    <i className="bi bi-x-circle-fill"></i>
-                  </button>
-                  <button className="btn btn-sm btn-outline-primary">
-                    <i className="bi bi-envelope-fill"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <SeminaireTable searchTerm={searchTerm} />
       </section>
 
       {/* Modal pour ajouter un élève */}
@@ -76,24 +79,24 @@ export const SeminaireAdmin = () => {
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label className="form-label">Nom</label>
-                    <input type="text" className="form-control" placeholder="Nom" />
+                    <input type="text" className="form-control" placeholder="Nom" name="lastName" value={formData.lastName} onChange={handleChange}  />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Prénom</label>
-                    <input type="text" className="form-control" placeholder="Prénom" />
+                    <input type="text" className="form-control" placeholder="Prénom" name="firstName" value={formData.firstName} onChange={handleChange} />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Email</label>
-                    <input type="email" className="form-control" placeholder="email@example.com" />
+                    <input type="email" className="form-control" placeholder="email@example.com" name="email" value={formData.email} onChange={handleChange} />
                   </div>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-success">Ajouter</button>
+                  <div className="modal-footer">
+                <button type="submit" className="btn btn-success">Ajouter</button>
                 <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Fermer</button>
+              </div>
+                </form>
               </div>
             </div>
           </div>
