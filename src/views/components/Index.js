@@ -7,14 +7,28 @@ import {Seminaire} from './Seminaire';
 import {Payment} from './Payment';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {Fragment} from 'react';
+import {Admin} from './Admin';
+import {RegistrationAdmin} from './RegistrationAdmin';
+import {SeminaireAdmin} from './SeminaireAdmin';
+import {PaymentAdmin} from './PaymentAdmin';
 import { ScrollToTop } from '../../components/index';
+import { useEffect } from 'react';
+import {getRegistrationsRequest} from '../../lib/actions/RegistrationActions';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+export const BaseApp = props => {
+const datas = useSelector((state) => state.registrations);
+const dispatch = useDispatch();
 
-export const BaseApp = () => {
+useEffect(() => {
+  dispatch(getRegistrationsRequest());
+},[]);
+
   return (
     <Fragment>
       <Router>
-        <ScrollToTop />
+        <ScrollToTop /> 
         <Navbar />
         {/* Routes */}
         <Routes>
@@ -23,6 +37,10 @@ export const BaseApp = () => {
           <Route path="/inscription" element={<Inscriptions />} />
           <Route path="/seminaire" element={<Seminaire />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/registrations" element={<RegistrationAdmin />} />
+          <Route path="/admin/seminaires" element={<SeminaireAdmin />} />
+          <Route path="/admin/payments" element={<PaymentAdmin />} />
         </Routes>
         <Footer />
       </Router>
