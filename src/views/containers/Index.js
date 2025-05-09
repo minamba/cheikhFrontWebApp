@@ -10,6 +10,7 @@ export const AppContainer = connect(
         return {
             registrations : state.registrations,
             seminaires : state.seminaires,
+            seminaireUsers : state.seminaireUsers,
             payments : state.payments
         }
     })

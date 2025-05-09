@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
 import RegistrationReducers from './RegistrationReducers';
-import SeminaireReducers from './SeminaireReducers';
+import SeminaireUsersReducers from './SeminaireUsersReducers';
 import PaymentReducers from './PaymentReducers';
+import SeminaireReducers from './SeminaireReducers';
 
 export default combineReducers({
     registrations : RegistrationReducers,
-    seminaires : SeminaireReducers,
-    payments : PaymentReducers
+    seminairesUsers : SeminaireUsersReducers,
+    payments : PaymentReducers,
+    seminaires : SeminaireReducers
 });

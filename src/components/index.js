@@ -2,6 +2,7 @@ import { useLocation, Link } from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {updateRegistrationRequest, deleteRegistrationRequest } from '../lib/actions/RegistrationActions';
+import {updateSeminaireUserRequest, deleteSeminaireUserRequest } from '../lib/actions/SeminaireUsersActions';
 import {updateSeminaireRequest, deleteSeminaireRequest } from '../lib/actions/SeminaireActions';
 import {updatePaymentRequest, deletePaymentRequest } from '../lib/actions/PaymentActions';  
 
@@ -145,7 +146,7 @@ export const RegistrationTable = ({ searchTerm }) => {
             <td>{data.firstName}</td>
             <td>{data.phoneNumber}</td>
             <td>{data.email}</td>
-            <td>{data.date}</td>
+            <td>{new Date(data.date).toLocaleDateString('fr-FR')}</td>
             <td>{data.isContacted ? "Oui" : "Non"}</td>
             <td>{data.sendedToBot ? "Oui" : "Non"}</td>
             <td>
@@ -219,9 +220,9 @@ export const SeminaireTable = ({ searchTerm }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedSeminaire, setSelectedSeminaire] = useState(null);
   const dispatch = useDispatch();
-  const datas = useSelector((state) => state.seminaires) || [];
+  const datas = useSelector((state) => state.seminairesUsers) || [];
 
-  const filteredData = datas?.seminaires?.filter((data) => {
+  const filteredData = datas?.seminairesUsers?.filter((data) => {
     return data.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
            data.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
            data.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -235,6 +236,7 @@ export const SeminaireTable = ({ searchTerm }) => {
           <th>Nom</th>
           <th>Prénom</th>
           <th>Email</th>
+          <th>Seminaire</th>
           <th>Date</th>
           <th>MailEnvoyé</th>
           <th>Actions</th>
@@ -246,7 +248,8 @@ export const SeminaireTable = ({ searchTerm }) => {
           <td>{data.lastName}</td>
           <td>{data.firstName}</td>
           <td>{data.email}</td>
-          <td>{data.date}</td>
+          <td>{data.seminaire.title}</td>
+          <td>{new Date(data.date).toLocaleDateString('fr-FR')}</td>
           <td>{data.isMailSend ? "Oui" : "Non"}</td>
           <td>
             <button className="btn btn-sm btn-outline-warning me-2">
@@ -256,7 +259,7 @@ export const SeminaireTable = ({ searchTerm }) => {
               }}></i>
             </button>
             <button className="btn btn-sm btn-outline-danger me-2">
-              <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteSeminaireRequest(data.id))}></i>
+              <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteSeminaireUserRequest(data.id))}></i>
             </button>
             <button className="btn btn-sm btn-outline-primary">
               <i className="bi bi-envelope-fill"></i>
@@ -343,7 +346,7 @@ export const SeminaireTable = ({ searchTerm }) => {
               type="button"
               className="btn btn-success"
               onClick={() => {
-                dispatch(updateSeminaireRequest(selectedSeminaire));
+                dispatch(updateSeminaireUserRequest(selectedSeminaire));
                 setShowEditModal(false);
               }}
             >
@@ -389,6 +392,7 @@ return (
         <th>Email</th>
         <th>Montant</th>
         <th>Type</th>
+        <th>Seminaire</th>
         <th>Date</th>
         <th>Actions</th>
       </tr>
@@ -402,7 +406,8 @@ return (
           <td>{p.mail}</td>
           <td>{p.amount}</td>
           <td>{p.paymentMode}</td>
-          <td>{p.date}</td>
+          <td>{p.seminaire.title}</td>
+          <td>{new Date(p.date).toLocaleDateString('fr-FR')}</td>
           <td>
             <button className="btn btn-sm btn-outline-warning me-2">
               <i className="bi bi-pencil-fill" onClick={() => {
@@ -510,7 +515,7 @@ return (
               type="button"
               className="btn btn-success"
               onClick={() => {
-                // Exemple : dispatch(updatePaymentRequest(selectedPayment));
+                 dispatch(updatePaymentRequest(selectedPayment));
                 console.log("Paiement modifié :", selectedPayment);
                 setShowEditModal(false);
               }}

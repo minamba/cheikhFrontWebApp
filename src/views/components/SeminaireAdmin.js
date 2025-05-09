@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SeminaireTable } from '../../components/index';
-import { addSeminaireRequest } from '../../lib/actions/SeminaireActions';
+import { addSeminaireUserRequest } from '../../lib/actions/SeminaireUsersActions';
 
 export const SeminaireAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -27,7 +27,7 @@ export const SeminaireAdmin = () => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      dispatch(addSeminaireRequest(formData));
+      dispatch(addSeminaireUserRequest(formData));
       setFormData({
         firstName: '',
         lastName: '',

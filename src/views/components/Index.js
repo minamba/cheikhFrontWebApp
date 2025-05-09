@@ -15,6 +15,7 @@ import { ScrollToTop } from '../../components/index';
 import { useEffect } from 'react';
 import {getRegistrationsRequest} from '../../lib/actions/RegistrationActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { getSeminairesUserRequest } from '../../lib/actions/SeminaireUsersActions';
 import { getSeminairesRequest } from '../../lib/actions/SeminaireActions';
 import { getPaymentsRequest } from '../../lib/actions/PaymentActions';
 
@@ -25,8 +26,10 @@ const dispatch = useDispatch();
 
 useEffect(() => {
   dispatch(getRegistrationsRequest());
-  dispatch(getSeminairesRequest()); 
+  dispatch(getSeminairesUserRequest()); 
   dispatch(getPaymentsRequest());
+  dispatch(getSeminairesRequest());
+
 },[]);
 
 // useEffect(() => {
