@@ -53,28 +53,28 @@ function* deleteSeminaire(action) {
 }
 
 
-function* watchGetSeminairesRequest() {
+function* watchGetSeminairesUserRequest() {
     yield takeEvery(actions.actionsSeminaire.GET_SEMINAIRE_USER_REQUEST,getSeminaires);
 }
 
-function* watchAddSeminaireRequest() {
+function* watchAddSeminaireUserRequest() {
     yield takeLatest(actions.actionsSeminaire.ADD_SEMINAIRE_USER_REQUEST,addSeminaire);
 }
 
-function* watchUpdateSeminaireRequest() {
+function* watchUpdateSeminaireUserRequest() {
     yield takeLatest(actions.actionsSeminaire.UPDATE_SEMINAIRE_USER_REQUEST,updateSeminaire);
 }
 
-function* watchDeleteSeminaireRequest() {
+function* watchDeleteSeminaireUserRequest() {
     yield takeLatest(actions.actionsSeminaire.DELETE_SEMINAIRE_USER_REQUEST,deleteSeminaire);
 }
 
 
 const seminairesUsersSagas = [
-    fork(watchGetSeminairesRequest),
-    // fork(watchAddSeminaireRequest),
-    // fork(watchUpdateSeminaireRequest),
-    // fork(watchDeleteSeminaireRequest)
+    fork(watchGetSeminairesUserRequest),
+    fork(watchAddSeminaireUserRequest),
+    fork(watchUpdateSeminaireUserRequest),
+    fork(watchDeleteSeminaireUserRequest)
 ];
 
 export default seminairesUsersSagas;

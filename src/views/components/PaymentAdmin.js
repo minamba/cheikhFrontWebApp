@@ -5,6 +5,7 @@ import { addPaymentRequest } from '../../lib/actions/PaymentActions';
 
 export const PaymentAdmin = () => {
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
       lastName: '',
@@ -45,23 +46,16 @@ export const PaymentAdmin = () => {
 
       {/* Section 1 : Barre de recherche + filtres + ajout */}
         <div className="row align-items-center mb-3">
-          <div className="col-12 col-md-6 mb-2 mb-md-0">
+          <div className="col-6 col-md-6 mb-2 mb-md-0">
             <input
               type="text"
               className="form-control"
               placeholder="Rechercher par nom, email, type..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="col-6 col-md-3">
-             <select className="form-select" /*value={filterType} onChange={e => setFilterType(e.target.value)}*/>
-              <option value="">Tous les types</option>
-              <option value="Paypal">Paypal</option>
-              <option value="CB">CB</option>
-              <option value="Google Pay">Google Pay</option>
-              <option value="Espèces">Espèces</option>
-            </select>
-          </div>
-          <div className="col-6 col-md-3 text-end">
+          <div className="col-6 col-md-6 text-end">
             <button className="btn btn-success w-100 w-md-auto" onClick={() => setShowModal(true)}>
               <i className="bi bi-plus-circle-fill me-1"></i> Ajouter
             </button>
@@ -77,7 +71,7 @@ export const PaymentAdmin = () => {
 
       {/* Section 2 : Tableau */}
       <section>
-        <PaymentTable/>
+        <PaymentTable searchTerm={searchTerm}/>
       </section>
 
       {/* Modal pour ajouter un paiement */}

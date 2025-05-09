@@ -221,6 +221,8 @@ export const SeminaireTable = ({ searchTerm }) => {
   const [selectedSeminaire, setSelectedSeminaire] = useState(null);
   const dispatch = useDispatch();
   const datas = useSelector((state) => state.seminairesUsers) || [];
+  const seminaires = useSelector((state) => state.seminaires) || [];
+  const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
 
   const filteredData = datas?.seminairesUsers?.filter((data) => {
     return data.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -248,7 +250,7 @@ export const SeminaireTable = ({ searchTerm }) => {
           <td>{data.lastName}</td>
           <td>{data.firstName}</td>
           <td>{data.email}</td>
-          <td>{data.seminaire.title}</td>
+          <td>{activeSeminaire? activeSeminaire.title : "En attente d'un seminaire"}</td>
           <td>{new Date(data.date).toLocaleDateString('fr-FR')}</td>
           <td>{data.isMailSend ? "Oui" : "Non"}</td>
           <td>
@@ -371,15 +373,22 @@ export const SeminaireTable = ({ searchTerm }) => {
   )
 }
 
-export const PaymentTable = () => {
+export const PaymentTable = ({ searchTerm }) => {
   const [filterType, setFilterType] = useState('');
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const dispatch = useDispatch();
   const datas = useSelector((state) => state.payments) || [];
-  const filteredPayments = filterType
-  ? datas.payments.filter(p => p.type === filterType)
+
+
+  const filteredPayments = searchTerm
+  ? datas.payments.filter(p => p.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                p.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                p.mail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                p.paymentMode.toLowerCase().includes(searchTerm.toLowerCase()))
   : datas.payments;
+
+
 return (
 
   <div className="table-responsive">
@@ -398,7 +407,7 @@ return (
       </tr>
     </thead>
     <tbody>
-      {datas.payments.map((p, index) => (
+      {filteredPayments.map((p, index) => (
         <tr key={p.id}>
           <td>{p.lastName}</td>
           <td>{p.firstName}</td>
