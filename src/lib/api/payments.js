@@ -4,8 +4,13 @@ export const getPayments = () => {
     return axios.get("/Payment/payments");
 }
 
-export const addPayment = (payment) => {
-    return axios.post("/Payment/payment", payment);
+export const addPayment = async (payment) => {
+    try {
+        return await axios.post("/Payment/payment", payment);
+    } catch (error) {
+        console.log("Erreur lors de l'ajout du paiement", error.message);
+        throw error;
+    }
 }
 
 export const updatePayment = (payment) => {

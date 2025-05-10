@@ -9,6 +9,11 @@ import { useSelector } from 'react-redux';
 export const CloseInscriptions = () => {
   const seminaires = useSelector((state) => state.seminaires || []);
 const hasActiveSeminaire = seminaires.seminaires.find(s => s.active === true);
+const showSemUsrSuccessPopupppp = useSelector(state => state.uiSeminaireUser?.showSemUsrSuccessPopup);
+const showSemUsrErrorPopuppppp = useSelector(state => state.uiSeminaireUser?.showSemUsrErrorPopup);
+
+console.log("succes",showSemUsrSuccessPopupppp);
+
 const formRef = useRef(null);
 const firstFieldRef = useRef(null);
 const navigate = useNavigate();
@@ -101,6 +106,27 @@ const dispatch = useDispatch();
                     <button type="submit" className="btn subscribe-btn">Participer au prochain séminaire</button>
                     </div>
                 </form>
+                {showSemUsrSuccessPopupppp && (
+                <div className="popup-overlay">
+                  <div className="popup-success-card">
+                    <p className="popup-message">✅ Votre demande a bien été prise en compte</p>
+                    <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
+                      Fermer
+                    </button>
+                  </div>
+                </div>
+              )}
+              {showSemUsrErrorPopuppppp && (
+                  <div className="popup-overlay">
+                    <div className="popup-error-card">
+                      <p className="popup-message-error">❌ Une erreur est survenue, veuillez réessayer plus tard.</p>
+                      <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
+                        Fermer
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 </div>
             </div>
         </section>

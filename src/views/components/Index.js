@@ -27,8 +27,8 @@ const dispatch = useDispatch();
 useEffect(() => {
   dispatch(getRegistrationsRequest());
   dispatch(getSeminairesUserRequest()); 
-  dispatch(getPaymentsRequest());
   dispatch(getSeminairesRequest());
+  dispatch(getPaymentsRequest());
 
 },[]);
 

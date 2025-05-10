@@ -7,7 +7,7 @@ function* getPayments() {
     try {
         const response = yield call(api.getPayments);
         console.log("je rentre dans le getPayment", response);
-        yield put(actions.getPaymentsSuccess({ payments : response.data}));
+        yield put({ type: actions.actions.GET_PAYMENT_SUCCESS, payload: response });
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
     }
@@ -17,12 +17,10 @@ function* getPayments() {
 function* addPayment(action) {
     try {
         console.log("je rentre dans le addPayment", action.payload);
-        yield call(api.addPayment(action.payload));
-        //yield call(getRegistrations);
-        //je rappel getRegistration pour la mise à jour du store
-        const response = yield call(api.getPayments);
-        yield put(actions.getPaymentsSuccess({ payments: response.data }));
+        const response = yield call(api.addPayment(action.payload));
+        yield put({ type: actions.actions.ADD_PAYMENT_SUCCESS, payload: response.data });
     } catch (error) {
+        yield put({ type: actions.actions.ADD_PAYMENT_FAILURE, payload: error.message });
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
     }
 }

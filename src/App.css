@@ -83,7 +83,7 @@ body {
 
 /* Hero section (section 1 plein écran) */
 .hero-section {
-  height: 100vh;
+  height: 80vh;
   background: linear-gradient(135deg, var(--main-blue), var(--accent-green));
   display: flex;
   justify-content: center;
@@ -95,7 +95,7 @@ body {
 
 
 .hero-section-with-image {
-  height: 100vh;
+  height: 80vh;
   background-image: url("../public/Images/channels4_banner.jpg");
   background-size: cover;
   background-position: center;
@@ -105,7 +105,7 @@ body {
 }
 
 .hero-section-seminaire-with-image {
-  height: 100vh;
+  height: 85vh;
   background-image: url("../public/Images/bann7.jpg");
   background-size: cover;
   background-position: center;
@@ -424,6 +424,66 @@ footer .bi:hover {
   transform: scale(1.05);
   background-color: var(--accent-green); /* ou une autre couleur si besoin */
   color: white;
+}
+
+
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-success-card {
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.popup-message {
+  font-size: 1.2rem;
+  color: #2e7d32;
+  margin-bottom: 1.2rem;
+  font-weight: 500;
+}
+
+.popup-close-btn {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.popup-close-btn:hover {
+  background-color: #256429;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 

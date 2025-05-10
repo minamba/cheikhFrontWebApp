@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/autoplay';
+import { Navigation } from 'swiper/modules';
 
 export const Home = () => {
   return (
@@ -14,11 +14,17 @@ export const Home = () => {
         <div className="container text-center">
           <h1 className="calligraphic-glow mb-5">INSTITUT MALIK IBN ANAS</h1>
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
-            <iframe
-              src="https://www.youtube.com/embed/hQEr_8MPcEg?si=SeEe5_SVzGG1eKgn"
-              title="Vidéo de présentation"
-              allowFullScreen
-            ></iframe>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-100 h-100"
+              style={{ objectFit: 'cover' }}
+            >
+              <source src="/Vidéos/video2.mp4" type="video/mp4" />
+              Votre navigateur ne supporte pas la balise vidéo.
+            </video>
           </div>
         </div>
       </section>
@@ -70,13 +76,18 @@ export const Home = () => {
         <div className="container text-center">
           <h2 className="mb-5">Témoignages</h2>
           <Swiper
-            modules={[Autoplay]}
-            spaceBetween={30}
-            slidesPerView={3}
-            loop={true}
-            autoplay={{ delay: 3000, disableOnInteraction: false }}
-            breakpoints={{ 0: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 992: { slidesPerView: 3 } }}
-          >
+        modules={[Autoplay]}
+              spaceBetween={30}
+              slidesPerView={3}
+              loop={true}
+               autoplay={{ delay: 3000, disableOnInteraction: true }}
+              navigation
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                992: { slidesPerView: 3 }
+              }}
+            >
             {/* Slide 1 */}
             <SwiperSlide>
               <div className="testimonial-card p-4 h-100 rounded">

@@ -72,9 +72,9 @@ function* watchDeleteSeminaireRequest() {
 
 const seminairesSagas = [
     fork(watchGetSeminairesRequest),
-    // fork(watchAddSeminaireRequest),
-    // fork(watchUpdateSeminaireRequest),
-    // fork(watchDeleteSeminaireRequest)
+    fork(watchAddSeminaireRequest),
+    fork(watchUpdateSeminaireRequest),
+    fork(watchDeleteSeminaireRequest)
 ];
 
 export default seminairesSagas;

@@ -18,8 +18,6 @@ function* addRegistrations(action) {
     try {
         console.log("je rentre dans le addRegistration", action.payload);
         yield call(api.addRegistration(action.payload));
-        //yield call(getRegistrations);
-        //je rappel getRegistration pour la mise à jour du store
         const response = yield call(api.getRegistrations);
         yield put(actions.getRegistrationsSuccess({ registrations: response.data }));
     } catch (error) {

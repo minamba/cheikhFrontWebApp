@@ -379,6 +379,8 @@ export const PaymentTable = ({ searchTerm }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const dispatch = useDispatch();
   const datas = useSelector((state) => state.payments) || [];
+  const seminaires = useSelector((state) => state.seminaires) || [];
+  const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
 
 
   const filteredPayments = searchTerm
@@ -413,9 +415,9 @@ return (
           <td>{p.firstName}</td>
           <td>{p.phoneNumber}</td>
           <td>{p.mail}</td>
-          <td>{p.amount}</td>
+          <td>{activeSeminaire?.amount || 0}</td>
           <td>{p.paymentMode}</td>
-          <td>{p.seminaire.title}</td>
+          <td>{activeSeminaire? activeSeminaire.title : "En attente d'un seminaire"}</td>
           <td>{new Date(p.date).toLocaleDateString('fr-FR')}</td>
           <td>
             <button className="btn btn-sm btn-outline-warning me-2">

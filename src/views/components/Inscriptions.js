@@ -3,9 +3,16 @@ import '../../App.css';
 import { useDispatch } from 'react-redux';
 import { addRegistrationRequest } from '../../lib/actions/RegistrationActions';
 import { useState } from 'react';
+import { sendTelegramMessageRequest } from '../../lib/actions/TelegramActions';
+import { useSelector } from 'react-redux';
 
 export const Inscriptions = () => {
   const dispatch = useDispatch();
+  const showSuccessPopup = useSelector(state => state.ui.showSuccessPopup);
+  const showErrorPopup = useSelector(state => state.ui.showErrorPopup); 
+
+  console.log("showSuccessPopup", showSuccessPopup);
+  
 
   const [formData, setFormData] = useState({
     lastName: '',
@@ -16,6 +23,13 @@ export const Inscriptions = () => {
     isContacted: false,
     sendedtobot: false,
   });
+
+  const entretien = {
+    lastName : formData.lastName,
+    firstName : formData.firstName,
+    phoneNumber : formData.phoneNumber,
+    mail : formData.email,
+  }
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -29,6 +43,7 @@ export const Inscriptions = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addRegistrationRequest(formData));
+    dispatch(sendTelegramMessageRequest(entretien));
     setFormData({
       lastName: '',
       firstName: '',
@@ -66,6 +81,26 @@ export const Inscriptions = () => {
                 </button>
               </div>
             </form>
+            {showSuccessPopup && (
+                <div className="popup-overlay">
+                  <div className="popup-success-card">
+                    <p className="popup-message">✅ Votre demande a bien été prise en compte</p>
+                    <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
+                      Fermer
+                    </button>
+                  </div>
+                </div>
+              )}
+              {showErrorPopup && (
+                  <div className="popup-overlay">
+                    <div className="popup-error-card">
+                      <p className="popup-message-error">❌ Une erreur est survenue, veuillez réessayer plus tard.</p>
+                      <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
+                        Fermer
+                      </button>
+                    </div>
+                  </div>
+                )}
           </div>
         </div>
       </section>

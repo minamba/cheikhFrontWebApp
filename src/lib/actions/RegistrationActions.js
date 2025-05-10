@@ -1,5 +1,3 @@
-import {registration} from "../../components/data"; 
-
 
 export const actions = {
     GET_REGISTRATION_REQUEST : "GET_REGISTRATION_REQUEST",
@@ -96,10 +94,10 @@ export function addRegistrationRequest(registration) {
     }
 }
 
-export function addRegistrationSuccess(registration) {
+export function addRegistrationSuccess(payment) {
     return {
         type : actions.ADD_REGISTRATION_SUCCESS,
-        payload : registration
+        payload : payment
     }
 }
 
