@@ -25,13 +25,6 @@ function PaymentReducers(state = initialState, action) {
                 }
             })
 
-        // Suppression
-        case actions.DELETE_PAYMENT_SUCCESS:
-              return state.payments.filter(payment => payment.id !== action.payload)
-
-        // Ajout
-        case actions.ADD_PAYMENT_SUCCESS:
-            return [...state.payments, action.payload.payment]
         default:
             return state
     }

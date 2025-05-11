@@ -1,13 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { SeminaireTable } from '../../components/index';
-import { addSeminaireUserRequest } from '../../lib/actions/SeminaireUsersActions';
+import { addSeminaireUserRequest, updateSeminaireUserRequest } from '../../lib/actions/SeminaireUsersActions';
+import { sendMailGroupRequest } from '../../lib/actions/MailActions';
+import { useSelector } from 'react-redux';
 
 export const SeminaireAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
+  const datas = useSelector((state) => state.seminairesUsers) || [];
+  const seminaires = useSelector((state) => state.seminaires) || [];
+  const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
   
+  const mailList = (datas?.seminairesUsers || [])
+  .filter((data) => !!data.email && data.seminaire === null)
+  .map((data) => data.email);
+
     const [formData, setFormData] = useState({
       lastName: '',
       firstName: '',
@@ -38,6 +47,22 @@ export const SeminaireAdmin = () => {
       setShowModal(false);
     };
 
+  
+    const handleSubmitMail = (mailList, title, userList) => {
+      dispatch(sendMailGroupRequest({RecipientList : mailList, SeminaireTitle : title}))
+      updateSentMail(userList);  
+    };
+
+    const updateSentMail = (users) => {
+      users.forEach((user) => {
+        if (user.seminaire === null || user.mailSent === false) {
+          const updatedUser = { ...user, mailSent: true };
+          dispatch(updateSeminaireUserRequest(updatedUser));
+        }
+      });
+    };
+
+
   return (
     <div className="container py-5">
 
@@ -62,11 +87,16 @@ export const SeminaireAdmin = () => {
             </button>
           </div>
         </div>
+        <div className="col-12 col-md-12 text-md-end">
+            <button className="btn btn-success w-100 w-md-auto" onClick={() => handleSubmitMail(mailList,activeSeminaire?.title,datas?.seminairesUsers)}>
+                      Envoie de mail à toutes les personnes en attente du prochain seminaire
+            </button>
+          </div>
       </section>
 
       {/* Section 2 : Tableau */}
       <section>
-        <SeminaireTable searchTerm={searchTerm} />
+        <SeminaireTable searchTerm={searchTerm}/>
       </section>
 
       {/* Modal pour ajouter un élève */}

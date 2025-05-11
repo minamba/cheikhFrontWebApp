@@ -9,12 +9,12 @@ export const AppContainer = connect(
             seminaires : state.seminaires,
             seminaireUsers : state.seminaireUsers,
             payments : state.payments,
+            recipient : state.recipient,
+            recipientList : state.recipientList,
             showSuccessPopup : state.showSuccessPopup,
             showErrorPopup : state.showErrorPopup,
-            showSemUsrSuccessPopup : state.showSemUsrSuccessPopup,
-            showSemUsrErrorPopup : state.showSemUsrErrorPopup,
             showSuccessPayment : state.showSuccessPayment,
-            showErrorPayment : state.showErrorPayment
+            showErrorPayment : state.showErrorPayment,
         }
     })
     (BaseApp);

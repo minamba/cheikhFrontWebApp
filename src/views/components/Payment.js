@@ -3,6 +3,7 @@ import '../../App.css';
 import { useDispatch } from 'react-redux';
 import { addPaymentRequest } from '../../lib/actions/PaymentActions';
 import { useSelector } from 'react-redux';
+import { sendPaymentMailRequest } from '../../lib/actions/MailActions';
 
 export const Payment = () => {
 const [showCardForm, setShowCardForm] = useState(false);
@@ -131,7 +132,7 @@ const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || 
 
               {/* Bouton acheter */}
               <div className="text-center">
-                <button type="submit" className="btn subscribe-btn px-5">
+                <button type="submit" className="btn subscribe-btn px-5" onClick={() => dispatch(sendPaymentMailRequest({Recipient: formData.mail, SeminaireTitle: activeSeminaire?.title}))}>
                   Acheter
                 </button>
               </div>

@@ -6,7 +6,7 @@ import * as api from '../api/registrations';
 function* getRegistrations() {
     try {
         const response = yield call(api.getRegistrations);
-        console.log("je rentre dans le getRegistration", response);
+        //console.log("je rentre dans le getRegistration", response);
         yield put(actions.getRegistrationsSuccess({ registrations : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -16,7 +16,7 @@ function* getRegistrations() {
 
 function* addRegistrations(action) {
     try {
-        console.log("je rentre dans le addRegistration", action.payload);
+        //console.log("je rentre dans le addRegistration", action.payload);
         yield call(api.addRegistration(action.payload));
         const response = yield call(api.getRegistrations);
         yield put(actions.getRegistrationsSuccess({ registrations: response.data }));
@@ -27,7 +27,7 @@ function* addRegistrations(action) {
 
 function* updateRegistrations(action) {
     try {
-        console.log("je rentre dans le updateRegistration", action.payload);
+        //console.log("je rentre dans le updateRegistration", action.payload);
         yield call(api.updateRegistration(action.payload));
 
         //je rappel getRegistration pour la mise à jour du store
@@ -40,7 +40,7 @@ function* updateRegistrations(action) {
 
 function* deleteRegistrations(action) {
     try {
-        console.log("je rentre dans le deleteRegistration", action.payload);
+        //console.log("je rentre dans le deleteRegistration", action.payload);
         yield call(api.deleteRegistration(action.payload));
         
         //je rappel getRegistration pour la mise à jour du store

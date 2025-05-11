@@ -2,11 +2,22 @@ import { useState } from 'react';
 import { PaymentTable } from '../../components/index';
 import { useDispatch } from 'react-redux';
 import { addPaymentRequest } from '../../lib/actions/PaymentActions';
+import { useSelector } from 'react-redux';
+import { sendPaymentMailGroupRequest } from '../../lib/actions/MailActions';
+import { updatePaymentRequest } from '../../lib/actions/PaymentActions';
 
 export const PaymentAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const seminaires = useSelector((state) => state.seminaires) || [];
+  const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
+  const datas = useSelector((state) => state.payments) || [];
   const dispatch = useDispatch();
+
+  const mailList = (datas?.payments || [])
+  .filter((data) => !!data.mail)
+  .map((data) => data.mail);
+
   const [formData, setFormData] = useState({
       lastName: '',
       firstName: '',
@@ -41,6 +52,23 @@ export const PaymentAdmin = () => {
       setShowModal(false);
     };
 
+
+      
+        const handleSubmitMail = (mailList, title, userList) => {
+          dispatch(sendPaymentMailGroupRequest({RecipientList : mailList, SeminaireTitle : title}))
+          updateSentMail(userList);  
+        };
+    
+        const updateSentMail = (users) => {
+          users.forEach((user) => {
+            if (user.mailSent === null || user.mailSent === false) {
+              const updatedUser = { ...user, mailSent: true };
+              dispatch(updatePaymentRequest(updatedUser));
+            }
+          });
+        };
+    
+
   return (
     <div className="container py-5">
 
@@ -64,8 +92,8 @@ export const PaymentAdmin = () => {
 
         {/* Bouton envoyer mail en masse */}
         <div className="text-end mt-3">
-          <button className="btn btn-primary">
-            <i className="bi bi-envelope-fill me-1"></i> Envoyer mail en masse
+          <button className="btn btn-primary" onClick={() => handleSubmitMail(mailList, activeSeminaire?.title, datas?.payments || [])}>
+            <i className="bi bi-envelope-fill me-1"  ></i> Envoyer mail en masse
           </button>
         </div>
 

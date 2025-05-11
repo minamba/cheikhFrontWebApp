@@ -22,6 +22,8 @@ import { getPaymentsRequest } from '../../lib/actions/PaymentActions';
 export const BaseApp = props => {
 const datas = useSelector((state) => state.registrations);
 const datas2 = useSelector((state) => state.seminaires);
+const datas3 = useSelector((state) => state.payments);
+
 const dispatch = useDispatch();
 
 useEffect(() => {

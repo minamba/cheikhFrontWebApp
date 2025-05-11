@@ -5,6 +5,7 @@ import {updateRegistrationRequest, deleteRegistrationRequest } from '../lib/acti
 import {updateSeminaireUserRequest, deleteSeminaireUserRequest } from '../lib/actions/SeminaireUsersActions';
 import {updateSeminaireRequest, deleteSeminaireRequest } from '../lib/actions/SeminaireActions';
 import {updatePaymentRequest, deletePaymentRequest } from '../lib/actions/PaymentActions';  
+import {sendMailRequest, sendMailGroupRequest, sendPaymentMailRequest, sendPaymentMailGroupRequest } from '../lib/actions/MailActions';
 
 export const Navbar = () => {
 
@@ -230,6 +231,22 @@ export const SeminaireTable = ({ searchTerm }) => {
            data.email.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+  const getSeminaire = (sem) => {
+    if(sem == null){
+      return "En attente d'un seminaire";
+    }
+    else{
+    const seminaire = seminaires.seminaires?.find((s) => s.id === sem.id) || null;
+    return sem?.title;
+    }
+  }
+  
+    const handleSubmitMail = (mail, title, user) => {
+      dispatch(sendMailRequest({Recipient : mail, SeminaireTitle : title}))
+      user.mailSent = true;
+      dispatch(updateSeminaireUserRequest(user));
+    };
+
   return (
     <div className="table-responsive">
     <table className="table table-bordered table-hover shadow-sm text-nowrap">
@@ -250,9 +267,9 @@ export const SeminaireTable = ({ searchTerm }) => {
           <td>{data.lastName}</td>
           <td>{data.firstName}</td>
           <td>{data.email}</td>
-          <td>{activeSeminaire? activeSeminaire.title : "En attente d'un seminaire"}</td>
+          <td>{getSeminaire(data.seminaire)}</td>
           <td>{new Date(data.date).toLocaleDateString('fr-FR')}</td>
-          <td>{data.isMailSend ? "Oui" : "Non"}</td>
+          <td>{data.mailSent ? "Oui" : "Non"}</td>
           <td>
             <button className="btn btn-sm btn-outline-warning me-2">
               <i className="bi bi-pencil-fill" onClick={() => {
@@ -264,7 +281,7 @@ export const SeminaireTable = ({ searchTerm }) => {
               <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteSeminaireUserRequest(data.id))}></i>
             </button>
             <button className="btn btn-sm btn-outline-primary">
-              <i className="bi bi-envelope-fill"></i>
+              <i className="bi bi-envelope-fill" onClick={() => handleSubmitMail(data.email,data.seminaire?.title,data)}></i>
             </button>
           </td>
         </tr>
@@ -375,14 +392,15 @@ export const SeminaireTable = ({ searchTerm }) => {
 
 export const PaymentTable = ({ searchTerm }) => {
   const [filterType, setFilterType] = useState('');
+  const [seminaireTitle, setSeminaireTitle] = useState('');
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const dispatch = useDispatch();
   const datas = useSelector((state) => state.payments) || [];
   const seminaires = useSelector((state) => state.seminaires) || [];
   const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
-
-
+  console.log("activeSeminaire", activeSeminaire?.title);
+  
   const filteredPayments = searchTerm
   ? datas.payments.filter(p => p.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                 p.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -390,6 +408,15 @@ export const PaymentTable = ({ searchTerm }) => {
                                 p.paymentMode.toLowerCase().includes(searchTerm.toLowerCase()))
   : datas.payments;
 
+  useEffect(() => {
+    setSeminaireTitle(activeSeminaire?.title);
+  }, []);
+
+  const handleSubmitMail = (mail, title, user) => {
+    dispatch(sendMailRequest({Recipient : mail, SeminaireTitle : title}))
+    user.mailSent = true;
+    dispatch(updatePaymentRequest(user));
+  };
 
 return (
 
@@ -405,6 +432,7 @@ return (
         <th>Type</th>
         <th>Seminaire</th>
         <th>Date</th>
+        <th>MailEnvoyé</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -419,6 +447,7 @@ return (
           <td>{p.paymentMode}</td>
           <td>{activeSeminaire? activeSeminaire.title : "En attente d'un seminaire"}</td>
           <td>{new Date(p.date).toLocaleDateString('fr-FR')}</td>
+          <td>{p.mailSent ? "Oui" : "Non"}</td>
           <td>
             <button className="btn btn-sm btn-outline-warning me-2">
               <i className="bi bi-pencil-fill" onClick={() => {
@@ -430,7 +459,7 @@ return (
               <i className="bi bi-x-circle-fill" onClick={() => dispatch(deletePaymentRequest(p.id))}></i>
             </button>
             <button className="btn btn-sm btn-outline-primary">
-              <i className="bi bi-envelope-fill"></i>
+              <i className="bi bi-envelope-fill" onClick={() => handleSubmitMail(p.mail, activeSeminaire?.title, p)}></i>
             </button>
           </td>
         </tr>

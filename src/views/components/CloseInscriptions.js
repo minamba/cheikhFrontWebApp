@@ -9,10 +9,10 @@ import { useSelector } from 'react-redux';
 export const CloseInscriptions = () => {
   const seminaires = useSelector((state) => state.seminaires || []);
 const hasActiveSeminaire = seminaires.seminaires.find(s => s.active === true);
-const showSemUsrSuccessPopupppp = useSelector(state => state.uiSeminaireUser?.showSemUsrSuccessPopup);
-const showSemUsrErrorPopuppppp = useSelector(state => state.uiSeminaireUser?.showSemUsrErrorPopup);
+const addSeminairSuccess = useSelector(state => state.seminairesUsers.addSeminairSuccess);
+const addSeminairError = useSelector(state => state.seminairesUsers.addSeminairError);
 
-console.log("succes",showSemUsrSuccessPopupppp);
+console.log("status",addSeminairSuccess);
 
 const formRef = useRef(null);
 const firstFieldRef = useRef(null);
@@ -106,7 +106,7 @@ const dispatch = useDispatch();
                     <button type="submit" className="btn subscribe-btn">Participer au prochain séminaire</button>
                     </div>
                 </form>
-                {showSemUsrSuccessPopupppp && (
+                {addSeminairSuccess && (
                 <div className="popup-overlay">
                   <div className="popup-success-card">
                     <p className="popup-message">✅ Votre demande a bien été prise en compte</p>
@@ -116,7 +116,7 @@ const dispatch = useDispatch();
                   </div>
                 </div>
               )}
-              {showSemUsrErrorPopuppppp && (
+              {addSeminairError && (
                   <div className="popup-overlay">
                     <div className="popup-error-card">
                       <p className="popup-message-error">❌ Une erreur est survenue, veuillez réessayer plus tard.</p>

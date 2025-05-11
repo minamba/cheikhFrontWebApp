@@ -13,13 +13,16 @@ function* getSeminaires() {
     }
 }
 
-function* addSeminaire(action) {
+function* addSeminaires(action) {
     try {
         console.log("je rentre dans le addSeminaireUserr", action.payload);
         const response = yield call(api.addSeminaire(action.payload));
-        yield put({ type: actions.actionsSeminaire.ADD_SEMINAIRE_USER_SUCCESS, payload: response });
-        const users = yield call(api.getSeminaires);
-        yield put(actions.getSeminairesUserSuccess({ seminairesUsers : users.data }));
+        console.log("reponse de l'ajout");
+        yield put({ type: actions.actionsSeminaire.ADD_SEMINAIRE_USER_SUCCESS, payload: action.payload.seminaireUser });
+        // console.log("reponse de l'ajout", response);
+        // yield put({ type: actions.actionsSeminaire.ADD_SEMINAIRE_USER_SUCCESS, payload: response });
+        // const users = yield call(api.getSeminaires);
+        // yield put(actions.getSeminairesUserSuccess({ seminairesUsers : users.data }));
     } catch (error) {
         yield put({ type: actions.actionsSeminaire.ADD_SEMINAIRE_USER_FAILURE, payload: error.message });
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -58,7 +61,7 @@ function* watchGetSeminairesUserRequest() {
 }
 
 function* watchAddSeminaireUserRequest() {
-    yield takeLatest(actions.actionsSeminaire.ADD_SEMINAIRE_USER_REQUEST,addSeminaire);
+    yield takeLatest(actions.actionsSeminaire.ADD_SEMINAIRE_USER_REQUEST,addSeminaires);
 }
 
 function* watchUpdateSeminaireUserRequest() {

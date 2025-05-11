@@ -23,3 +23,6 @@ const initialState = {
   };
   
   export default UiPaymentReducer;
+
+
+  

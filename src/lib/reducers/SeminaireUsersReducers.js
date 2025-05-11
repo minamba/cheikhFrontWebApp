@@ -1,7 +1,9 @@
 import { actionsSeminaire } from "../actions/SeminaireUsersActions";
 
 const initialState = {
-  seminairesUsers: []
+  seminairesUsers: [],
+  addSeminairSuccess : false,
+  addSeminairError : false
 };
 
 function SeminaireUsersReducers(state = initialState, action) {
@@ -38,7 +40,17 @@ function SeminaireUsersReducers(state = initialState, action) {
       return {
         ...state,
         seminairesUsers: [...state.seminairesUsers, action.payload],
+        addSeminairSuccess : true
       };
+
+    case actionsSeminaire.ADD_SEMINAIRE_USER_FAILURE:
+      return {
+        ...state,
+        addSeminairError : true
+      };
+
+      case "HIDE_POPUP":
+        return { ...state, addSeminairSuccess: false, addSeminairError: false };
 
     default:
       return state;

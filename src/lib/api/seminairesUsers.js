@@ -5,7 +5,6 @@ export const getSeminaires = () => {
 }
 
 export const addSeminaire = async (seminaire) => {
-
     try {
         return await axios.post("/SeminaireUsers/SeminaireUser", seminaire);
     } catch (error) {
@@ -15,6 +14,8 @@ export const addSeminaire = async (seminaire) => {
 }
 
 export const updateSeminaire = (seminaire) => {
+
+    console.log("updateSeminaire", seminaire);
     return axios.put("/SeminaireUsers/SeminaireUser", seminaire);
 }
 
