@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSeminairesUserRequest } from '../../lib/actions/SeminaireUsersActions';
 import { getSeminairesRequest } from '../../lib/actions/SeminaireActions';
 import { getPaymentsRequest } from '../../lib/actions/PaymentActions';
+import { getRegistrationPageRequest } from '../../lib/actions/RegistrationPageActions';
 
 export const BaseApp = props => {
 const datas = useSelector((state) => state.registrations);
@@ -31,6 +32,7 @@ useEffect(() => {
   dispatch(getSeminairesUserRequest()); 
   dispatch(getSeminairesRequest());
   dispatch(getPaymentsRequest());
+  dispatch(getRegistrationPageRequest());
 
 },[]);
 

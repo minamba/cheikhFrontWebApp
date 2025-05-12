@@ -5,8 +5,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import { Navigation } from 'swiper/modules';
+import { useSelector } from 'react-redux';
 
 export const Home = () => {
+const datas = useSelector((state) => state.registrationPage);
+const isClosed = datas.registrationPage.find((registrationPage) => registrationPage.id === 1)?.isClosed;
+
   return (
     <div>
       {/* Section 1 : Hero avec vidéo */}
@@ -31,7 +35,7 @@ export const Home = () => {
 
       {/* Bouton entre sections */}
       <div className="text-center position-relative" style={{ marginTop: '-60px', zIndex: 2 }}>
-        <Link to="/CloseInscriptions" className="btn subscribe-btn btn-lg mt-4 animated-button">S'inscrire maintenant</Link>
+      <Link to={isClosed ? "/CloseInscriptions" : "/inscription"} className="btn subscribe-btn btn-lg mt-4 animated-button">S 'inscrire maintenant</Link> 
       </div>
 
       {/* Section 2: Présentation texte + image */}
@@ -68,7 +72,7 @@ export const Home = () => {
 
       {/* Bouton entre sections */}
       <div className="text-center position-relative" style={{ marginTop: '-60px', zIndex: 2 }}>
-      <Link to="/CloseInscriptions" className="btn subscribe-btn btn-lg mt-4 animated-button">S'inscrire maintenant</Link>
+      <Link to={isClosed ? "/CloseInscriptions" : "/inscription"} className="btn subscribe-btn btn-lg mt-4 animated-button">S 'inscrire maintenant</Link> 
       </div>
 
       {/* Section 3: Témoignages avec Swiper */}

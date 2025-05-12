@@ -6,6 +6,8 @@ import {updateSeminaireUserRequest, deleteSeminaireUserRequest } from '../lib/ac
 import {updateSeminaireRequest, deleteSeminaireRequest } from '../lib/actions/SeminaireActions';
 import {updatePaymentRequest, deletePaymentRequest } from '../lib/actions/PaymentActions';  
 import {sendMailRequest, sendMailGroupRequest, sendPaymentMailRequest, sendPaymentMailGroupRequest } from '../lib/actions/MailActions';
+import {sendTelegramMessageRequest } from '../lib/actions/TelegramActions';
+import {getRegistrationPageRequest } from '../lib/actions/RegistrationPageActions';
 
 export const Navbar = () => {
 
@@ -14,6 +16,11 @@ export const Navbar = () => {
   const isRegistrationsPage = location.pathname === "/admin/registrations";
   const isSeminairePage = location.pathname === "/admin/seminaires";
   const isPaymentPage = location.pathname === "/admin/payments";
+
+  const dispatch = useDispatch();
+
+const datas = useSelector((state) => state.registrationPage);
+const isClosed = datas.registrationPage.find((registrationPage) => registrationPage.id === 1)?.isClosed;
 
   return (
   <nav className="navbar navbar-expand-lg custom-navbar-light sticky-top">
@@ -35,8 +42,7 @@ export const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav ms-auto">
         <Link to="/" className="nav-link active" aria-current="page">Accueil</Link>
-        <Link to="/inscription" className="nav-link" aria-current="page">Inscriptions</Link>
-        <Link to="/" className="nav-link" aria-current="page">Nous rejoindre</Link>
+        <Link to={isClosed ? "/CloseInscriptions" : "/inscription"} className="nav-link" aria-current="page">Inscriptions</Link> 
         {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage) && (
               <div className="nav-item dropdown">
                 <span
@@ -124,6 +130,14 @@ export const RegistrationTable = ({ searchTerm }) => {
            data.email.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+
+
+  const handleSubmitBot = (data) => {
+    dispatch(sendTelegramMessageRequest({LastName : data.lastName, FirstName : data.firstName, PhoneNumber : data.phoneNumber, Mail : data.email}));
+    data.mailSent = true;
+    dispatch(updateRegistrationRequest(data));
+  };
+
   return (
     <div className="table-responsive">
     <table className="table table-bordered table-hover shadow-sm text-nowrap">
@@ -160,7 +174,7 @@ export const RegistrationTable = ({ searchTerm }) => {
               <button className="btn btn-sm btn-outline-danger me-2" onClick={() => setIdRegistration(data.id)}>
                 <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteRegistrationRequest(data.id))}></i>
               </button>
-              <button className="btn btn-sm btn-outline-secondary" onClick={() => setIdRegistration(data.id)}>
+              <button className="btn btn-sm btn-outline-secondary" onClick={() => dispatch(handleSubmitBot(data))}>
                 <i className="bi bi-robot"></i>
               </button>
             </td>
@@ -195,12 +209,8 @@ export const RegistrationTable = ({ searchTerm }) => {
               <input type="email" className="form-control" value={selectedRegistration?.email} onChange={(e) => setSelectedRegistration({ ...selectedRegistration,email : e.target.value })} />
             </div>
             <div className="mb-3 form-check">
-              <input type="checkbox" className="form-check-input" id="contactedCheck" checked={selectedRegistration?.isContacted} onChange={(e) => setSelectedRegistration({ ...selectedRegistration,isContacted : e.target.value })} />
+              <input type="checkbox" className="form-check-input" id="contactedCheck" checked={selectedRegistration?.isContacted} onChange={(e) => setSelectedRegistration({ ...selectedRegistration,IsContacted : e.target.checked })} />
               <label className="form-check-label" htmlFor="contactedCheck">A été contacté</label>
-            </div>
-            <div className="mb-3 form-check">
-              <input type="checkbox" className="form-check-input" id="botCheck" checked={selectedRegistration?.sendedToBot} onChange={(e) => setSelectedRegistration({ ...selectedRegistration,sendedToBot : e.target.value })} />
-              <label className="form-check-label" htmlFor="botCheck">Envoyé au bot</label>
             </div>
           </form>
         </div>

@@ -7,6 +7,7 @@ import TelegramReducers from './TelegramReducers';
 import UiReducer from './UiTelegramReducer';
 import UiPaymentReducer from './UiPaymentReducer';
 import MailReducers from './MailReducers';
+import RegistrationPageReducers from './RegistrationPageReducers';
 
 export default combineReducers({
     registrations : RegistrationReducers,
@@ -16,5 +17,6 @@ export default combineReducers({
     messages : TelegramReducers,
     ui : UiReducer,
     uiPayment : UiPaymentReducer,
-    mails : MailReducers
+    mails : MailReducers,
+    registrationPage : RegistrationPageReducers
 });

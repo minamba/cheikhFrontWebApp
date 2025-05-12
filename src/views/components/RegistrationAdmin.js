@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { RegistrationTable } from '../../components/index';
-import { useDispatch, useSelector,dispatch } from 'react-redux';
-import { addRegistrationRequest, addRegistrationSuccess } from '../../lib/actions/RegistrationActions';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addRegistrationRequest } from '../../lib/actions/RegistrationActions';
+import { updateRegistrationPageRequest } from '../../lib/actions/RegistrationPageActions';
 
 
 export const RegistrationAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const registrationPages = useSelector((state) => state.registrationPage);
+  const registrationPage = registrationPages.registrationPage.find((registrationPage) => registrationPage.id === 1);
+  console.log("registrationPagddsldùmqldùmqldùqe", registrationPage);
+  
 
   const dispatch = useDispatch();
 
@@ -63,11 +67,16 @@ export const RegistrationAdmin = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+
           <div className="col-12 col-md-4 text-md-end">
             <button className="btn btn-success w-100 w-md-auto" onClick={() => setShowModal(true)}>
               <i className="bi bi-plus-circle-fill me-1"></i> Ajouter
             </button>
           </div>
+        </div>
+        <div className="mb-12 bg-warning text-center font-weight-bold">
+              <input type="checkbox" className="form-check-input" id="contactedCheck" value={registrationPage?.isClosed || false}     checked={registrationPage?.isClosed || false} onChange={(e) => dispatch(updateRegistrationPageRequest({ Id : registrationPage.id, Title : registrationPage.title, IsClosed: e.target.checked }))}/>
+              <label className="form-check-label color">INSCRIPTIONS FERMEES</label>
         </div>
       </section>
 

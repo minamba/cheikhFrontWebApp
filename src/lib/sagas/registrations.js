@@ -27,7 +27,7 @@ function* addRegistrations(action) {
 
 function* updateRegistrations(action) {
     try {
-        //console.log("je rentre dans le updateRegistration", action.payload);
+        console.log("je rentre dans le updateRegistration", action.payload);
         yield call(api.updateRegistration(action.payload));
 
         //je rappel getRegistration pour la mise à jour du store

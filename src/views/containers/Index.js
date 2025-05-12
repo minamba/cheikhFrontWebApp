@@ -15,6 +15,7 @@ export const AppContainer = connect(
             showErrorPopup : state.showErrorPopup,
             showSuccessPayment : state.showSuccessPayment,
             showErrorPayment : state.showErrorPayment,
+            registrationPage : state.registrationPage,
         }
     })
     (BaseApp);

@@ -5,6 +5,7 @@ import { all } from "redux-saga/effects";
 import seminairesSagas from "./seminaires";
 import telegramSagas from "./telegram";
 import mailSagas from "./mails";
+import registrationPageSagas from "./registrationPage";
 
 export default function* rootSaga() {
     yield all([
@@ -13,6 +14,7 @@ export default function* rootSaga() {
         ...paymentsSagas,
         ...seminairesSagas,
         ...telegramSagas,
-        ...mailSagas
+        ...mailSagas,
+        ...registrationPageSagas
     ]);
 }
