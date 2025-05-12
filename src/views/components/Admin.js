@@ -1,7 +1,13 @@
+
+import {RegistrationAdmin} from './RegistrationAdmin';
+import AdminProtectedPage from './AdminProtectedPage';
+
 export const Admin = () => {
   return (
     <div>
-      <h1>Admin</h1>
+      <AdminProtectedPage>
+        <RegistrationAdmin />
+      </AdminProtectedPage>
     </div>
   );
 };

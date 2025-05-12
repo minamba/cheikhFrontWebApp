@@ -174,7 +174,7 @@ export const RegistrationTable = ({ searchTerm }) => {
               <button className="btn btn-sm btn-outline-danger me-2" onClick={() => setIdRegistration(data.id)}>
                 <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteRegistrationRequest(data.id))}></i>
               </button>
-              <button className="btn btn-sm btn-outline-secondary" onClick={() => dispatch(handleSubmitBot(data))}>
+              <button className="btn btn-sm btn-outline-secondary" onClick={() => handleSubmitBot(data)}>
                 <i className="bi bi-robot"></i>
               </button>
             </td>

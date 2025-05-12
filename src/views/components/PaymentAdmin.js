@@ -5,6 +5,7 @@ import { addPaymentRequest } from '../../lib/actions/PaymentActions';
 import { useSelector } from 'react-redux';
 import { sendPaymentMailGroupRequest } from '../../lib/actions/MailActions';
 import { updatePaymentRequest } from '../../lib/actions/PaymentActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const PaymentAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -71,6 +72,7 @@ export const PaymentAdmin = () => {
 
   return (
     <div className="container py-5">
+      <AdminProtectedPage>
 
       {/* Section 1 : Barre de recherche + filtres + ajout */}
         <div className="row align-items-center mb-3">
@@ -156,6 +158,7 @@ export const PaymentAdmin = () => {
 
       {/* Fond sombre modal */}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };

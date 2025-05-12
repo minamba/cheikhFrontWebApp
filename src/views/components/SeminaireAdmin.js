@@ -4,6 +4,7 @@ import { SeminaireTable } from '../../components/index';
 import { addSeminaireUserRequest, updateSeminaireUserRequest } from '../../lib/actions/SeminaireUsersActions';
 import { sendMailGroupRequest } from '../../lib/actions/MailActions';
 import { useSelector } from 'react-redux';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const SeminaireAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -65,6 +66,7 @@ export const SeminaireAdmin = () => {
 
   return (
     <div className="container py-5">
+      <AdminProtectedPage>
 
       {/* Section 1 : Titre */}
       <section className="mb-4">
@@ -135,6 +137,7 @@ export const SeminaireAdmin = () => {
 
       {/* Fond sombre modal */}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };

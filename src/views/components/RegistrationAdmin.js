@@ -3,6 +3,7 @@ import { RegistrationTable } from '../../components/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { addRegistrationRequest } from '../../lib/actions/RegistrationActions';
 import { updateRegistrationPageRequest } from '../../lib/actions/RegistrationPageActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 
 export const RegistrationAdmin = () => {
@@ -51,7 +52,7 @@ export const RegistrationAdmin = () => {
 
   return (
     <div className="container py-5">
-
+      <AdminProtectedPage>
       {/* Section 1 : Titre */}
       <section className="mb-4">
         <h2 className="fw-bold text-center mb-4">Liste des élèves en attente d'entretien</h2>
@@ -131,6 +132,7 @@ export const RegistrationAdmin = () => {
         </div>
       )}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };
