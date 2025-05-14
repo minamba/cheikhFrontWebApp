@@ -1,12 +1,12 @@
 import axios from "axios";
 
 export const getSeminaires = () => {
-    return axios.get("/SeminaireUsers/SeminaireUsers");
+    return axios.get("/seminaireUsers");
 }
 
 export const addSeminaire = async (seminaire) => {
     try {
-        return await axios.post("/SeminaireUsers/SeminaireUser", seminaire);
+        return await axios.post("/seminaireUser", seminaire);
     } catch (error) {
         console.log("Erreur lors de l'ajout du l'utilisateur sur la liste d'attente du prochain seminaire", error.message);
         throw error;
@@ -14,11 +14,9 @@ export const addSeminaire = async (seminaire) => {
 }
 
 export const updateSeminaire = (seminaire) => {
-
-    console.log("updateSeminaire", seminaire);
-    return axios.put("/SeminaireUsers/SeminaireUser", seminaire);
+    return axios.put("/seminaireUser", seminaire);
 }
 
 export const deleteSeminaire = (idSeminaire) => {
-    return axios.delete(`/SeminaireUsers/${idSeminaire}`);
+    return axios.delete(`/seminaireUser/${idSeminaire}`);
 }

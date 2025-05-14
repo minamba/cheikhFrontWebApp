@@ -1,4 +1,4 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, NavLink } from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {updateRegistrationRequest, deleteRegistrationRequest } from '../lib/actions/RegistrationActions';
@@ -16,6 +16,10 @@ export const Navbar = () => {
   const isRegistrationsPage = location.pathname === "/admin/registrations";
   const isSeminairePage = location.pathname === "/admin/seminaires";
   const isPaymentPage = location.pathname === "/admin/payments";
+  const isSeminairePageAdmin = location.pathname === "/admin/seminairesPage";
+  const isThemePageAdmin = location.pathname === "/admin/theme";
+  const isTargetPageAdmin = location.pathname === "/admin/target";
+  const isSessionPageAdmin = location.pathname === "/admin/session";
 
   const dispatch = useDispatch();
 
@@ -41,9 +45,9 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav ms-auto">
-        <Link to="/" className="nav-link active" aria-current="page">Accueil</Link>
-        <Link to={isClosed ? "/CloseInscriptions" : "/inscription"} className="nav-link" aria-current="page">Inscriptions</Link> 
-        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage) && (
+        <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Accueil</NavLink>
+        <NavLink to={isClosed ? "/CloseInscriptions" : "/inscription"} className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Inscriptions</NavLink>
+        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage || isSeminairePageAdmin || isThemePageAdmin || isTargetPageAdmin || isSessionPageAdmin) && (
               <div className="nav-item dropdown">
                 <span
                   className="nav-link dropdown-toggle text-danger fw-bold"
@@ -55,8 +59,12 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
                 </span>
                 <ul className="dropdown-menu">
                   <li><Link className="dropdown-item" to="/admin/registrations" aria-current="page">Entretiens</Link></li>
-                  <li><Link className="dropdown-item" to="/admin/seminaires" aria-current="page">Seminaires</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/seminaires" aria-current="page">Seminaires usr</Link></li>
                   <li><Link className="dropdown-item" to="/admin/payments" aria-current="page">Paiements</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/seminairesPage" aria-current="page">Seminaires Page</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/theme" aria-current="page">Theme</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/target" aria-current="page">Target</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/session" aria-current="page">Session</Link></li>
                 </ul>
               </div>
             )}

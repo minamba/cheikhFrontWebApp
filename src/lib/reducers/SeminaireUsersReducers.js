@@ -3,7 +3,8 @@ import { actionsSeminaire } from "../actions/SeminaireUsersActions";
 const initialState = {
   seminairesUsers: [],
   addSeminairSuccess : false,
-  addSeminairError : false
+  addSeminairError : false,
+  errorMessageAddSeminaireUser : null
 };
 
 function SeminaireUsersReducers(state = initialState, action) {
@@ -46,11 +47,12 @@ function SeminaireUsersReducers(state = initialState, action) {
     case actionsSeminaire.ADD_SEMINAIRE_USER_FAILURE:
       return {
         ...state,
-        addSeminairError : true
+        addSeminairError : true,
+        errorMessageAddSeminaireUser : action.payload.error
       };
 
       case "HIDE_POPUP":
-        return { ...state, addSeminairSuccess: false, addSeminairError: false };
+        return { ...state, addSeminairSuccess: false, addSeminairError: false, errorMessageAddSeminaireUser : null };
 
     default:
       return state;

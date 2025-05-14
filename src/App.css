@@ -95,7 +95,7 @@ body {
 
 
 .hero-section-with-image {
-  height: 80vh;
+  height: 100vh;
   background-image: url("../public/Images/channels4_banner.jpg");
   background-size: cover;
   background-position: center;
@@ -451,6 +451,26 @@ footer .bi:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   text-align: center;
   animation: scaleIn 0.3s ease-out;
+}
+
+.popup-error-card {
+  background-color: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: popup-fade-in 0.3s ease-out;
+  max-width: 400px;
+  width: 90%;
+}
+
+
+.popup-message-error {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
 }
 
 .popup-message {

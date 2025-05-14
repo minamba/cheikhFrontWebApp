@@ -11,7 +11,7 @@ export const Inscriptions = () => {
   const showSuccessPopup = useSelector(state => state.ui.showSuccessPopup);
   const showErrorPopup = useSelector(state => state.ui.showErrorPopup); 
 
-  console.log("showSuccessPopup", showSuccessPopup);
+
   
 
   const [formData, setFormData] = useState({
@@ -44,6 +44,7 @@ export const Inscriptions = () => {
     e.preventDefault();
     dispatch(addRegistrationRequest(formData));
     dispatch(sendTelegramMessageRequest(entretien));
+    console.log("showSuccessPopup valeur", showSuccessPopup);
     setFormData({
       lastName: '',
       firstName: '',

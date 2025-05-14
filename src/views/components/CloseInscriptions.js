@@ -11,8 +11,8 @@ export const CloseInscriptions = () => {
 const hasActiveSeminaire = seminaires.seminaires.find(s => s.active === true);
 const addSeminairSuccess = useSelector(state => state.seminairesUsers.addSeminairSuccess);
 const addSeminairError = useSelector(state => state.seminairesUsers.addSeminairError);
+const errorMessageAddSeminaireUser = useSelector(state => state.seminairesUsers.errorMessageAddSeminaireUser);
 
-console.log("status",addSeminairSuccess);
 
 const formRef = useRef(null);
 const firstFieldRef = useRef(null);
@@ -109,7 +109,7 @@ const dispatch = useDispatch();
                 {addSeminairSuccess && (
                 <div className="popup-overlay">
                   <div className="popup-success-card">
-                    <p className="popup-message">✅ Votre demande a bien été prise en compte</p>
+                    <p className="popup-message">✅ Vos informations ont bien été enregistrées. Vous serez contacté pour participer au prochain séminaire.</p>
                     <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
                       Fermer
                     </button>
@@ -119,7 +119,7 @@ const dispatch = useDispatch();
               {addSeminairError && (
                   <div className="popup-overlay">
                     <div className="popup-error-card">
-                      <p className="popup-message-error">❌ Une erreur est survenue, veuillez réessayer plus tard.</p>
+                      <p className="popup-message-error">❌ {errorMessageAddSeminaireUser}</p>
                       <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
                         Fermer
                       </button>

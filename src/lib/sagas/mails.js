@@ -29,7 +29,7 @@ function* sendSeminaireMailGroup(action) {
 //PAYMENT
 function* sendPaymentMail(action) {
     try {
-        //console.log("je rentre dans l'envoie de mail pour le paiement", action.payload);
+        console.log("je rentre dans l'envoie de mail pour le paiement", action.payload);
         const response = yield call(api.sendPaymentMail, action.payload);
         yield put({ type: actions.actionsMail.SEND_PAYMENT_MAIL_SUCCESS, payload: response });
     } catch (error) {

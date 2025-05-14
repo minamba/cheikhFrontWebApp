@@ -19,11 +19,24 @@ import { getSeminairesUserRequest } from '../../lib/actions/SeminaireUsersAction
 import { getSeminairesRequest } from '../../lib/actions/SeminaireActions';
 import { getPaymentsRequest } from '../../lib/actions/PaymentActions';
 import { getRegistrationPageRequest } from '../../lib/actions/RegistrationPageActions';
+import { getThemesRequest } from '../../lib/actions/ThemeActions';
+import { getTargetsRequest } from '../../lib/actions/TargetActions';
+import { getSessionsRequest } from '../../lib/actions/SessionActions';
+import { getWitnessesRequest } from '../../lib/actions/WitnessActions';
+import { getImagesRequest } from '../../lib/actions/ImageActions';
+import { getMediasRequest } from '../../lib/actions/MediaActions';
+import { getHomesRequest } from '../../lib/actions/HomeActions';
+
+import { SeminairePageAdmin } from './SeminairePageAdmin';
+import { ThemeAdmin } from './ThemeAdmin';
+import { TargetAdmin } from './TargetAdmin';
+import { SessionAdmin } from './SessionAdmin';
 
 export const BaseApp = props => {
 const datas = useSelector((state) => state.registrations);
 const datas2 = useSelector((state) => state.seminaires);
 const datas3 = useSelector((state) => state.payments);
+const datas4 = useSelector((state) => state.images);
 
 const dispatch = useDispatch();
 
@@ -33,6 +46,14 @@ useEffect(() => {
   dispatch(getSeminairesRequest());
   dispatch(getPaymentsRequest());
   dispatch(getRegistrationPageRequest());
+  dispatch(getThemesRequest());
+  dispatch(getTargetsRequest());
+  dispatch(getSessionsRequest());
+  dispatch(getWitnessesRequest());
+  dispatch(getImagesRequest());
+  dispatch(getMediasRequest());
+  dispatch(getHomesRequest());
+
 
 },[]);
 
@@ -56,6 +77,10 @@ useEffect(() => {
           <Route path="/admin/registrations" element={<RegistrationAdmin />} />
           <Route path="/admin/seminaires" element={<SeminaireAdmin />} />
           <Route path="/admin/payments" element={<PaymentAdmin />} />
+          <Route path="/admin/seminairesPage" element={<SeminairePageAdmin />} />
+          <Route path="/admin/theme" element={<ThemeAdmin />} />
+          <Route path="/admin/target" element={<TargetAdmin />} />
+          <Route path="/admin/session" element={<SessionAdmin />} />
         </Routes>
         <Footer />
       </Router>

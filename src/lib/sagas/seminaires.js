@@ -6,7 +6,7 @@ import * as api from '../api/seminaires';
 function* getSeminaires() {
     try {
         const response = yield call(api.getSeminaires);
-        //console.log("je rentre dans le getSeminaires", response);
+        console.log("je rentre dans le getSeminaires", response);
         yield put(actions.getSeminairesSuccess({seminaires : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});

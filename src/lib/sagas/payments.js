@@ -17,12 +17,10 @@ function* getPayments() {
 function* addPayment(action) {
     try {
         console.log("je rentre dans le addPayment", action.payload);
-        const response = yield call(api.addPayment(action.payload));
-        console.log("reponse de l'ajout", response);    
-        yield put(actions.addPaymentSuccess({ payment : true }));
+        const response = yield call(api.addPayment,action.payload); 
         yield put({ type: actions.actions.ADD_PAYMENT_SUCCESS, payload: response });
     } catch (error) {
-        yield put(actions.addPaymentFailure({ payment : error.message }));
+        yield put(actions.addPaymentFailure({ error : error.response.data }));
     }
 }
 
@@ -35,7 +33,7 @@ function* updatePayment(action) {
         const response = yield call(api.getPayments);
         yield put(actions.getPaymentsSuccess({ payments: response.data }));
     } catch (error) {
-        //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
+        yield put(actions.updatePaymentFailure({ error: error.message }));
     }
 }
 

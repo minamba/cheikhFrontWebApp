@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const getRegistrationPage = () => {
-    return axios.get("/RegistrationPage/registration");
+    return axios.get("/registrationPage");
 }
 
 export const updateRegistrationPage = (registrationPage) => {
     console.log("ce que j'envoie a l'api", registrationPage);
-    return axios.put("/RegistrationPage/registration", registrationPage);
+    return axios.put("/registrationPage", registrationPage);
 }
 

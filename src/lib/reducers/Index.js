@@ -8,6 +8,13 @@ import UiReducer from './UiTelegramReducer';
 import UiPaymentReducer from './UiPaymentReducer';
 import MailReducers from './MailReducers';
 import RegistrationPageReducers from './RegistrationPageReducers';
+import ImageReducers from './ImageReducers';
+import MediaReducers from './MediaReducers';
+import SessionReducers from './SessionReducers';
+import TargetReducers from './TargetReducers';
+import ThemeReducers from './ThemeReducers';
+import HomeReducers from './HomeReducers';
+import WitnessReducers from './WitnessReducers';
 
 export default combineReducers({
     registrations : RegistrationReducers,
@@ -18,5 +25,12 @@ export default combineReducers({
     ui : UiReducer,
     uiPayment : UiPaymentReducer,
     mails : MailReducers,
-    registrationPage : RegistrationPageReducers
+    registrationPage : RegistrationPageReducers,
+    images : ImageReducers,
+    medias : MediaReducers,
+    sessions : SessionReducers,
+    targets : TargetReducers,
+    themes : ThemeReducers,
+    homes : HomeReducers,
+    witnesses : WitnessReducers
 });

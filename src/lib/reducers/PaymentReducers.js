@@ -1,7 +1,7 @@
 import { actions } from "../actions/PaymentActions";
 
 const initialState = {
-    payments : []
+    payments : [],
 }
 
 function PaymentReducers(state = initialState, action) {
@@ -14,6 +14,15 @@ function PaymentReducers(state = initialState, action) {
                 payments: action.payload.payments,
               };
 
+
+        //ajout payment
+        case actions.ADD_PAYMENT_SUCCESS:
+            return {
+                ...state,
+                payments: [...state.payments, action.payload.payment],
+                successAddPayment: true
+              };
+
         // Mise à jour
         case actions.UPDATE_PAYMENT_SUCCESS:
             state.payments.map(payment => {
@@ -24,6 +33,12 @@ function PaymentReducers(state = initialState, action) {
                     return payment
                 }
             })
+
+        case actions.RESET_PAYMENT_SUCCESS:
+            return {
+                ...state,
+                successAddPayment: false
+            };
 
         default:
             return state

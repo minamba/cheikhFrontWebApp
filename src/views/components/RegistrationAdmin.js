@@ -11,7 +11,6 @@ export const RegistrationAdmin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const registrationPages = useSelector((state) => state.registrationPage);
   const registrationPage = registrationPages.registrationPage.find((registrationPage) => registrationPage.id === 1);
-  console.log("registrationPagddsldùmqldùmqldùqe", registrationPage);
   
 
   const dispatch = useDispatch();

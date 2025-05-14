@@ -16,6 +16,17 @@ export const AppContainer = connect(
             showSuccessPayment : state.showSuccessPayment,
             showErrorPayment : state.showErrorPayment,
             registrationPage : state.registrationPage,
+            addSeminairSuccess : state.addSeminairSuccess,
+            addSeminairError : state.addSeminairError,
+            errorMessageAddSeminaireUser : state.errorMessageAddSeminaireUser,
+            errorMessageAddPayment : state.errorMessageAddPayment,
+            successAddPayment : state.successAddPayment,
+            themes : state.themes,
+            targets : state.targets,
+            sessions : state.sessions,
+            images : state.images,
+            medias : state.medias,
+            homes : state.homes,
         }
     })
     (BaseApp);

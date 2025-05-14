@@ -48,7 +48,7 @@ export const Seminaire = () => {
             </div>
 
             {/* Colonne 2 : Cards */}
-            <div className="col-lg-5 d-flex">
+            <div className="col-lg-5 d-flex justify-content-center">
                 <div className="w-100 h-100 d-flex flex-column justify-content-between gap-4">
 
                     {/* Card 1 */}
@@ -59,7 +59,7 @@ export const Seminaire = () => {
                 <h5 className="text-center">Les Thèmes</h5>
                 <hr className="my-2" style={{ borderColor: 'rgba(255,255,255,0.2)' }} />
                 <hr className="my-2" />
-                <ul className="ps-3">
+                <ul className="ps-3 ">
                     <li>Point essentiel n°1</li>
                     <li>Point essentiel n°2</li>
                     <li>Point essentiel n°3</li>

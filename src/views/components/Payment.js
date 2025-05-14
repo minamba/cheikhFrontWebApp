@@ -1,18 +1,21 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef } from "react";
 import '../../App.css';
 import { useDispatch } from 'react-redux';
 import { addPaymentRequest } from '../../lib/actions/PaymentActions';
 import { useSelector } from 'react-redux';
 import { sendPaymentMailRequest } from '../../lib/actions/MailActions';
+import { useEffect } from 'react';
 
 export const Payment = () => {
 const [showCardForm, setShowCardForm] = useState(false);
 const showSuccessPaymentlol = useSelector(state => state.uiPayment.showSuccessPayment);
 const showErrorPayment = useSelector(state => state.uiPayment.showErrorPayment);
-
-console.log("showSuccessPayment", showSuccessPaymentlol);
-
-
+const errorMessageAddPayment = useSelector(state => state.uiPayment.errorMessageAddPayment);
+const successAddPayment = useSelector((state) => state.payments.successAddPayment);
+const tempFormData = useRef(null); // permet de garder le formData avant reinitialisation
+const [confirmMail, setConfirmMail] = useState('');
+const [countryCode, setCountryCode] = useState('+33'); // 🇫🇷 par défaut
+const [localPhone, setLocalPhone] = useState('');
 const seminaires = useSelector((state) => state.seminaires) || [];
 const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
 
@@ -40,7 +43,29 @@ const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addPaymentRequest(formData));
+
+    // Vérification email
+    if (formData.mail !== confirmMail) {
+      alert("Les adresses mail ne correspondent pas.");
+      return;
+    }
+
+    const cleanedPhone = localPhone.startsWith('0') ? localPhone.slice(1) : localPhone;
+const fullPhone = `${countryCode}${cleanedPhone}`;
+    const phoneRegex = /^\+?[0-9]{8,15}$/;
+  
+    if (!phoneRegex.test(fullPhone)) {
+      alert("Numéro de téléphone invalide.");
+      return;
+    }
+
+    const finalData = {
+      ...formData,
+      phoneNumber: fullPhone
+    };
+
+    tempFormData.current = finalData;
+    dispatch(addPaymentRequest(finalData));
     setFormData({
       lastName: '',
       firstName: '',
@@ -52,6 +77,17 @@ const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || 
       idseminaire: activeSeminaire?.id || null
     },[]);
   };
+
+
+  useEffect(() => {
+    console.log("successAddPayment:", successAddPayment);
+    console.log("tempFormData:", tempFormData.current);
+
+    if (successAddPayment) {
+      dispatch(sendPaymentMailRequest({Recipient: tempFormData.current.mail, SeminaireTitle: activeSeminaire?.title}));
+      dispatch({ type: "RESET_PAYMENT_SUCCESS" });
+    }
+  }, [successAddPayment]);
 
   return (
     <Fragment>
@@ -75,14 +111,34 @@ const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || 
               <div className="mb-3">
                 <input type="text" name="firstName" className="form-control" placeholder="Prénom" required value={formData.firstName} onChange={handleChange} />
               </div>
-              <div className="mb-3">
-                <input type="tel" className="form-control" name="phoneNumber" placeholder="N° de téléphone" required value={formData.phoneNumber} onChange={handleChange}/>
+              <div className="mb-3 d-flex gap-2">
+                <select
+                  className="form-select w-auto"
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                >
+                  <option value="+33">🇫🇷 +33</option>
+                  <option value="+212">🇲🇦 +212</option>
+                  <option value="+213">🇩🇿 +213</option>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option>
+                </select>
+
+                <input
+                  type="tel"
+                  className="form-control"
+                  placeholder="Numéro sans indicatif"
+                  value={localPhone}
+                  onChange={(e) => setLocalPhone(e.target.value)}
+                  required
+                  maxLength={10}
+                />
               </div>
               <div className="mb-3">
                 <input type="email" className="form-control" name="mail" placeholder="Adresse mail" required value={formData.mail} onChange={handleChange}/>
               </div>
               <div className="mb-4">
-                <input type="email" className="form-control" placeholder="Confirmer l'adresse mail" required />
+                <input type="email" className="form-control" placeholder="Confirmer l'adresse mail" required value={confirmMail} onChange={(e) => setConfirmMail(e.target.value)} />
               </div>
 
               {/* Moyens de paiement */}
@@ -131,16 +187,18 @@ const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || 
               </div>
 
               {/* Bouton acheter */}
+              {errorMessageAddPayment === null && (
               <div className="text-center">
-                <button type="submit" className="btn subscribe-btn px-5" onClick={() => dispatch(sendPaymentMailRequest({Recipient: formData.mail, SeminaireTitle: activeSeminaire?.title}))}>
+                <button type="submit" className="btn subscribe-btn px-5">
                   Acheter
                 </button>
               </div>
+              )}
             </form>
             {showSuccessPaymentlol && (
                 <div className="popup-overlay">
                   <div className="popup-success-card">
-                    <p className="popup-message">✅ Votre demande a bien été prise en compte</p>
+                    <p className="popup-message">✅ Votre inscription a bien été prise en compte</p>
                     <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
                       Fermer
                     </button>
@@ -150,7 +208,7 @@ const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || 
               {showErrorPayment && (
                   <div className="popup-overlay">
                     <div className="popup-error-card">
-                      <p className="popup-message-error">❌ Une erreur est survenue, veuillez réessayer plus tard.</p>
+                      <p className="popup-message-error">❌ {errorMessageAddPayment}</p>
                       <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
                         Fermer
                       </button>

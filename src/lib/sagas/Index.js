@@ -6,6 +6,14 @@ import seminairesSagas from "./seminaires";
 import telegramSagas from "./telegram";
 import mailSagas from "./mails";
 import registrationPageSagas from "./registrationPage";
+import homesSagas from "./homes";
+import sessionsSagas from "./sessions";
+import witnessesSagas from "./witnesses";
+import mediasSagas from "./medias";
+import targetsSagas from "./targets";
+import themesSagas from "./themes";
+import imagesSagas from "./images";
+
 
 export default function* rootSaga() {
     yield all([
@@ -15,6 +23,13 @@ export default function* rootSaga() {
         ...seminairesSagas,
         ...telegramSagas,
         ...mailSagas,
-        ...registrationPageSagas
+        ...registrationPageSagas,
+        ...homesSagas,
+        ...sessionsSagas,
+        ...witnessesSagas,
+        ...mediasSagas,
+        ...targetsSagas,
+        ...themesSagas,
+        ...imagesSagas,
     ]);
 }
