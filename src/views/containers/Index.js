@@ -27,6 +27,8 @@ export const AppContainer = connect(
             images : state.images,
             medias : state.medias,
             homes : state.homes,
+            showSuccessUpload : state.showSuccessUpload,
+            showErrorUpload : state.showErrorUpload,
         }
     })
     (BaseApp);

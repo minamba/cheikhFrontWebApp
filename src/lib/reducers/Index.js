@@ -15,6 +15,7 @@ import TargetReducers from './TargetReducers';
 import ThemeReducers from './ThemeReducers';
 import HomeReducers from './HomeReducers';
 import WitnessReducers from './WitnessReducers';
+import UploadReducers from './UploadReducers';
 
 export default combineReducers({
     registrations : RegistrationReducers,
@@ -32,5 +33,6 @@ export default combineReducers({
     targets : TargetReducers,
     themes : ThemeReducers,
     homes : HomeReducers,
-    witnesses : WitnessReducers
+    witnesses : WitnessReducers,
+    upload : UploadReducers,
 });

@@ -10,13 +10,23 @@ import { useSelector } from 'react-redux';
 export const Home = () => {
 const datas = useSelector((state) => state.registrationPage);
 const isClosed = datas.registrationPage.find((registrationPage) => registrationPage.id === 1)?.isClosed;
+const homes = useSelector((state) => state.homes);
+const witnesses = useSelector((state) => state.witnesses);
+
+console.log("home",homes.homes);
+console.log(homes.homes?.media?.url);
+console.log("witnesses",witnesses.witnesses);
+
+
+const videoUrl = homes.homes?.media?.url;
+console.log("videoUrl",videoUrl);
 
   return (
     <div>
       {/* Section 1 : Hero avec vidéo */}
       <section className="hero-section-with-image d-flex align-items-center text-white">
         <div className="container text-center">
-          <h1 className="calligraphic-glow mb-5">INSTITUT MALIK IBN ANAS</h1>
+          <h1 className="calligraphic-glow mb-5">{homes.homes?.title}</h1>
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
             <video
               autoPlay
@@ -26,7 +36,7 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
               className="w-100 h-100"
               style={{ objectFit: 'cover' }}
             >
-              <source src="/Vidéos/video2.mp4" type="video/mp4" />
+                 <source src={videoUrl} type="video/mp4" />
               Votre navigateur ne supporte pas la balise vidéo.
             </video>
           </div>
@@ -59,7 +69,7 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
               {/* Colonne droite : Image */}
                   <div className="col-lg-6 d-flex align-items-center justify-content-center">
               <img 
-                src="/Images/study2.jpg" 
+                src={`/Images/${homes.homes.image?.url}`} 
                 alt="Méthodologie" 
                 className="rounded shadow"
                 style={{ maxWidth: '80%', height: 'auto', objectFit: 'cover' }}
@@ -93,56 +103,27 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
               }}
             >
             {/* Slide 1 */}
-            <SwiperSlide>
-              <div className="testimonial-card p-4 h-100 rounded">
-                <div className="ratio ratio-16x9 mb-3">
-                  <video controls className="w-100 rounded shadowed-video">
-                    <source src="/Vidéos/video1.mp4" type="video/mp4" />
-                  </video>
+           
+            {witnesses.witnesses.map((witness) => (
+              <SwiperSlide key={witness.id}>
+                <div className="testimonial-card p-4 h-100 rounded">
+                  <div className="ratio ratio-16x9 mb-3">
+                    {witness.media.type === 1 ? (
+                      <video controls className="w-100 rounded shadowed-video">
+                        <source src={`/Vidéos/${witness.media?.url}`} type="video/mp4" />
+                        Votre navigateur ne supporte pas la vidéo.
+                      </video>
+                    ) : (
+                      <audio controls className="w-100 rounded shadowed-video">
+                        <source src={`/Audios/${witness.media?.url}`} type="audio/mpeg" />
+                      </audio>
+                    )}
+                  </div>
+                  <h5 className="mb-1">{witness.title}</h5>
+                  <p className="testimonial-desc mb-0">{witness.description}</p>
                 </div>
-                <h5 className="mb-1">Fatima</h5>
-                <p className="testimonial-desc mb-0">"Une expérience enrichissante et bienveillante."</p>
-              </div>
-            </SwiperSlide>
-
-            {/* Slide 2 */}
-            <SwiperSlide>
-              <div className="testimonial-card p-4 h-100 rounded">
-                <div className="ratio ratio-16x9 mb-3">
-                  <video controls className="w-100 rounded shadowed-video">
-                    <source src="/Vidéos/video2.mp4" type="video/mp4" />
-                  </video>
-                </div>
-                <h5 className="mb-1">Yassine</h5>
-                <p className="testimonial-desc mb-0">"J’ai trouvé une vraie communauté."</p>
-              </div>
-            </SwiperSlide>
-
-            {/* Slide 3 */}
-            <SwiperSlide>
-              <div className="testimonial-card p-4 h-100 rounded">
-                <div className="ratio ratio-16x9 mb-3">
-                  <video controls className="w-100 rounded shadowed-video">
-                    <source src="/Vidéos/video2.mp4" type="video/mp4" />
-                  </video>
-                </div>
-                <h5 className="mb-1">Aïcha</h5>
-                <p className="testimonial-desc mb-0">"Chaque session est motivante."</p>
-              </div>
-            </SwiperSlide>
-
-            {/* Slide 4 — AUDIO */}
-            <SwiperSlide>
-              <div className="testimonial-card p-4 h-100 rounded">
-                <div className="audio-wrapper mb-3">
-                  <audio controls className="w-100 rounded shadowed-video">
-                    <source src="/Audios/audio1.mp3" type="audio/mpeg" />
-                  </audio>
-                </div>
-                <h5 className="mb-1">Omar</h5>
-                <p className="testimonial-desc mb-0">"Une parole pleine de sagesse à écouter."</p>
-              </div>
-            </SwiperSlide>
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
       </section>

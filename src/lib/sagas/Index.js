@@ -13,7 +13,7 @@ import mediasSagas from "./medias";
 import targetsSagas from "./targets";
 import themesSagas from "./themes";
 import imagesSagas from "./images";
-
+import uploadSagas from "./upload";    
 
 export default function* rootSaga() {
     yield all([
@@ -31,5 +31,6 @@ export default function* rootSaga() {
         ...targetsSagas,
         ...themesSagas,
         ...imagesSagas,
+        ...uploadSagas,
     ]);
 }

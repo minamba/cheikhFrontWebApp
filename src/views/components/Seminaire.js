@@ -1,22 +1,41 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import '../../App.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getSeminairesRequest } from '../../lib/actions/SeminaireActions';
+import { getThemesRequest } from '../../lib/actions/ThemeActions';
+import { getTargetsRequest } from '../../lib/actions/TargetActions';
+import { getSessionsRequest } from '../../lib/actions/SessionActions';
+import { getImagesRequest } from '../../lib/actions/ImageActions';
+import { getMediasRequest } from '../../lib/actions/MediaActions';
+import { useEffect } from 'react';
 
 export const Seminaire = () => {
+
+const dispatch = useDispatch();
+//const [activeSeminaire, setActiveSeminaire] = useState(null);
+const targets = useSelector((state) => state.targets.targets);
+const sessions = useSelector((state) => state.sessions.sessions);
+const themes = useSelector((state) => state.themes.themes);
+const seminaires = useSelector((state) => state.seminaires) || [];
+const activeSeminaire=(seminaires.seminaires.find((s) => s.active === true) || null);
+
+console.log("seminaiiiiire video",activeSeminaire.video.url);
+
+// const image = images.images.find((i) => i.id === seminaire.imageId);
   return (
     <Fragment>
 
       {/* Section 1 : Titre + Vidéo */}
-      <section className="hero-section-seminaire-with-image d-flex align-items-center">
+      <section className="hero-section-seminaire-with-image d-flex align-items-center "     style={{backgroundImage: activeSeminaire?.banner?.url? `url("/Images/${activeSeminaire.banner.url}")` : 'none'}}>
         <div className="container text-center">
-          <h1 className="hero-title-seminaire mb-4">Qui es-tu auprès d'Allah ?</h1>
+          <h1 className="hero-title-seminaire mb-4">{activeSeminaire?.title}</h1>
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
-            <iframe
-              src="https://www.youtube.com/embed/EW0yagG8SDM?si=hdQeZtmm9hqeWleU"
-              title="Vidéo séminaire"
-              allowFullScreen
-            ></iframe>
+          <video controls className="img-fluid" width="100%">
+                    <source src={activeSeminaire?.video?.url} type="video/mp4" />
+           </video>
           </div>
         </div>
       </section>
@@ -40,7 +59,7 @@ export const Seminaire = () => {
             <div className="col-lg-5 d-flex mb-4 mb-lg-0">
                 <div className="w-100 h-100">
                 <img
-                    src="/Images/Seminaires/S1/img1.jpg"
+                    src={`/Images/Seminaires/S1/${activeSeminaire?.graphic?.url}`} 
                     className="img-fluid rounded shadow object-fit-cover"
                     alt="Séminaire visuel"
                 />
@@ -56,14 +75,16 @@ export const Seminaire = () => {
                 <div className="mb-3 text-center">
                     <i className="bi bi-bookmark fs-2"></i>
                 </div>
-                <h5 className="text-center">Les Thèmes</h5>
+                <h5 className="text-center">{themes.length > 0 ? themes[0].title : '...'}</h5>
                 <hr className="my-2" style={{ borderColor: 'rgba(255,255,255,0.2)' }} />
                 <hr className="my-2" />
-                <ul className="ps-3 ">
-                    <li>Point essentiel n°1</li>
-                    <li>Point essentiel n°2</li>
-                    <li>Point essentiel n°3</li>
-                </ul>
+                {themes
+                    .filter(theme => theme.seminaire?.id === activeSeminaire?.id)
+                    .map(theme => (
+                        <ul className="ps-3" key={theme.id}>
+                        <li>{theme.detail}</li>
+                        </ul>
+                    ))}
                 </div>
 
                 {/* Card 2 */}
@@ -71,14 +92,16 @@ export const Seminaire = () => {
                 <div className="mb-3 text-center">
                     <i className="bi bi-bullseye fs-2"></i>
                 </div>
-                <h5 className="text-center">Les Objectifs</h5>
+                <h5 className="text-center">{targets.length > 0 ? targets[0].title : '...'}</h5>
                 <hr className="my-3" style={{ borderColor: 'rgba(255,255,255,0.2)' }} />
                 <hr className="my-2" />
-                <ul className="ps-3">
-                    <li>Point essentiel n°1</li>
-                    <li>Point essentiel n°2</li>
-                    <li>Point essentiel n°3</li>
-                </ul>
+                {targets
+                    .filter(target => target.seminaire?.id === activeSeminaire.id)
+                    .map(target => (
+                        <ul className="ps-3" key={target.id}>
+                        <li>{target.detail}</li>
+                        </ul>
+                    ))}
                 </div>
 
                 {/* Card 3 */}
@@ -86,14 +109,16 @@ export const Seminaire = () => {
                 <div className="mb-3 text-center">
                     <i className="bi bi-calendar fs-2"></i>
                 </div>
-                <h5 className="text-center">6 Séances de 1h</h5>
+                <h5 className="text-center">{sessions.length > 0 ? sessions[0].title : 's'}</h5>
                 <hr className="my-3" style={{ borderColor: 'rgba(255,255,255,0.2)' }} />
                 <hr className="my-2" />
-                <ul className="ps-3">
-                    <li>Point essentiel n°1</li>
-                    <li>Point essentiel n°2</li>
-                    <li>Point essentiel n°3</li>
-                </ul>
+                {sessions
+                    .filter(sessions => sessions.seminaire?.id === activeSeminaire.id)
+                    .map(sessions => (
+                        <ul className="ps-3" key={sessions.id}>
+                        <li>{sessions.detail}</li>
+                        </ul>
+                    ))}
                 </div>
 
                 {/* Card 4 */}

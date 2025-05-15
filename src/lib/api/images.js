@@ -13,5 +13,5 @@ export const updateImage = (image) => {
 }
 
 export const deleteImage = (idImage) => {
-    return axios.delete(`/image/${idImage}`);
+    return axios.delete(`/Images/${idImage}`);
 }

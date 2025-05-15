@@ -183,7 +183,7 @@ const fullPhone = `${countryCode}${cleanedPhone}`;
 
               {/* Montant total */}
               <div className="text-center mb-3 text-dark">
-                <h5>Montant total : <strong>20,00 €</strong></h5>
+                <h5>Montant total : <strong>{activeSeminaire?.amount}€</strong></h5>
               </div>
 
               {/* Bouton acheter */}

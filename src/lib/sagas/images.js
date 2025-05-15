@@ -26,7 +26,7 @@ function* addImages(action) {
 function* updateImage(action) {
     try {
         console.log("je rentre dans le updateImage", action.payload);
-        yield call(api.updateImage(action.payload));
+        yield call(api.updateImage,action.payload);
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getImages);
@@ -39,7 +39,7 @@ function* updateImage(action) {
 function* deleteImage(action) {
     try {
         console.log("je rentre dans le deleteImage", action.payload);
-        yield call(api.deleteImage(action.payload));
+        yield call(api.deleteImage,action.payload);
         
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getImages);

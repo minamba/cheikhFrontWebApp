@@ -31,12 +31,17 @@ import { SeminairePageAdmin } from './SeminairePageAdmin';
 import { ThemeAdmin } from './ThemeAdmin';
 import { TargetAdmin } from './TargetAdmin';
 import { SessionAdmin } from './SessionAdmin';
+import { HomeAdmin } from './HomeAdmin';
+import ImageAdmin  from './ImageAdmin';
+import MediaAdmin from './MediaAdmin';
+import WitnessAdmin from './WitnessAdmin';
 
 export const BaseApp = props => {
 const datas = useSelector((state) => state.registrations);
 const datas2 = useSelector((state) => state.seminaires);
 const datas3 = useSelector((state) => state.payments);
 const datas4 = useSelector((state) => state.images);
+const datas5 = useSelector((state) => state.medias);
 
 const dispatch = useDispatch();
 
@@ -81,6 +86,10 @@ useEffect(() => {
           <Route path="/admin/theme" element={<ThemeAdmin />} />
           <Route path="/admin/target" element={<TargetAdmin />} />
           <Route path="/admin/session" element={<SessionAdmin />} />
+          <Route path="/admin/home" element={<HomeAdmin />} />
+          <Route path="/admin/image" element={<ImageAdmin />} />
+          <Route path="/admin/media" element={<MediaAdmin />} />
+          <Route path="/admin/witness" element={<WitnessAdmin />} />
         </Routes>
         <Footer />
       </Router>

@@ -28,8 +28,8 @@ function* addSeminaire(action) {
 
 function* updateSeminaire(action) {
     try {
-        //console.log("je rentre dans le updateSeminaire", action.payload);
-        yield call(api.updateSeminaire(action.payload));
+        console.log("je rentre dans le updateSeminaire", action.payload);
+        yield call(api.updateSeminaire,action.payload);
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getSeminaires);

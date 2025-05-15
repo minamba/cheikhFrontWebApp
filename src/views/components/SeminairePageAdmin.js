@@ -7,7 +7,6 @@ export const SeminairePageAdmin = () => {
   const seminaires = useSelector((state) => state.seminaires.seminaires || []);
   const images = useSelector((state) => state.images || []);
   const videos = useSelector((state) => state.medias || []);
-  console.log("images list", images.images);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -24,39 +23,69 @@ export const SeminairePageAdmin = () => {
   const handleToggleActive = (seminaire) => {
     const updatedSeminaire = { ...seminaire, active: !seminaire.active };
     dispatch(updateSeminaireRequest(updatedSeminaire));
+
+    setTimeout(() => {
+      dispatch(getSeminairesRequest());
+    }, 2000);
   };
+
+  // const handleAddOrEditSeminaire = (e) => {
+  //   e.preventDefault();
+  //   if (editMode) {
+  //     dispatch(updateSeminaireRequest({ ...newSeminaire, id: selectedSeminaireId }));
+  //   } else {
+  //     dispatch(addSeminaireRequest(newSeminaire));
+  //   }
+  //   setShowModal(false);
+  //   setEditMode(false);
+  //   setSelectedSeminaireId(null);
+  //   setNewSeminaire({ title: '', bannerUrl: '', videoUrl: '', graphiqueUrl: '', amount: '' });
+  // };
+
+  const handleEditClick = (seminaire) => {
+    setNewSeminaire({
+      Title: seminaire.title,
+      IdBanner: seminaire.banner?.id || '', 
+      IdMedia: seminaire.video?.id || '',
+      IdImage: seminaire.graphic?.id || '',
+      Amount: seminaire.amount,
+      Active: seminaire.active
+    });
+    setSelectedSeminaireId(seminaire.id);
+    setEditMode(true);
+    setShowModal(true);
+  
+    setTimeout(() => {
+      dispatch(getSeminairesRequest());
+    }, 2000);
+  };
+
 
   const handleAddOrEditSeminaire = (e) => {
     e.preventDefault();
+  
+    const payload = {
+      Id: selectedSeminaireId,
+      Title: newSeminaire.Title,
+      IdBanner: newSeminaire.IdBanner,
+      IdMedia: newSeminaire.IdMedia,
+      IdImage: newSeminaire.IdImage,
+      Amount: newSeminaire.Amount,
+      active: seminaires.find(s => s.Id === selectedSeminaireId)?.Active
+    };
+  
     if (editMode) {
-      dispatch(updateSeminaireRequest({ ...newSeminaire, id: selectedSeminaireId }));
+      dispatch(updateSeminaireRequest(payload));
     } else {
-      dispatch(addSeminaireRequest(newSeminaire));
+      dispatch(addSeminaireRequest(payload));
     }
+  
     setShowModal(false);
     setEditMode(false);
     setSelectedSeminaireId(null);
     setNewSeminaire({ title: '', bannerUrl: '', videoUrl: '', graphiqueUrl: '', amount: '' });
   };
 
-  const handleEditClick = (seminaire) => {
-    setNewSeminaire({
-      title: seminaire.title,
-      bannerUrl: seminaire.bannerUrl,
-      videoUrl: seminaire.videoUrl,
-      graphiqueUrl: seminaire.graphiqueUrl,
-      amount: seminaire.amount
-    });
-    setSelectedSeminaireId(seminaire.id);
-    setEditMode(true);
-    setShowModal(true);
-
-
-     setTimeout(() => {
-          dispatch(getSeminairesRequest());
-        }, 2000);
-
-  };
 
   const handleDelete = (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce séminaire ?")) {
@@ -67,6 +96,35 @@ export const SeminairePageAdmin = () => {
   const filteredSeminaires = seminaires.filter((s) =>
     (s.title || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+
+  //Upload fichier 
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) throw new Error('Erreur lors de l\'upload');
+  
+      const result = await response.json();
+      alert('Upload réussi ✅');
+  
+      // Optionnel : recharger la liste d’images ou vidéos
+      dispatch(getSeminairesRequest());
+      // ou : dispatch(getImagesRequest()); dispatch(getMediasRequest());
+    } catch (error) {
+      console.error(error);
+      alert('Échec de l\'upload ❌');
+    }
+  };
 
   return (
     <div className="container py-5">
@@ -91,13 +149,23 @@ export const SeminairePageAdmin = () => {
         </div>
       </div>
 
+      <div className="mb-3">
+        <label htmlFor="fileUpload" className="btn btn-outline-primary me-2">
+          <i className="bi bi-upload"></i> Upload de document
+        </label>
+        <input
+          id="fileUpload"
+          type="file"
+          accept="image/*,video/*"
+          style={{ display: 'none' }}
+          onChange={handleFileUpload}
+        />
+      </div>
+
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>
             <th>Title</th>
-            <th>Video URL</th>
-            <th>Bannière URL</th>
-            <th>Graphique URL</th>
             <th>Prix</th>
             <th>Bannière</th>
             <th>Graphique</th>
@@ -110,9 +178,6 @@ export const SeminairePageAdmin = () => {
           {filteredSeminaires.map((s) => (
             <tr key={s.id || `${s.title}-${Math.random()}`}>
               <td>{s.title}</td>
-              <td>{s.videoUrl}</td>
-              <td>{s.banner.url}</td>
-              <td>{s.graphic.url}</td>
               <td>{s.amount} €</td>
               <td>
                 <img src={`/Images/${s.banner.url}`} alt="Banner" className="img-fluid" />
@@ -122,7 +187,7 @@ export const SeminairePageAdmin = () => {
               </td>
               <td>
               <video controls className="img-fluid" width="100%">
-                    <source src={`/Images/Seminaires/Vidéos/${s.video.url}`} type="video/mp4" />
+                    <source src={`/Vidéos/${s.video.url}`} type="video/mp4" />
               </video>
               </td>
               <td>
@@ -157,14 +222,14 @@ export const SeminairePageAdmin = () => {
                 <form onSubmit={handleAddOrEditSeminaire}>
                   <div className="mb-3">
                     <label className="form-label">Titre</label>
-                    <input type="text" className="form-control" name="title" value={newSeminaire.title} onChange={(e) => setNewSeminaire({ ...newSeminaire, title: e.target.value })} required />
+                    <input type="text" className="form-control" name="title" value={newSeminaire.Title} onChange={(e) => setNewSeminaire({ ...newSeminaire, Title: e.target.value })} required />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Bannière</label>
                     <select
                       className="form-select"
-                      value={newSeminaire.bannerUrl}
-                      onChange={(e) => setNewSeminaire({ ...newSeminaire, bannerUrl: parseInt(e.target.value, 10) })}
+                      value={newSeminaire.IdBanner}
+                      onChange={(e) => setNewSeminaire({ ...newSeminaire, IdBanner: parseInt(e.target.value, 10) })}
                       required
                     >
                       <option value="">-- Sélectionner une bannière --</option>
@@ -177,8 +242,8 @@ export const SeminairePageAdmin = () => {
                     <label className="form-label">Vidéo</label>
                     <select
                       className="form-select"
-                      value={newSeminaire.videoUrl}
-                      onChange={(e) => setNewSeminaire({ ...newSeminaire, videoUrl: parseInt(e.target.value, 10) })}
+                      value={newSeminaire.IdMedia}
+                      onChange={(e) => setNewSeminaire({ ...newSeminaire, IdMedia: parseInt(e.target.value, 10) })}
                       required
                     >
                       <option value="">-- Sélectionner une vidéo --</option>
@@ -191,8 +256,8 @@ export const SeminairePageAdmin = () => {
                     <label className="form-label">Image graphique</label>
                     <select
                       className="form-select"
-                      value={newSeminaire.graphiqueUrl}
-                      onChange={(e) => setNewSeminaire({ ...newSeminaire, graphiqueUrl: parseInt(e.target.value, 10) })}
+                      value={newSeminaire.IdImage}
+                      onChange={(e) => setNewSeminaire({ ...newSeminaire, IdImage: parseInt(e.target.value, 10) })}
                       required
                     >
                       <option value="">-- Sélectionner une image --</option>
@@ -203,7 +268,7 @@ export const SeminairePageAdmin = () => {
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Prix</label>
-                    <input type="number" className="form-control" name="amount" value={newSeminaire.amount} onChange={(e) => setNewSeminaire({ ...newSeminaire, amount: e.target.value })} required />
+                    <input type="number" className="form-control" name="amount" value={newSeminaire.Amount} onChange={(e) => setNewSeminaire({ ...newSeminaire, Amount: e.target.value })} required />
                   </div>
                   <div className="modal-footer">
                     <button type="submit" className="btn btn-success">{editMode ? 'Modifier' : 'Ajouter'}</button>

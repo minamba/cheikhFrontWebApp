@@ -26,28 +26,35 @@ function* addMedias(action) {
 function* updateMedia(action) {
     try {
         console.log("je rentre dans le updateMedia", action.payload);
-        yield call(api.updateMedia(action.payload));
+        yield call(api.updateMedia,action.payload);
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getMedias);
-        yield put(actions.updateMediasRequest({ medias: response.data }));
+        yield put(actions.updateMediasSuccess({ media: response.data }));
     } catch (error) {
-        //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
+        yield put(actions.updateMediasFailure({ error : error.response.data }));
     }
 }
 
 function* deleteMedia(action) {
     try {
-        console.log("je rentre dans le deleteMedia", action.payload);
-        yield call(api.deleteMedia(action.payload));
-        
-        //je rappel getSeminaire pour la mise à jour du store
-        const response = yield call(api.getMedias);
-        yield put(actions.getMediasSuccess({ medias: response.data }));
+      console.log("je rentre dans le deleteMedia", action.payload);
+  
+      // Si action.payload est un objet, il faut faire :
+      // const id = action.payload.id;
+      // yield call(api.deleteMedia, id);
+  
+      yield call(api.deleteMedia, action.payload); // si payload = id
+  
+      // Optionnel : rafraîchir la liste
+      const response = yield call(api.getMedias);
+      yield put(actions.getMediasSuccess({ medias: response.data }));
+      
     } catch (error) {
-        yield put(actions.addMediasFailure({ error : error.response.data }));   
+      console.error("Erreur dans deleteMedia :", error);
+      yield put(actions.deleteMediasFailure({ error: error.response?.data || error.message }));   
     }
-}
+  }
 
 
 function* watchGetMediasRequest() {

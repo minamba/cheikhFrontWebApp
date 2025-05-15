@@ -20,7 +20,10 @@ export const Navbar = () => {
   const isThemePageAdmin = location.pathname === "/admin/theme";
   const isTargetPageAdmin = location.pathname === "/admin/target";
   const isSessionPageAdmin = location.pathname === "/admin/session";
-
+  const isHomePageAdmin = location.pathname === "/admin/home";
+  const isImagePageAdmin = location.pathname === "/admin/image";
+  const isMediaPageAdmin = location.pathname === "/admin/media";
+  const isWitnessPageAdmin = location.pathname === "/admin/witness";
   const dispatch = useDispatch();
 
 const datas = useSelector((state) => state.registrationPage);
@@ -47,7 +50,7 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
         <div className="navbar-nav ms-auto">
         <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Accueil</NavLink>
         <NavLink to={isClosed ? "/CloseInscriptions" : "/inscription"} className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Inscriptions</NavLink>
-        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage || isSeminairePageAdmin || isThemePageAdmin || isTargetPageAdmin || isSessionPageAdmin) && (
+        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage || isSeminairePageAdmin || isThemePageAdmin || isTargetPageAdmin || isSessionPageAdmin || isHomePageAdmin || isImagePageAdmin || isMediaPageAdmin || isWitnessPageAdmin) && (
               <div className="nav-item dropdown">
                 <span
                   className="nav-link dropdown-toggle text-danger fw-bold"
@@ -65,6 +68,10 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
                   <li><Link className="dropdown-item" to="/admin/theme" aria-current="page">Theme</Link></li>
                   <li><Link className="dropdown-item" to="/admin/target" aria-current="page">Target</Link></li>
                   <li><Link className="dropdown-item" to="/admin/session" aria-current="page">Session</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/home" aria-current="page">Home Page</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/image" aria-current="page">Image</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/media" aria-current="page">Media</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/witness" aria-current="page">Témoignages</Link></li>
                 </ul>
               </div>
             )}

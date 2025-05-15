@@ -25,16 +25,21 @@ function* getHomes() {
 
 function* updateHome(action) {
     try {
-        console.log("je rentre dans le updateHome", action.payload);
-        yield call(api.updateHome(action.payload));
-
-        //je rappel getSeminaire pour la mise à jour du store
-        const response = yield call(api.getHomes);
-        yield put(actions.updateHomesSuccess({ homes: response.data }));
+      console.log("je rentre dans le updateHome", action.payload);
+  
+      // Appel de l'API pour update
+      yield call(api.updateHome, action.payload);
+  
+      // On recharge les données à jour
+      const response = yield call(api.getHomes);
+  
+      // On envoie uniquement les données utiles dans le store
+      yield put(actions.updateHomesSuccess({ home: response.data }));
     } catch (error) {
-        yield put(actions.updateHomesFailure({ error : error.response.data }));
+      console.error("Erreur updateHome :", error);
+      yield put(actions.updateHomesFailure({ error: error.response?.data || error.message }));
     }
-}
+  }
 
 // function* deleteHome(action) {
 //     try {

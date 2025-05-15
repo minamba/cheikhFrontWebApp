@@ -13,5 +13,5 @@ export const updateMedia = (media) => {
 }
 
 export const deleteMedia = (idMedia) => {
-    return axios.delete(`/media/${idMedia}`);
+    return axios.delete(`/Medias/${idMedia}`);
 }
