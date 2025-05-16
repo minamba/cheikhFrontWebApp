@@ -18,6 +18,8 @@ const ImageAdmin = () => {
     file: null
   });
 
+  console.log("images",images);
+
   const handleOpenAdd = () => {
     setEditMode(false);
     setSelectedImage(null);
@@ -87,6 +89,7 @@ const ImageAdmin = () => {
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>
+            <th>Visuel</th>
             <th>Titre</th>
             <th>URL</th>
             <th>Actions</th>
@@ -95,6 +98,9 @@ const ImageAdmin = () => {
         <tbody>
           {images.map((img) => (
             <tr key={img.id}>
+              <td>
+                <img src={img.url} alt={img.title} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+              </td>
               <td>{img.title}</td>
               <td>{img.url}</td>
               <td>

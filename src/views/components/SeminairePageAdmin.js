@@ -71,7 +71,7 @@ export const SeminairePageAdmin = () => {
       IdMedia: newSeminaire.IdMedia,
       IdImage: newSeminaire.IdImage,
       Amount: newSeminaire.Amount,
-      active: seminaires.find(s => s.Id === selectedSeminaireId)?.Active
+      active: (seminaires.find(s => s.Id === selectedSeminaireId)?.Active) ?? false,
     };
   
     if (editMode) {
@@ -180,14 +180,14 @@ export const SeminairePageAdmin = () => {
               <td>{s.title}</td>
               <td>{s.amount} €</td>
               <td>
-                <img src={`/Images/${s.banner.url}`} alt="Banner" className="img-fluid" />
+                <img src={s.banner.url} alt="Banner" className="img-fluid" />
               </td>
               <td>
-                <img src={`/Images/Seminaires/S1/${s.graphic.url}`}alt="Graphique" className="img-fluid" />
+                <img src={s.graphic.url} alt="Graphique" className="img-fluid" />
               </td>
               <td>
               <video controls className="img-fluid" width="100%">
-                    <source src={`/Vidéos/${s.video.url}`} type="video/mp4" />
+                    <source src={s.video.url} type="video/mp4" />
               </video>
               </td>
               <td>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addWitnessesRequest, updateWitnessesRequest, deleteWitnessesRequest } from '../../lib/actions/WitnessActions';
+import { addWitnessesRequest, updateWitnessesRequest, deleteWitnessesRequest, getWitnessesRequest } from '../../lib/actions/WitnessActions';
 
 const WitnessAdmin = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const WitnessAdmin = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    mediaId: ''
+    idMedia: ''
   });
 
   const handleChange = (e) => {
@@ -33,28 +33,45 @@ const WitnessAdmin = () => {
     setFormData({
       title: witness.title,
       description: witness.description,
-      mediaId: witness.media?.id || ''
+      idMedia: witness.media?.id || ''
     });
+
     setShowModal(true);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Confirmer la suppression ?')) {
       dispatch(deleteWitnessesRequest(id));
+      setTimeout(() => {
+        dispatch(getWitnessesRequest());
+    }, 2000);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editMode) {
-      dispatch(updateWitnessesRequest({ id: selectedWitnessId, ...formData }));
+      dispatch(updateWitnessesRequest({ id: selectedWitnessId, title: formData.title, description: formData.description, idMedia: formData.idMedia }));
+       
+      setTimeout(() => {
+            dispatch(getWitnessesRequest());
+        }, 2000);
+
     } else {
-      dispatch(addWitnessesRequest(formData));
+      dispatch(addWitnessesRequest({ title: formData.title, description: formData.description, idMedia: formData.idMedia }));
+      setTimeout(() => {
+        dispatch(getWitnessesRequest());
+    }, 2000);
     }
     setShowModal(false);
     setFormData({ title: '', description: '', mediaId: '' });
     setSelectedWitnessId(null);
     setEditMode(false);
+
+
+    setTimeout(() => {
+        dispatch(getWitnessesRequest());
+    }, 2000);
   };
 
   return (
@@ -131,9 +148,9 @@ const WitnessAdmin = () => {
                   <div className="mb-3">
                     <label className="form-label">Media</label>
                     <select
-                      name="mediaId"
+                      name="idMedia"
                       className="form-select"
-                      value={formData.mediaId}
+                      value={formData.idMedia}
                       onChange={handleChange}
                       required
                     >

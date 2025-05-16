@@ -26,6 +26,8 @@ import { getWitnessesRequest } from '../../lib/actions/WitnessActions';
 import { getImagesRequest } from '../../lib/actions/ImageActions';
 import { getMediasRequest } from '../../lib/actions/MediaActions';
 import { getHomesRequest } from '../../lib/actions/HomeActions';
+import { getCloseInscriptionRequest } from '../../lib/actions/CloseInscriptionActions';
+import { getPaymentPageRequest } from '../../lib/actions/PaymentPageActions';
 
 import { SeminairePageAdmin } from './SeminairePageAdmin';
 import { ThemeAdmin } from './ThemeAdmin';
@@ -35,6 +37,9 @@ import { HomeAdmin } from './HomeAdmin';
 import ImageAdmin  from './ImageAdmin';
 import MediaAdmin from './MediaAdmin';
 import WitnessAdmin from './WitnessAdmin';
+import {CloseInscriptionAdmin} from './CloseInscriptionAdmin';
+import {PaymentPageAdmin} from './PaymentPageAdmin';
+
 
 export const BaseApp = props => {
 const datas = useSelector((state) => state.registrations);
@@ -58,6 +63,8 @@ useEffect(() => {
   dispatch(getImagesRequest());
   dispatch(getMediasRequest());
   dispatch(getHomesRequest());
+  dispatch(getCloseInscriptionRequest());
+  dispatch(getPaymentPageRequest());
 
 
 },[]);
@@ -90,6 +97,8 @@ useEffect(() => {
           <Route path="/admin/image" element={<ImageAdmin />} />
           <Route path="/admin/media" element={<MediaAdmin />} />
           <Route path="/admin/witness" element={<WitnessAdmin />} />
+          <Route path="/admin/closeInscription" element={<CloseInscriptionAdmin />} />
+          <Route path="/admin/paymentPage" element={<PaymentPageAdmin />} />
         </Routes>
         <Footer />
       </Router>

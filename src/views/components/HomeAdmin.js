@@ -62,6 +62,7 @@ export const HomeAdmin = () => {
     if (editMode) {
       dispatch(updateHomesRequest(payload));
     } else {
+        console.log("payload booooooordellll",payload);
       dispatch(addHomesRequest(payload));
     }
 
@@ -116,14 +117,14 @@ export const HomeAdmin = () => {
             <tr>
               <td>{homes.title}</td>
               <td>
-                <img src={`/Images/${homes.banner?.url}`} alt="" className="img-fluid" />
+                <img src={homes.banner?.url} alt="" className="img-fluid" />
               </td>
               <td>
-                <img src={`/Images/${homes.image?.url}`} alt="" className="img-fluid" />
+                <img src={homes.image?.url} alt="" className="img-fluid" />
               </td>
               <td>
                 <video controls className="img-fluid" width="150">
-                  <source src={`/Vidéos/${homes.video?.url}`} type="video/mp4" />
+                  <source src={homes.media?.url} type="video/mp4" />
                 </video>
               </td>
               <td>

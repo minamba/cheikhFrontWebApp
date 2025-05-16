@@ -15,7 +15,7 @@ function* getSeminaires() {
 
 function* addSeminaire(action) {
     try {
-        //console.log("je rentre dans le addSeminaire", action.payload);
+        console.log("je rentre dans le addSeminaire", action.payload);
         yield call(api.addSeminaire(action.payload));
         //yield call(getRegistrations);
         //je rappel getRegistration pour la mise à jour du store

@@ -13,15 +13,15 @@ function* getHomes() {
     }
 }
 
-// function* addHomes(action) {
-//     try {
-//         console.log("je rentre dans le addHomes", action.payload);
-//         const response = yield call(api.addHome,action.payload);
-//         yield put(actions.addHomesSuccess({homes : response.data}));
-//     } catch (error) {
-//         yield put(actions.addHomesFailure({error : error.response.data}));
-//     }
-// }
+function* addHomes(action) {
+    try {
+        console.log("je rentre dans le addHomessssssssssssssssssssss", action.payload);
+        const response = yield call(api.addHome,action.payload);
+        yield put(actions.addHomesSuccess({home : response.data}));
+    } catch (error) {
+        yield put(actions.addHomesFailure({error : error.response.data}));
+    }
+}
 
 function* updateHome(action) {
     try {
@@ -59,9 +59,9 @@ function* watchGetHomesRequest() {
     yield takeEvery(actions.actions.GET_HOMES_REQUEST,getHomes);
 }
 
-// function* watchAddHomeRequest() {
-//     yield takeLatest(actions.actionsHomes.ADD_HOME_REQUEST,addHomes);
-// }
+function* watchAddHomeRequest() {
+    yield takeLatest(actions.actions.ADD_HOMES_REQUEST,addHomes);
+}
 
 function* watchUpdateHomeRequest() {
     yield takeLatest(actions.actions.UPDATE_HOMES_REQUEST,updateHome);
@@ -75,6 +75,7 @@ function* watchUpdateHomeRequest() {
 const homesSagas = [
     fork(watchGetHomesRequest),
     fork(watchUpdateHomeRequest),
+    fork(watchAddHomeRequest)
 ];
 
 export default homesSagas;

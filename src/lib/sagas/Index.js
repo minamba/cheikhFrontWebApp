@@ -14,6 +14,8 @@ import targetsSagas from "./targets";
 import themesSagas from "./themes";
 import imagesSagas from "./images";
 import uploadSagas from "./upload";    
+import closeInscriptionSagas from "./closeInscription";
+import paymentPageSagas from "./paymentPage";
 
 export default function* rootSaga() {
     yield all([
@@ -32,5 +34,7 @@ export default function* rootSaga() {
         ...themesSagas,
         ...imagesSagas,
         ...uploadSagas,
+        ...closeInscriptionSagas,
+        ...paymentPageSagas,
     ]);
 }

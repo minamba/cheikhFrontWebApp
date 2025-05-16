@@ -16,6 +16,8 @@ import ThemeReducers from './ThemeReducers';
 import HomeReducers from './HomeReducers';
 import WitnessReducers from './WitnessReducers';
 import UploadReducers from './UploadReducers';
+import CloseInscriptionReducers from './CloseInscriptionReducers';
+import PaymentPageReducers from './PaymentPageReducers';
 
 export default combineReducers({
     registrations : RegistrationReducers,
@@ -35,4 +37,6 @@ export default combineReducers({
     homes : HomeReducers,
     witnesses : WitnessReducers,
     upload : UploadReducers,
+    closeInscription : CloseInscriptionReducers,
+    paymentPage : PaymentPageReducers,
 });

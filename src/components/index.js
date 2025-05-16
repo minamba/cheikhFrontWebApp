@@ -8,6 +8,7 @@ import {updatePaymentRequest, deletePaymentRequest } from '../lib/actions/Paymen
 import {sendMailRequest, sendMailGroupRequest, sendPaymentMailRequest, sendPaymentMailGroupRequest } from '../lib/actions/MailActions';
 import {sendTelegramMessageRequest } from '../lib/actions/TelegramActions';
 import {getRegistrationPageRequest } from '../lib/actions/RegistrationPageActions';
+import {getPaymentPageRequest } from '../lib/actions/PaymentPageActions';
 
 export const Navbar = () => {
 
@@ -24,6 +25,8 @@ export const Navbar = () => {
   const isImagePageAdmin = location.pathname === "/admin/image";
   const isMediaPageAdmin = location.pathname === "/admin/media";
   const isWitnessPageAdmin = location.pathname === "/admin/witness";
+  const isCloseInscriptionPageAdmin = location.pathname === "/admin/closeInscription";
+  const isPaymentPageAdmin = location.pathname === "/admin/paymentPage";
   const dispatch = useDispatch();
 
 const datas = useSelector((state) => state.registrationPage);
@@ -50,7 +53,7 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
         <div className="navbar-nav ms-auto">
         <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Accueil</NavLink>
         <NavLink to={isClosed ? "/CloseInscriptions" : "/inscription"} className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Inscriptions</NavLink>
-        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage || isSeminairePageAdmin || isThemePageAdmin || isTargetPageAdmin || isSessionPageAdmin || isHomePageAdmin || isImagePageAdmin || isMediaPageAdmin || isWitnessPageAdmin) && (
+        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage || isSeminairePageAdmin || isThemePageAdmin || isTargetPageAdmin || isSessionPageAdmin || isHomePageAdmin || isImagePageAdmin || isMediaPageAdmin || isWitnessPageAdmin || isCloseInscriptionPageAdmin || isPaymentPageAdmin) && (
               <div className="nav-item dropdown">
                 <span
                   className="nav-link dropdown-toggle text-danger fw-bold"
@@ -72,6 +75,8 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
                   <li><Link className="dropdown-item" to="/admin/image" aria-current="page">Image</Link></li>
                   <li><Link className="dropdown-item" to="/admin/media" aria-current="page">Media</Link></li>
                   <li><Link className="dropdown-item" to="/admin/witness" aria-current="page">Témoignages</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/closeInscription" aria-current="page">Inscription fermées</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/paymentPage" aria-current="page">Page de paiement</Link></li>
                 </ul>
               </div>
             )}

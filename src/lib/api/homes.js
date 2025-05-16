@@ -5,7 +5,7 @@ export const getHomes = () => {
 }
 
 export const addHome = (home) => {
-    return axios.post("/homes/home", home);
+    return axios.post("/home", home);
 }
 
 export const updateHome = (home) => {

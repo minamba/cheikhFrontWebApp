@@ -22,14 +22,16 @@ const themes = useSelector((state) => state.themes.themes);
 const seminaires = useSelector((state) => state.seminaires) || [];
 const activeSeminaire=(seminaires.seminaires.find((s) => s.active === true) || null);
 
-console.log("seminaiiiiire video",activeSeminaire.video.url);
+console.log("seminaiiire video",activeSeminaire?.banner?.url);
+const banniere = activeSeminaire?.banner?.url;
+const graphic = activeSeminaire?.graphic?.url;
 
 // const image = images.images.find((i) => i.id === seminaire.imageId);
   return (
     <Fragment>
 
       {/* Section 1 : Titre + Vidéo */}
-      <section className="hero-section-seminaire-with-image d-flex align-items-center "     style={{backgroundImage: activeSeminaire?.banner?.url? `url("/Images/${activeSeminaire.banner.url}")` : 'none'}}>
+      <section className="hero-section-seminaire-with-image d-flex align-items-center "     style={{backgroundImage: banniere ? `url("${banniere}")` : 'none'}}>
         <div className="container text-center">
           <h1 className="hero-title-seminaire mb-4">{activeSeminaire?.title}</h1>
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
@@ -59,7 +61,7 @@ console.log("seminaiiiiire video",activeSeminaire.video.url);
             <div className="col-lg-5 d-flex mb-4 mb-lg-0">
                 <div className="w-100 h-100">
                 <img
-                    src={`/Images/Seminaires/S1/${activeSeminaire?.graphic?.url}`} 
+                    src={graphic} 
                     className="img-fluid rounded shadow object-fit-cover"
                     alt="Séminaire visuel"
                 />

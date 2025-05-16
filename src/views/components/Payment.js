@@ -18,6 +18,10 @@ const [countryCode, setCountryCode] = useState('+33'); // 🇫🇷 par défaut
 const [localPhone, setLocalPhone] = useState('');
 const seminaires = useSelector((state) => state.seminaires) || [];
 const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
+const paymentPage = useSelector(state => state.paymentPage.paymentPage);
+
+
+console.log("paymentPage", paymentPage);
 
   const dispatch = useDispatch();
 
@@ -92,9 +96,9 @@ const fullPhone = `${countryCode}${cleanedPhone}`;
   return (
     <Fragment>
       {/* Section 1 : Titre principal */}
-      <section className="hero-section-payment-with-image styled-section text-white text-center">
+      <section className="hero-section-payment-with-image styled-section text-white text-center" style={{backgroundImage: paymentPage?.banner?.url ? `url("${paymentPage?.banner?.url}")` : 'none'}}>
         <div className="container">
-          <h1 className="hero-title">Qu'Allah fasse que ce séminaire vous soit utile</h1>
+          <h1 className="hero-title">{paymentPage?.title}</h1>
         </div>
       </section>
 

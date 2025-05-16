@@ -20,11 +20,14 @@ console.log("witnesses",witnesses.witnesses);
 
 const videoUrl = homes.homes?.media?.url;
 console.log("videoUrl",videoUrl);
+console.log("homes",homes.homes?.image?.url);
+const imgUrl = homes.homes?.image?.url;
+const banniere = homes.homes?.banner?.url;
 
   return (
     <div>
       {/* Section 1 : Hero avec vidéo */}
-      <section className="hero-section-with-image d-flex align-items-center text-white">
+      <section className="hero-section-with-image d-flex align-items-center text-white"     style={{backgroundImage: banniere ? `url("${banniere}")` : 'none'}}>
         <div className="container text-center">
           <h1 className="calligraphic-glow mb-5">{homes.homes?.title}</h1>
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
@@ -67,9 +70,10 @@ console.log("videoUrl",videoUrl);
             </div>
 
               {/* Colonne droite : Image */}
-                  <div className="col-lg-6 d-flex align-items-center justify-content-center">
+              
+            <div className="col-lg-6 d-flex align-items-center justify-content-center">
               <img 
-                src={`/Images/${homes.homes.image?.url}`} 
+                src={imgUrl} 
                 alt="Méthodologie" 
                 className="rounded shadow"
                 style={{ maxWidth: '80%', height: 'auto', objectFit: 'cover' }}
@@ -110,12 +114,12 @@ console.log("videoUrl",videoUrl);
                   <div className="ratio ratio-16x9 mb-3">
                     {witness.media.type === 1 ? (
                       <video controls className="w-100 rounded shadowed-video">
-                        <source src={`/Vidéos/${witness.media?.url}`} type="video/mp4" />
+                        <source src={witness.media?.url} type="video/mp4" />
                         Votre navigateur ne supporte pas la vidéo.
                       </video>
                     ) : (
                       <audio controls className="w-100 rounded shadowed-video">
-                        <source src={`/Audios/${witness.media?.url}`} type="audio/mpeg" />
+                        <source src={witness.media?.url} type="audio/mpeg" />
                       </audio>
                     )}
                   </div>

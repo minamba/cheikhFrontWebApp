@@ -29,6 +29,8 @@ export const AppContainer = connect(
             homes : state.homes,
             showSuccessUpload : state.showSuccessUpload,
             showErrorUpload : state.showErrorUpload,
+            closeInscription : state.closeInscription,
+            paymentPage : state.paymentPage,
         }
     })
     (BaseApp);
