@@ -8,7 +8,7 @@ import {updatePaymentRequest, deletePaymentRequest } from '../lib/actions/Paymen
 import {sendMailRequest, sendMailGroupRequest, sendPaymentMailRequest, sendPaymentMailGroupRequest } from '../lib/actions/MailActions';
 import {sendTelegramMessageRequest } from '../lib/actions/TelegramActions';
 import {getRegistrationPageRequest } from '../lib/actions/RegistrationPageActions';
-import {getPaymentPageRequest } from '../lib/actions/PaymentPageActions';
+import {getRegistrationsRequest } from '../lib/actions/RegistrationActions';  
 
 export const Navbar = () => {
 
@@ -158,6 +158,15 @@ export const RegistrationTable = ({ searchTerm }) => {
     dispatch(updateRegistrationRequest(data));
   };
 
+  const handleDelete = (id) => {
+    dispatch(deleteRegistrationRequest(id));
+
+
+    setTimeout(() => {
+      dispatch(getRegistrationsRequest());
+    }, 2000);
+  };
+
   return (
     <div className="table-responsive">
     <table className="table table-bordered table-hover shadow-sm text-nowrap">
@@ -192,7 +201,7 @@ export const RegistrationTable = ({ searchTerm }) => {
                 }}></i>
               </button>
               <button className="btn btn-sm btn-outline-danger me-2" onClick={() => setIdRegistration(data.id)}>
-                <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteRegistrationRequest(data.id))}></i>
+                <i className="bi bi-x-circle-fill" onClick={() => handleDelete(data.id)}></i>
               </button>
               <button className="btn btn-sm btn-outline-secondary" onClick={() => handleSubmitBot(data)}>
                 <i className="bi bi-robot"></i>

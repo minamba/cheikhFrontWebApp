@@ -5,6 +5,8 @@ import { addPaymentRequest } from '../../lib/actions/PaymentActions';
 import { useSelector } from 'react-redux';
 import { sendPaymentMailRequest } from '../../lib/actions/MailActions';
 import { useEffect } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { sendStripeRequest } from '../../lib/actions/stripeActions';
 
 export const Payment = () => {
 const [showCardForm, setShowCardForm] = useState(false);
@@ -19,7 +21,30 @@ const [localPhone, setLocalPhone] = useState('');
 const seminaires = useSelector((state) => state.seminaires) || [];
 const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
 const paymentPage = useSelector(state => state.paymentPage.paymentPage);
+const stripeSessionUrl = useSelector(state => state.stripe.sessionUrl);
+const stripePaymentSuccess = useSelector(state => state.stripe.stripePaymentSuccess);
+const stripePaymentFailure = useSelector(state => state.stripe.stripePaymentFailure);
+const errorStripePayment = useSelector(state => state.stripe.errorStripePayment);
 
+console.log("stripeSessionUrl", stripeSessionUrl);
+
+
+//STRIPE FOR REDIRECTION TO SUCCESS OR FAILURE PAAGE
+const stripePromise = loadStripe("pk_test_51RPKwNR8oy5yAtseyD55AS59mztGo1h4aOjNpJDPLdYkO6i5cFHrY0bRIoWLPInwEwlewNzD5EvNNQk98GcHIqgl00LqpQwros"); 
+
+
+useEffect(() => {
+  const redirectToStripe = async () => {
+    if (stripeSessionUrl) {
+      const stripe = await stripePromise;
+      stripe.redirectToCheckout({ url: stripeSessionUrl });
+    }
+  };
+
+  redirectToStripe();
+}, [stripeSessionUrl]);
+
+//END STRIPE
 
 console.log("paymentPage", paymentPage);
 
@@ -33,7 +58,9 @@ console.log("paymentPage", paymentPage);
     amount: activeSeminaire?.amount || 0,
     date: new Date().toISOString(),
     paymentMode: '',
-    idseminaire: activeSeminaire?.id || null  
+    idseminaire: activeSeminaire?.id || null,
+    title: activeSeminaire?.title || '',
+   
   });
 
   const handleChange = (e) => {
@@ -44,54 +71,60 @@ console.log("paymentPage", paymentPage);
     });
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Vérification email
+  
+    // Vérification mail et téléphone
     if (formData.mail !== confirmMail) {
       alert("Les adresses mail ne correspondent pas.");
       return;
     }
-
-    const cleanedPhone = localPhone.startsWith('0') ? localPhone.slice(1) : localPhone;
-const fullPhone = `${countryCode}${cleanedPhone}`;
-    const phoneRegex = /^\+?[0-9]{8,15}$/;
   
+    const cleanedPhone = localPhone.startsWith('0') ? localPhone.slice(1) : localPhone;
+    const fullPhone = `${countryCode}${cleanedPhone}`;
+    const phoneRegex = /^\+?[0-9]{8,15}$/;
     if (!phoneRegex.test(fullPhone)) {
       alert("Numéro de téléphone invalide.");
       return;
     }
-
+  
     const finalData = {
       ...formData,
       phoneNumber: fullPhone
     };
-
+  
     tempFormData.current = finalData;
-    dispatch(addPaymentRequest(finalData));
-    setFormData({
-      lastName: '',
-      firstName: '',
-      phoneNumber: '',
-      mail: '',
-      amount: activeSeminaire?.amount || 0,
-      date: new Date().toISOString(),
-      paymentMode: '',
-      idseminaire: activeSeminaire?.id || null
-    },[]);
+  
+    dispatch(
+      sendStripeRequest({
+        Amount: formData.amount,
+        Description: `Paiement pour le séminaire ${activeSeminaire?.title}`,
+        SuccessUrl: `${window.location.origin}/success`,
+        CancelUrl: `${window.location.origin}/cancel`,
+        Metadata: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phoneNumber: fullPhone,
+          mail: formData.mail,
+          amount: String(formData.amount),
+          date: String(formData.date),
+          paymentmode: formData.paymentMode,
+          idSeminaire: String(formData.idseminaire),
+          title: formData.title
+         }
+      })
+    );
   };
 
 
   useEffect(() => {
-    console.log("successAddPayment:", successAddPayment);
-    console.log("tempFormData:", tempFormData.current);
-
-    if (successAddPayment) {
-      dispatch(sendPaymentMailRequest({Recipient: tempFormData.current.mail, SeminaireTitle: activeSeminaire?.title}));
-      dispatch({ type: "RESET_PAYMENT_SUCCESS" });
+    if (stripeSessionUrl) {
+      console.log("🔁 Redirection vers Stripe :", stripeSessionUrl);
+      window.location.href = stripeSessionUrl;
     }
-  }, [successAddPayment]);
+  }, [stripeSessionUrl]);
+
+
 
   return (
     <Fragment>
@@ -224,4 +257,4 @@ const fullPhone = `${countryCode}${cleanedPhone}`;
       </section>
     </Fragment>
   );
-};
+};  

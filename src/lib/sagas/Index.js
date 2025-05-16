@@ -16,6 +16,7 @@ import imagesSagas from "./images";
 import uploadSagas from "./upload";    
 import closeInscriptionSagas from "./closeInscription";
 import paymentPageSagas from "./paymentPage";
+import stripeSagas from "./stripe";
 
 export default function* rootSaga() {
     yield all([
@@ -36,5 +37,6 @@ export default function* rootSaga() {
         ...uploadSagas,
         ...closeInscriptionSagas,
         ...paymentPageSagas,
+        ...stripeSagas,
     ]);
 }

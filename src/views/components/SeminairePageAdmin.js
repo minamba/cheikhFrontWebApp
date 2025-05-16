@@ -149,19 +149,6 @@ export const SeminairePageAdmin = () => {
         </div>
       </div>
 
-      <div className="mb-3">
-        <label htmlFor="fileUpload" className="btn btn-outline-primary me-2">
-          <i className="bi bi-upload"></i> Upload de document
-        </label>
-        <input
-          id="fileUpload"
-          type="file"
-          accept="image/*,video/*"
-          style={{ display: 'none' }}
-          onChange={handleFileUpload}
-        />
-      </div>
-
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>

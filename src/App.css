@@ -96,7 +96,7 @@ body {
 
 .hero-section-with-image {
   height: 100vh;
-  /* background-image: url("../public/Images/channels4_banner.jpg"); */
+  background-image: url("../public/Images/channels4_banner.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

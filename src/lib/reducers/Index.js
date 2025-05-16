@@ -18,6 +18,7 @@ import WitnessReducers from './WitnessReducers';
 import UploadReducers from './UploadReducers';
 import CloseInscriptionReducers from './CloseInscriptionReducers';
 import PaymentPageReducers from './PaymentPageReducers';
+import StripeReducers from './stripeReducers';
 
 export default combineReducers({
     registrations : RegistrationReducers,
@@ -39,4 +40,5 @@ export default combineReducers({
     upload : UploadReducers,
     closeInscription : CloseInscriptionReducers,
     paymentPage : PaymentPageReducers,
+    stripe : StripeReducers,
 });

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { RegistrationTable } from '../../components/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { addRegistrationRequest } from '../../lib/actions/RegistrationActions';
-import { updateRegistrationPageRequest } from '../../lib/actions/RegistrationPageActions';
+import { updateRegistrationPageRequest, getRegistrationPageRequest } from '../../lib/actions/RegistrationPageActions';
 import AdminProtectedPage from './AdminProtectedPage';
 
 
@@ -37,6 +37,11 @@ export const RegistrationAdmin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addRegistrationRequest(formData));
+    
+    setTimeout(() => {
+      dispatch(getRegistrationPageRequest());
+    }, 1000);
+
     setFormData({
       firstName: '',
       lastName: '',
@@ -48,6 +53,15 @@ export const RegistrationAdmin = () => {
     },[]);
     setShowModal(false);
   };
+
+  const handleActivate = (e) => {
+    const checked = e.target.checked;
+    dispatch(updateRegistrationPageRequest({ Id : registrationPage.id, Title : registrationPage.title, IsClosed: checked }));
+    setTimeout(() => {
+      dispatch(getRegistrationPageRequest());
+    }, 1000);
+  };
+
 
   return (
     <div className="container py-5">
@@ -75,8 +89,8 @@ export const RegistrationAdmin = () => {
           </div>
         </div>
         <div className="mb-12 bg-warning text-center font-weight-bold">
-              <input type="checkbox" className="form-check-input" id="contactedCheck" value={registrationPage?.isClosed || false}     checked={registrationPage?.isClosed || false} onChange={(e) => dispatch(updateRegistrationPageRequest({ Id : registrationPage.id, Title : registrationPage.title, IsClosed: e.target.checked }))}/>
-              <label className="form-check-label color">INSCRIPTIONS FERMEES</label>
+              <input type="checkbox" className="form-check-input" id="contactedCheck" value={registrationPage?.isClosed || false}     checked={registrationPage?.isClosed || false} onChange={handleActivate}/>
+              <label className="form-check-label color"><strong className="text-center m-2">INSCRIPTIONS FERMEES</strong></label>
         </div>
       </section>
 

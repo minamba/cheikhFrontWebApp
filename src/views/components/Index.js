@@ -39,6 +39,9 @@ import MediaAdmin from './MediaAdmin';
 import WitnessAdmin from './WitnessAdmin';
 import {CloseInscriptionAdmin} from './CloseInscriptionAdmin';
 import {PaymentPageAdmin} from './PaymentPageAdmin';
+import {Success} from './Success';
+import {Cancel} from './Cancel';
+
 
 
 export const BaseApp = props => {
@@ -99,6 +102,9 @@ useEffect(() => {
           <Route path="/admin/witness" element={<WitnessAdmin />} />
           <Route path="/admin/closeInscription" element={<CloseInscriptionAdmin />} />
           <Route path="/admin/paymentPage" element={<PaymentPageAdmin />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
+          
         </Routes>
         <Footer />
       </Router>
