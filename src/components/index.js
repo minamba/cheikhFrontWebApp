@@ -10,6 +10,7 @@ import {sendTelegramMessageRequest } from '../lib/actions/TelegramActions';
 import {getRegistrationPageRequest } from '../lib/actions/RegistrationPageActions';
 import {getRegistrationsRequest } from '../lib/actions/RegistrationActions';  
 import {getPaymentsRequest } from '../lib/actions/PaymentActions';
+import {getSeminairesUserRequest } from '../lib/actions/SeminaireUsersActions';
 
 export const Navbar = () => {
 
@@ -291,11 +292,32 @@ export const SeminaireTable = ({ searchTerm }) => {
   }
   
     const handleSubmitMail = (mail, title, user) => {
-      dispatch(sendMailRequest({Recipient : mail, SeminaireTitle : title}))
-      user.mailSent = true;
-      dispatch(updateSeminaireUserRequest(user));
+      dispatch(sendMailRequest({Recipient : mail, SeminaireTitle : getSeminaire(activeSeminaire)}))
+      alert("Mail envoyé");
+
+      if(title != undefined){
+        user.mailSent = true;
+        dispatch(updateSeminaireUserRequest(user));
+
+        setTimeout(() => {
+          dispatch(getSeminairesUserRequest());
+        }, 2000);
+      }
     };
 
+    const handleUpdate = (user) => {
+      dispatch(updateSeminaireUserRequest(user));
+      setTimeout(() => {
+        dispatch(getSeminairesUserRequest());
+      }, 2000);
+    };
+
+    const handleDelete = (id) => {
+      dispatch(deleteSeminaireUserRequest(id));
+      setTimeout(() => {
+        dispatch(getSeminairesUserRequest());
+      }, 2000);
+    };
     
     return (
     <div className="table-responsive">
@@ -328,7 +350,7 @@ export const SeminaireTable = ({ searchTerm }) => {
               }}></i>
             </button>
             <button className="btn btn-sm btn-outline-danger me-2">
-              <i className="bi bi-x-circle-fill" onClick={() => dispatch(deleteSeminaireUserRequest(data.id))}></i>
+              <i className="bi bi-x-circle-fill" onClick={() => handleDelete(data.id)}></i>
             </button>
             <button className="btn btn-sm btn-outline-primary">
               <i className="bi bi-envelope-fill" onClick={() => handleSubmitMail(data.email,data.seminaire?.title,data)}></i>
@@ -396,11 +418,11 @@ export const SeminaireTable = ({ searchTerm }) => {
                   type="checkbox"
                   className="form-check-input"
                   id="mailEnvoyeCheck"
-                  checked={selectedSeminaire.isMailSend}
+                  checked={selectedSeminaire.mailSent}
                   onChange={(e) =>
                     setSelectedSeminaire({
                       ...selectedSeminaire,
-                      isMailSend: e.target.checked
+                      mailSent: e.target.checked
                     })
                   }
                 />
@@ -413,9 +435,10 @@ export const SeminaireTable = ({ searchTerm }) => {
           <div className="modal-footer">
             <button
               type="button"
+              value={selectedSeminaire.id}
               className="btn btn-success"
               onClick={() => {
-                dispatch(updateSeminaireUserRequest(selectedSeminaire));
+                handleUpdate(selectedSeminaire);
                 setShowEditModal(false);
               }}
             >

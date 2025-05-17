@@ -5,6 +5,7 @@ import { addSeminaireUserRequest, updateSeminaireUserRequest } from '../../lib/a
 import { sendMailGroupRequest } from '../../lib/actions/MailActions';
 import { useSelector } from 'react-redux';
 import AdminProtectedPage from './AdminProtectedPage';
+import { getSeminairesUserRequest } from '../../lib/actions/SeminaireUsersActions';
 
 export const SeminaireAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -51,7 +52,8 @@ export const SeminaireAdmin = () => {
   
     const handleSubmitMail = (mailList, title, userList) => {
       dispatch(sendMailGroupRequest({RecipientList : mailList, SeminaireTitle : title}))
-      updateSentMail(userList);  
+      updateSentMail(userList);
+      alert("Mails envoyés (GROUPE)");  
     };
 
     const updateSentMail = (users) => {
@@ -59,6 +61,10 @@ export const SeminaireAdmin = () => {
         if (user.seminaire === null || user.mailSent === false) {
           const updatedUser = { ...user, mailSent: true };
           dispatch(updateSeminaireUserRequest(updatedUser));
+
+          setTimeout(() => {
+            dispatch(getSeminairesUserRequest());
+          }, 2000);
         }
       });
     };
