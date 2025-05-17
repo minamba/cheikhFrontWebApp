@@ -29,6 +29,7 @@ export const Navbar = () => {
   const isWitnessPageAdmin = location.pathname === "/admin/witness";
   const isCloseInscriptionPageAdmin = location.pathname === "/admin/closeInscription";
   const isPaymentPageAdmin = location.pathname === "/admin/paymentPage";
+  const isRegistrationPageAdmin = location.pathname === "/admin/registrationPage";
   const dispatch = useDispatch();
 
 const datas = useSelector((state) => state.registrationPage);
@@ -55,7 +56,7 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
         <div className="navbar-nav ms-auto">
         <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Accueil</NavLink>
         <NavLink to={isClosed ? "/CloseInscriptions" : "/inscription"} className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Inscriptions</NavLink>
-        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage || isSeminairePageAdmin || isThemePageAdmin || isTargetPageAdmin || isSessionPageAdmin || isHomePageAdmin || isImagePageAdmin || isMediaPageAdmin || isWitnessPageAdmin || isCloseInscriptionPageAdmin || isPaymentPageAdmin) && (
+        {(isAdminPage || isRegistrationsPage || isSeminairePage || isPaymentPage || isSeminairePageAdmin || isThemePageAdmin || isTargetPageAdmin || isSessionPageAdmin || isHomePageAdmin || isImagePageAdmin || isMediaPageAdmin || isWitnessPageAdmin || isCloseInscriptionPageAdmin || isPaymentPageAdmin || isRegistrationPageAdmin) && (
               <div className="nav-item dropdown">
                 <span
                   className="nav-link dropdown-toggle text-danger fw-bold"
@@ -79,6 +80,7 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
                   <li><Link className="dropdown-item" to="/admin/witness" aria-current="page">Témoignages</Link></li>
                   <li><Link className="dropdown-item" to="/admin/closeInscription" aria-current="page">Inscription fermées</Link></li>
                   <li><Link className="dropdown-item" to="/admin/paymentPage" aria-current="page">Page de paiement</Link></li>
+                  <li><Link className="dropdown-item" to="/admin/registrationPage" aria-current="page">Page d'entretien</Link></li>
                 </ul>
               </div>
             )}

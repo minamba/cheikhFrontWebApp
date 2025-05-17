@@ -21,6 +21,7 @@ const [localPhone, setLocalPhone] = useState('');
   const registrations = useSelector((state) => state.registrations.registrations);
   const tempFormData = useRef(null); // permet de garder le formData avant reinitialisation
   const navigate = useNavigate();
+  const image = registrationPage?.image?.url;
 
   useEffect(() => {
     if (closeRegistration) {
@@ -99,7 +100,7 @@ const [localPhone, setLocalPhone] = useState('');
   
   return (
     <Fragment>
-    <section className="hero-section-with-image d-flex align-items-center text-white">
+        <section className="hero-section-with-image d-flex align-items-center text-white" style={{backgroundImage: image ? `url("${image}")` : 'none'}}>
         <div className="container">
         <h1 className="hero-title-open-inscription text-center mb-4">Entretien Téléphonique</h1>
           <div className="inscription-card shadowed-card p-4 mx-auto" style={{ maxWidth: '700px' }}>

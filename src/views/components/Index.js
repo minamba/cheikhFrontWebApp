@@ -41,6 +41,7 @@ import {CloseInscriptionAdmin} from './CloseInscriptionAdmin';
 import {PaymentPageAdmin} from './PaymentPageAdmin';
 import {Success} from './Success';
 import {Cancel} from './Cancel';
+import {RegistrationPageAdmin} from './RegistrationPageAdmin';
 
 
 
@@ -68,6 +69,7 @@ useEffect(() => {
   dispatch(getHomesRequest());
   dispatch(getCloseInscriptionRequest());
   dispatch(getPaymentPageRequest());
+  dispatch(getRegistrationPageRequest());
 
 
 },[]);
@@ -104,6 +106,7 @@ useEffect(() => {
           <Route path="/admin/paymentPage" element={<PaymentPageAdmin />} />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
+          <Route path="/admin/registrationPage" element={<RegistrationPageAdmin />} />
           
         </Routes>
         <Footer />
