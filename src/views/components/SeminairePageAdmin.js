@@ -71,7 +71,7 @@ export const SeminairePageAdmin = () => {
       IdMedia: newSeminaire.IdMedia,
       IdImage: newSeminaire.IdImage,
       Amount: newSeminaire.Amount,
-      active: (seminaires.find(s => s.Id === selectedSeminaireId)?.Active) ?? false,
+      Active: newSeminaire.Active,
     };
   
     if (editMode) {
@@ -256,6 +256,19 @@ export const SeminairePageAdmin = () => {
                   <div className="mb-3">
                     <label className="form-label">Prix</label>
                     <input type="number" className="form-control" name="amount" value={newSeminaire.Amount} onChange={(e) => setNewSeminaire({ ...newSeminaire, Amount: e.target.value })} required />
+                  </div>
+                  <div className="mb-3 form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="activeCheckbox"
+                      name="active"
+                      checked={newSeminaire.Active || false}
+                      onChange={(e) => setNewSeminaire({ ...newSeminaire, Active: e.target.checked })}
+                    />
+                    <label className="form-check-label" htmlFor="activeCheckbox">
+                      Activer
+                    </label>
                   </div>
                   <div className="modal-footer">
                     <button type="submit" className="btn btn-success">{editMode ? 'Modifier' : 'Ajouter'}</button>
