@@ -5,14 +5,23 @@ import { addRegistrationRequest } from '../../lib/actions/RegistrationActions';
 import { useState } from 'react';
 import { sendTelegramMessageRequest } from '../../lib/actions/TelegramActions';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export const Inscriptions = () => {
   const dispatch = useDispatch();
   const showSuccessPopup = useSelector(state => state.ui.showSuccessPopup);
   const showErrorPopup = useSelector(state => state.ui.showErrorPopup); 
+  const registrationPages = useSelector((state) => state.registrationPage);
+  const registrationPage = registrationPages.registrationPage.find((registrationPage) => registrationPage.id === 1);
+  const closeRegistration = registrationPage?.isClosed;
+  const navigate = useNavigate();
 
-
-  
+  useEffect(() => {
+    if (closeRegistration) {
+      navigate('/'); // redirige vers une page d’information
+    }
+  }, [closeRegistration]);
 
   const [formData, setFormData] = useState({
     lastName: '',

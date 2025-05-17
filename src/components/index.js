@@ -9,6 +9,7 @@ import {sendMailRequest, sendMailGroupRequest, sendPaymentMailRequest, sendPayme
 import {sendTelegramMessageRequest } from '../lib/actions/TelegramActions';
 import {getRegistrationPageRequest } from '../lib/actions/RegistrationPageActions';
 import {getRegistrationsRequest } from '../lib/actions/RegistrationActions';  
+import {getPaymentsRequest } from '../lib/actions/PaymentActions';
 
 export const Navbar = () => {
 
@@ -286,7 +287,8 @@ export const SeminaireTable = ({ searchTerm }) => {
       dispatch(updateSeminaireUserRequest(user));
     };
 
-  return (
+    
+    return (
     <div className="table-responsive">
     <table className="table table-bordered table-hover shadow-sm text-nowrap">
       <thead className="table-dark">
@@ -457,6 +459,16 @@ export const PaymentTable = ({ searchTerm }) => {
     dispatch(updatePaymentRequest(user));
   };
 
+  const handleUpdatePayment = (payment) => {
+    
+    dispatch(updatePaymentRequest(payment));
+
+       setTimeout(() => {
+      dispatch(getPaymentsRequest());
+     }, 2000);
+
+    };
+
 return (
 
   <div className="table-responsive">
@@ -482,7 +494,7 @@ return (
           <td>{p.firstName}</td>
           <td>{p.phoneNumber}</td>
           <td>{p.mail}</td>
-          <td>{activeSeminaire?.amount || 0}</td>
+          <td>{activeSeminaire?.amount || 0} €</td>
           <td>{p.paymentMode}</td>
           <td>{activeSeminaire? activeSeminaire.title : "En attente d'un seminaire"}</td>
           <td>{new Date(p.date).toLocaleDateString('fr-FR')}</td>
@@ -594,7 +606,7 @@ return (
               type="button"
               className="btn btn-success"
               onClick={() => {
-                 dispatch(updatePaymentRequest(selectedPayment));
+                 handleUpdatePayment(selectedPayment);
                 console.log("Paiement modifié :", selectedPayment);
                 setShowEditModal(false);
               }}

@@ -11,9 +11,10 @@ import { getSessionsRequest } from '../../lib/actions/SessionActions';
 import { getImagesRequest } from '../../lib/actions/ImageActions';
 import { getMediasRequest } from '../../lib/actions/MediaActions';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Seminaire = () => {
-
+const navigate = useNavigate();
 const dispatch = useDispatch();
 //const [activeSeminaire, setActiveSeminaire] = useState(null);
 const targets = useSelector((state) => state.targets.targets);
@@ -21,6 +22,16 @@ const sessions = useSelector((state) => state.sessions.sessions);
 const themes = useSelector((state) => state.themes.themes);
 const seminaires = useSelector((state) => state.seminaires) || [];
 const activeSeminaire=(seminaires.seminaires.find((s) => s.active === true) || null);
+const registrationPage  = useSelector((state) => state.registrationPage.registrationPage);
+const closeInscription  = useSelector((state) => state.closeInscription.closeInscription);
+
+
+useEffect(() => {
+    if (closeInscription == false) {
+      navigate('/'); // redirige vers une page d’information
+    }
+  }, [closeInscription]);
+
 
 console.log("seminaiiire video",activeSeminaire?.banner?.url);
 const banniere = activeSeminaire?.banner?.url;

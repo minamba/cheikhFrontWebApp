@@ -7,6 +7,7 @@ import { sendPaymentMailRequest } from '../../lib/actions/MailActions';
 import { useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { sendStripeRequest } from '../../lib/actions/stripeActions';
+import { useNavigate } from 'react-router-dom';
 
 export const Payment = () => {
 const [showCardForm, setShowCardForm] = useState(false);
@@ -25,12 +26,25 @@ const stripeSessionUrl = useSelector(state => state.stripe.sessionUrl);
 const stripePaymentSuccess = useSelector(state => state.stripe.stripePaymentSuccess);
 const stripePaymentFailure = useSelector(state => state.stripe.stripePaymentFailure);
 const errorStripePayment = useSelector(state => state.stripe.errorStripePayment);
-
+const payments = useSelector(state => state.payments.payments);
+const navigate = useNavigate();
 console.log("stripeSessionUrl", stripeSessionUrl);
+
+
+
+
+
+  useEffect(() => {
+    if (activeSeminaire == null) {
+      navigate('/'); // redirige vers une page d’information
+    }
+  }, [activeSeminaire]);
+
 
 
 //STRIPE FOR REDIRECTION TO SUCCESS OR FAILURE PAAGE
 const stripePromise = loadStripe("pk_test_51RPKwNR8oy5yAtseyD55AS59mztGo1h4aOjNpJDPLdYkO6i5cFHrY0bRIoWLPInwEwlewNzD5EvNNQk98GcHIqgl00LqpQwros"); 
+
 
 
 useEffect(() => {
@@ -94,6 +108,12 @@ console.log("paymentPage", paymentPage);
     };
   
     tempFormData.current = finalData;
+
+    const existingPayment = payments.find(p => p.mail === formData.mail);
+    if (existingPayment) {
+      alert("Cet e-mail est deja enregistré pour ce séminaire !");
+      return;
+    }
   
     dispatch(
       sendStripeRequest({
@@ -180,9 +200,9 @@ console.log("paymentPage", paymentPage);
 
               {/* Moyens de paiement */}
               <div className="text-center mb-4">
-                <p className="mb-3 text-dark">Choisissez un mode de paiement :</p>
+                <p className="mb-3 text-dark">Paiement par carte bleu :</p>
                 <div className="d-flex justify-content-center gap-4">
-                  <button type="button" name="paymentMode" className="btn bg-white text-dark d-flex align-items-center gap-2 px-3 py-2" onClick={() => {
+                  {/* <button type="button" name="paymentMode" className="btn bg-white text-dark d-flex align-items-center gap-2 px-3 py-2" onClick={() => {
                       setShowCardForm(false);
                       setFormData({ ...formData, paymentMode: 'Paypal' });
                     }}>
@@ -193,9 +213,9 @@ console.log("paymentPage", paymentPage);
                     setFormData({ ...formData, paymentMode: 'Google Pay' });
                   }}>
                     <img src="/Images/Pay/gpay.png" alt="Google Pay" style={{ height: '24px' }} />
-                  </button>
+                  </button> */}
                   <button type="button" name="paymentMode" className="btn bg-white text-dark d-flex align-items-center gap-2 px-3 py-2" onClick={() => {
-                    setShowCardForm(true);
+                    setShowCardForm(false);
                     setFormData({ ...formData, paymentMode: 'CB' });
                   }}>
                     <img src="/Images/Pay/visa.png" alt="Visa" style={{ height: '24px' }} />
