@@ -6,7 +6,7 @@ import * as api from '../api/medias';
 function* getMedias() {
     try {
         const response = yield call(api.getMedias);
-        console.log("je rentre dans le getMedias", response);
+        //console.log("je rentre dans le getMedias", response);
         yield put(actions.getMediasSuccess({medias : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -15,7 +15,7 @@ function* getMedias() {
 
 function* addMedias(action) {
     try {
-        console.log("je rentre dans le addMedias", action.payload);
+        //console.log("je rentre dans le addMedias", action.payload);
         const response = yield call(api.addMedia,action.payload);
         yield put(actions.addMediasSuccess({media : response.data}));
     } catch (error) {
@@ -25,7 +25,7 @@ function* addMedias(action) {
 
 function* updateMedia(action) {
     try {
-        console.log("je rentre dans le updateMedia", action.payload);
+        //console.log("je rentre dans le updateMedia", action.payload);
         yield call(api.updateMedia,action.payload);
 
         //je rappel getSeminaire pour la mise à jour du store
@@ -38,7 +38,7 @@ function* updateMedia(action) {
 
 function* deleteMedia(action) {
     try {
-      console.log("je rentre dans le deleteMedia", action.payload);
+      //console.log("je rentre dans le deleteMedia", action.payload);
   
       // Si action.payload est un objet, il faut faire :
       // const id = action.payload.id;
@@ -51,7 +51,7 @@ function* deleteMedia(action) {
       yield put(actions.getMediasSuccess({ medias: response.data }));
       
     } catch (error) {
-      console.error("Erreur dans deleteMedia :", error);
+      //console.error("Erreur dans deleteMedia :", error);
       yield put(actions.deleteMediasFailure({ error: error.response?.data || error.message }));   
     }
   }

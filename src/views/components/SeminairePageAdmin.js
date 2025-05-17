@@ -129,6 +129,7 @@ export const SeminairePageAdmin = () => {
   return (
     <div className="container py-5">
       <div className="row align-items-center mb-3">
+      <h2 className="fw-bold text-center mb-4">Gestion des séminaires</h2>
         <div className="col-6 col-md-6 mb-2 mb-md-0">
           <input
             type="text"

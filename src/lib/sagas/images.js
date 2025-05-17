@@ -6,7 +6,7 @@ import * as api from '../api/images';
 function* getImages() {
     try {
         const response = yield call(api.getImages);
-        console.log("je rentre dans le getImages", response);
+        //console.log("je rentre dans le getImages", response);
         yield put(actions.getImagesSuccess({images : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -15,7 +15,7 @@ function* getImages() {
 
 function* addImages(action) {
     try {
-        console.log("je rentre dans le addImages", action.payload);
+        //console.log("je rentre dans le addImages", action.payload);
         const response = yield call(api.addImage,action.payload);
         yield put(actions.addImagesSuccess({image : response.data}));
     } catch (error) {
@@ -25,7 +25,7 @@ function* addImages(action) {
 
 function* updateImage(action) {
     try {
-        console.log("je rentre dans le updateImage", action.payload);
+        //console.log("je rentre dans le updateImage", action.payload);
         yield call(api.updateImage,action.payload);
 
         //je rappel getSeminaire pour la mise à jour du store
@@ -38,7 +38,7 @@ function* updateImage(action) {
 
 function* deleteImage(action) {
     try {
-        console.log("je rentre dans le deleteImage", action.payload);
+        //console.log("je rentre dans le deleteImage", action.payload);
         yield call(api.deleteImage,action.payload);
         
         //je rappel getSeminaire pour la mise à jour du store

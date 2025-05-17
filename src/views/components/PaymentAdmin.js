@@ -75,6 +75,7 @@ export const PaymentAdmin = () => {
       <AdminProtectedPage>
 
       {/* Section 1 : Barre de recherche + filtres + ajout */}
+      <h2 className="fw-bold text-center mb-4">Liste des achats</h2>
         <div className="row align-items-center mb-3">
           <div className="col-6 col-md-6 mb-2 mb-md-0">
             <input

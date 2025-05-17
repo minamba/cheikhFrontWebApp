@@ -10,7 +10,7 @@ function* sendSeminaireMail(action) {
         const response = yield call(api.sendSeminaireMail, action.payload);
         yield put({ type: actions.actionsMail.SEND_SEMINAIRE_MAIL_SUCCESS, payload: response });
     } catch (error) {
-        console.log("Erreur attrapée dans la saga :", error.message);
+        //console.log("Erreur attrapée dans la saga :", error.message);
         yield put({ type: actions.actionsMail.SEND_SEMINAIRE_MAIL_FAILURE, payload: error.message });
     }
 }
@@ -21,7 +21,7 @@ function* sendSeminaireMailGroup(action) {
         const response = yield call(api.sendSeminaireMailGroup, action.payload);
         yield put({ type: actions.actionsMail.SEND_SEMINAIRE_MAIL_GROUP_SUCCESS, payload: response });
     } catch (error) {
-        console.log("Erreur attrapée dans la saga :", error.message);
+        //console.log("Erreur attrapée dans la saga :", error.message);
         yield put({ type: actions.actionsMail.SEND_SEMINAIRE_MAIL_GROUP_FAILURE, payload: error.message });
     }
 }
@@ -29,11 +29,11 @@ function* sendSeminaireMailGroup(action) {
 //PAYMENT
 function* sendPaymentMail(action) {
     try {
-        console.log("je rentre dans l'envoie de mail pour le paiement", action.payload);
+        //console.log("je rentre dans l'envoie de mail pour le paiement", action.payload);
         const response = yield call(api.sendPaymentMail, action.payload);
         yield put({ type: actions.actionsMail.SEND_PAYMENT_MAIL_SUCCESS, payload: response });
     } catch (error) {
-        console.log("Erreur attrapée dans la saga :", error.message);
+        //console.log("Erreur attrapée dans la saga :", error.message);
         yield put({ type: actions.actionsMail.SEND_PAYMENT_MAIL_FAILURE, payload: error.message });
     }
 }
@@ -44,7 +44,7 @@ function* sendPaymentMailGroup(action) {
         const response = yield call(api.sendPaymentMailGroup, action.payload);
         yield put({ type: actions.actionsMail.SEND_PAYMENT_MAIL_GROUP_SUCCESS, payload: response });
     } catch (error) {
-        console.log("Erreur attrapée dans la saga :", error.message);
+        //console.log("Erreur attrapée dans la saga :", error.message);
         yield put({ type: actions.actionsMail.SEND_PAYMENT_MAIL_GROUP_FAILURE, payload: error.message });
     }
 }

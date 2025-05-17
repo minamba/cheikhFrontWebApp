@@ -155,18 +155,27 @@ export const RegistrationTable = ({ searchTerm }) => {
 
   const handleSubmitBot = (data) => {
     dispatch(sendTelegramMessageRequest({LastName : data.lastName, FirstName : data.firstName, PhoneNumber : data.phoneNumber, Mail : data.email}));
-    data.mailSent = true;
+    data.sendedtobot = true;
     dispatch(updateRegistrationRequest(data));
-  };
-
-  const handleDelete = (id) => {
-    dispatch(deleteRegistrationRequest(id));
-
-
     setTimeout(() => {
       dispatch(getRegistrationsRequest());
     }, 2000);
   };
+
+  const handleDelete = (id) => {
+    dispatch(deleteRegistrationRequest(id));
+    setTimeout(() => {
+      dispatch(getRegistrationsRequest());
+    }, 2000);
+  };
+
+  const handleUpdate = (user) => {
+    dispatch(updateRegistrationRequest(user));
+    setTimeout(() => {
+      dispatch(getRegistrationsRequest());
+    }, 2000);
+  };
+
 
   return (
     <div className="table-responsive">
@@ -245,7 +254,7 @@ export const RegistrationTable = ({ searchTerm }) => {
           </form>
         </div>
         <div className="modal-footer">
-          <button type="button" className="btn btn-success" onClick={() => dispatch(updateRegistrationRequest(selectedRegistration))}>Modifier</button>
+          <button type="button" className="btn btn-success" onClick={() => handleUpdate(selectedRegistration)}>Modifier</button>
           <button type="button" className="btn btn-secondary" onClick={() => setShowEditModal(false)}>Fermer</button>
         </div>
       </div>

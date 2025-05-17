@@ -5,7 +5,7 @@ import * as api from '../api/closeInscription';
 function* getCloseInscription() {
     try {
         const response = yield call(api.getCloseInscription);
-        console.log("je rentre dans le getCloseInscription", response);
+        //console.log("je rentre dans le getCloseInscription", response);
         yield put(actions.getCloseInscriptionSuccess({ closeInscription : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -14,7 +14,7 @@ function* getCloseInscription() {
 
 function* updateCloseInscription(action) {
     try {
-        console.log("je rentre dans le updateCloseInscription", action.payload);
+        //console.log("je rentre dans le updateCloseInscription", action.payload);
         yield call(api.updateCloseInscription,action.payload);
 
         //je rappel getCloseInscription pour la mise à jour du store

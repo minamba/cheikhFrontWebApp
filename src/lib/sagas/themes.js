@@ -6,7 +6,7 @@ import * as api from '../api/themes';
 function* getThemes() {
     try {
         const response = yield call(api.getThemes);
-        console.log("je rentre dans le getThemes", response);
+        //console.log("je rentre dans le getThemes", response);
         yield put(actions.getThemesSuccess({themes : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -15,7 +15,7 @@ function* getThemes() {
 
 function* addThemes(action) {
     try {
-        console.log("je rentre dans le addThemes", action.payload);
+        //console.log("je rentre dans le addThemes", action.payload);
         const response = yield call(api.addTheme,action.payload);
         yield put(actions.addThemesSuccess({theme : response.data}));
     } catch (error) {
@@ -25,7 +25,7 @@ function* addThemes(action) {
 
 function* updateTheme(action) {
     try {
-        console.log("je rentre dans le updateTheme", action.payload);
+        //console.log("je rentre dans le updateTheme", action.payload);
 //         const payload = { ...action.payload };
 // delete payload.IdSeminaireNavigation;
         yield call(api.updateTheme,action.payload);
@@ -40,7 +40,7 @@ function* updateTheme(action) {
 
 function* deleteTheme(action) {
     try {
-        console.log("je rentre dans le deleteTheme", action.payload);
+        //console.log("je rentre dans le deleteTheme", action.payload);
         yield call(api.deleteTheme,action.payload);
         
         //je rappel getSeminaire pour la mise à jour du store

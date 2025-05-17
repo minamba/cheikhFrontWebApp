@@ -5,7 +5,7 @@ import * as api from '../api/registrationPage';
 function* getRegistrationPage() {
     try {
         const response = yield call(api.getRegistrationPage);
-        console.log("je rentre dans le getRegistrationPage", response);
+        //console.log("je rentre dans le getRegistrationPage", response);
         yield put(actions.getRegistrationPageSuccess({ registrationPage : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -14,7 +14,7 @@ function* getRegistrationPage() {
 
 function* updateRegistrationPage(action) {
     try {
-        console.log("je rentre dans le updateRegistrationPage", action.payload);
+        //console.log("je rentre dans le updateRegistrationPage", action.payload);
         yield call(api.updateRegistrationPage(action.payload));
 
         //je rappel getRegistration pour la mise à jour du store

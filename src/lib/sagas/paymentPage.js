@@ -5,7 +5,7 @@ import * as api from '../api/paymentpage';
 function* getPaymentPage() {
     try {
         const response = yield call(api.getPaymentPage);
-        console.log("je rentre dans le getPaymentPage", response);
+       // console.log("je rentre dans le getPaymentPage", response);
         yield put(actions.getPaymentPageSuccess({ paymentPage : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -14,7 +14,7 @@ function* getPaymentPage() {
 
 function* updatePaymentPage(action) {
     try {
-        console.log("je rentre dans le updatePaymentPage", action.payload);
+        //console.log("je rentre dans le updatePaymentPage", action.payload);
         yield call(api.updatePaymentPage,action.payload);
 
         //je rappel getPaymentPage pour la mise à jour du store

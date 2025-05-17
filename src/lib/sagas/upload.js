@@ -5,11 +5,11 @@ import * as api from '../api/upload';
 
 function* postUpload(action) {
     try {
-        console.log("j'upload le fichier", action.payload);
+        //console.log("j'upload le fichier", action.payload);
         const response = yield call(api.uploadFile, action.payload);
         yield put(actions.postUploadSuccess(response.data));
     } catch (error) {
-        console.log("Erreur attrapée dans la saga :", error.message);
+        //console.log("Erreur attrapée dans la saga :", error.message);
         yield put(actions.postUploadFailure(error.message));
     }
 }

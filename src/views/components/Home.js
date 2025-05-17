@@ -6,43 +6,57 @@ import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import { Navigation } from 'swiper/modules';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getHomesRequest } from '../../lib/actions/HomeActions';
+import { useEffect } from 'react';
 
 export const Home = () => {
+const dispatch = useDispatch();
 const datas = useSelector((state) => state.registrationPage);
 const isClosed = datas.registrationPage.find((registrationPage) => registrationPage.id === 1)?.isClosed;
 const homes = useSelector((state) => state.homes);
 const witnesses = useSelector((state) => state.witnesses);
 
-console.log("home",homes.homes);
-console.log(homes.homes?.media?.url);
-console.log("witnesses",witnesses.witnesses);
-
+//console.log("home",homes.homes);
+//console.log(homes.homes?.media?.url);
+//console.log("witnesses",witnesses.witnesses);
+useEffect(() => {
+  dispatch(getHomesRequest());
+  console.log("je suis dans le useeffect",homes.homes);
+}, []);
 
 const videoUrl = homes.homes?.media?.url;
-console.log("videoUrl",videoUrl);
-console.log("homes",homes.homes?.image?.url);
+
+//console.log("homes",homes.homes?.image?.url);
 const imgUrl = homes.homes?.image?.url;
 const banniere = homes.homes?.banner?.url;
-
+console.log("videoUrl",videoUrl);
   return (
     <div>
       {/* Section 1 : Hero avec vidéo */}
       <section className="hero-section-with-image d-flex align-items-center text-white"     style={{backgroundImage: banniere ? `url("${banniere}")` : 'none'}}>
         <div className="container text-center">
           <h1 className="calligraphic-glow mb-5">{homes.homes?.title}</h1>
-          <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-100 h-100"
-              style={{ objectFit: 'cover' }}
-            >
-                 <source src={videoUrl} type="video/mp4" />
-              Votre navigateur ne supporte pas la balise vidéo.
-            </video>
-          </div>
+          {videoUrl ? (
+              <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-100 h-100"
+                  style={{ objectFit: 'cover' }}
+                >
+                  <source src={videoUrl} type="video/mp4" />
+                  Votre navigateur ne supporte pas la balise vidéo.
+                </video>
+              </div>
+            ) : (
+              <div style={{ height: '500px' }} className="d-flex align-items-center justify-content-center text-white">
+                Chargement de la vidéo...
+              </div>
+            )}
+
         </div>
       </section>
 
@@ -59,7 +73,7 @@ const banniere = homes.homes?.banner?.url;
             {/* Colonne gauche : Texte */}
             <div className="col-lg-6 d-flex flex-column justify-content-center mb-4 mb-lg-0">
               <div>
-                <h2 className="mb-3">Découvrez notre méthodologie</h2>
+                <h2 className="mb-3 subtitle">Découvrez notre méthodologie</h2>
                 <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
                   Plongez dans notre monde et découvrez notre mission, notre énergie et l’expérience que nous offrons à notre communauté.
                 </p>
@@ -92,7 +106,7 @@ const banniere = homes.homes?.banner?.url;
       {/* Section 3: Témoignages avec Swiper */}
       <section className="styled-section">
         <div className="container text-center">
-          <h2 className="mb-5">Témoignages</h2>
+          <h2 className="mb-5 subtitle">Témoignages</h2>
           <Swiper
         modules={[Autoplay]}
               spaceBetween={30}

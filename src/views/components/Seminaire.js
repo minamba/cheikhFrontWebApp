@@ -12,6 +12,7 @@ import { getImagesRequest } from '../../lib/actions/ImageActions';
 import { getMediasRequest } from '../../lib/actions/MediaActions';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getRegistrationPageRequest } from "../../lib/actions/RegistrationPageActions";
 
 export const Seminaire = () => {
 const navigate = useNavigate();
@@ -21,18 +22,18 @@ const targets = useSelector((state) => state.targets.targets);
 const sessions = useSelector((state) => state.sessions.sessions);
 const themes = useSelector((state) => state.themes.themes);
 const seminaires = useSelector((state) => state.seminaires) || [];
-const activeSeminaire=(seminaires.seminaires.find((s) => s.active === true) || null);
-const registrationPage  = useSelector((state) => state.registrationPage.registrationPage);
-const closeInscription  = useSelector((state) => state.closeInscription.closeInscription);
+const registrationPage = useSelector((state) => state.registrationPage.registrationPage.find((registrationPage) => registrationPage.id === 1));
+const closeRegistration = registrationPage?.isClosed;
 
 
-useEffect(() => {
-    if (closeInscription == false) {
-      navigate('/'); // redirige vers une page d’information
+  console.log("closed",registrationPage);
+  useEffect(() => {
+    if (!closeRegistration) {
+      navigate('/');
     }
-  }, [closeInscription]);
+  }, [closeRegistration]);
 
-
+const activeSeminaire=(seminaires.seminaires.find((s) => s.active === true) || null);
 console.log("seminaiiire video",activeSeminaire?.banner?.url);
 const banniere = activeSeminaire?.banner?.url;
 const graphic = activeSeminaire?.graphic?.url;
@@ -40,16 +41,21 @@ const graphic = activeSeminaire?.graphic?.url;
 // const image = images.images.find((i) => i.id === seminaire.imageId);
   return (
     <Fragment>
-
       {/* Section 1 : Titre + Vidéo */}
       <section className="hero-section-seminaire-with-image d-flex align-items-center "     style={{backgroundImage: banniere ? `url("${banniere}")` : 'none'}}>
         <div className="container text-center">
           <h1 className="hero-title-seminaire mb-4">{activeSeminaire?.title}</h1>
+          {activeSeminaire?.video?.url ? (
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
           <video controls className="img-fluid" width="100%">
                     <source src={activeSeminaire?.video?.url} type="video/mp4" />
            </video>
           </div>
+          ) : (
+            <div style={{ height: '500px' }} className="d-flex align-items-center justify-content-center text-white">
+              Chargement de la vidéo...
+            </div>
+          )}
         </div>
       </section>
 
@@ -69,7 +75,7 @@ const graphic = activeSeminaire?.graphic?.url;
             <div className="row align-items-stretch justify-content-center">
 
             {/* Colonne 1 : Image */}
-            <div className="col-lg-5 d-flex mb-4 mb-lg-0">
+            <div className="col-lg-5 d-flex mb-4 mb-lg-0 d-none d-md-block">
                 <div className="w-100 h-100">
                 <img
                     src={graphic} 
@@ -185,6 +191,7 @@ const graphic = activeSeminaire?.graphic?.url;
             </div>
         </div>
         </section>
+      )}
     </Fragment>
   );
 };

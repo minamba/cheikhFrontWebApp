@@ -15,7 +15,7 @@ function* getHomes() {
 
 function* addHomes(action) {
     try {
-        console.log("je rentre dans le addHomessssssssssssssssssssss", action.payload);
+        //console.log("je rentre dans le addHomessssssssssssssssssssss", action.payload);
         const response = yield call(api.addHome,action.payload);
         yield put(actions.addHomesSuccess({home : response.data}));
     } catch (error) {
@@ -25,7 +25,7 @@ function* addHomes(action) {
 
 function* updateHome(action) {
     try {
-      console.log("je rentre dans le updateHome", action.payload);
+      //console.log("je rentre dans le updateHome", action.payload);
   
       // Appel de l'API pour update
       yield call(api.updateHome, action.payload);
@@ -36,7 +36,7 @@ function* updateHome(action) {
       // On envoie uniquement les données utiles dans le store
       yield put(actions.updateHomesSuccess({ home: response.data }));
     } catch (error) {
-      console.error("Erreur updateHome :", error);
+      //console.error("Erreur updateHome :", error);
       yield put(actions.updateHomesFailure({ error: error.response?.data || error.message }));
     }
   }

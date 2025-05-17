@@ -6,7 +6,7 @@ import * as api from '../api/sessions';
 function* getSessions() {
     try {
         const response = yield call(api.getSessions);
-        console.log("je rentre dans le getSessions", response);
+        //console.log("je rentre dans le getSessions", response);
         yield put(actions.getSessionsSuccess({sessions : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -15,7 +15,7 @@ function* getSessions() {
 
 function* addSessions(action) {
     try {
-        console.log("je rentre dans le addSessions", action.payload);
+        //console.log("je rentre dans le addSessions", action.payload);
         const response = yield call(api.addSession,action.payload);
         yield put(actions.addSessionsSuccess({session : response.data}));
     } catch (error) {
@@ -25,7 +25,7 @@ function* addSessions(action) {
 
 function* updateSession(action) {
     try {
-        console.log("je rentre dans le updateSession", action.payload);
+       // console.log("je rentre dans le updateSession", action.payload);
         yield call(api.updateSession,action.payload);
 
         //je rappel getSeminaire pour la mise à jour du store
@@ -38,7 +38,7 @@ function* updateSession(action) {
 
 function* deleteSession(action) {
     try {
-        console.log("je rentre dans le deleteSession", action.payload);
+        //console.log("je rentre dans le deleteSession", action.payload);
         yield call(api.deleteSession,action.payload);
         
         //je rappel getSeminaire pour la mise à jour du store

@@ -76,7 +76,7 @@ const WitnessAdmin = () => {
 
   return (
     <div className="container py-4">
-      <h2 className="mb-4">Gestion des Medias</h2>
+      <h2 className="mb-4">Gestion des témoignages</h2>
       <button className="btn btn-success mb-3" onClick={handleAdd}>
         Ajouter
       </button>

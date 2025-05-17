@@ -38,7 +38,7 @@ function* updateSeminaire(action) {
 
 function* deleteSeminaire(action) {
     try {
-        console.log("je rentre dans le deleteSeminaireUser", action.payload);
+        //console.log("je rentre dans le deleteSeminaireUser", action.payload);
         yield call(api.deleteSeminaire(action.payload));
         
         //je rappel getSeminaire pour la mise à jour du store

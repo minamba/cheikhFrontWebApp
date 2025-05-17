@@ -6,7 +6,7 @@ import * as api from '../api/witnesses';
 function* getWitnesses() {
     try {
         const response = yield call(api.getWitnesses);
-        console.log("je rentre dans le getWitnesses", response);
+        //console.log("je rentre dans le getWitnesses", response);
         yield put(actions.getWitnessesSuccess({witnesses : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -15,7 +15,7 @@ function* getWitnesses() {
 
 function* addWitnesses(action) {
     try {
-        console.log("je rentre dans le addWitnesses", action.payload);
+        //console.log("je rentre dans le addWitnesses", action.payload);
         const response = yield call(api.addWitness,action.payload);
         yield put(actions.addWitnessesSuccess({witness : response.data}));
     } catch (error) {
@@ -25,7 +25,7 @@ function* addWitnesses(action) {
 
 function* updateWitness(action) {
     try {
-        console.log("je rentre dans le updateWitness", action.payload);
+        //console.log("je rentre dans le updateWitness", action.payload);
         yield call(api.updateWitness(action.payload));
 
         //je rappel getSeminaire pour la mise à jour du store
@@ -38,7 +38,7 @@ function* updateWitness(action) {
 
 function* deleteWitness(action) {
     try {
-        console.log("je rentre dans le deleteWitness", action.payload);
+        //console.log("je rentre dans le deleteWitness", action.payload);
         yield call(api.deleteWitness(action.payload));
         
         //je rappel getSeminaire pour la mise à jour du store

@@ -6,7 +6,7 @@ import * as api from '../api/payments';
 function* getPayments() {
     try {
         const response = yield call(api.getPayments);
-        console.log("je rentre dans le getPayment", response);
+        //console.log("je rentre dans le getPayment", response);
         yield put(actions.getPaymentsSuccess({ payments : response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -16,7 +16,7 @@ function* getPayments() {
 
 function* addPayment(action) {
     try {
-        console.log("je rentre dans le addPayment", action.payload);
+        //console.log("je rentre dans le addPayment", action.payload);
         const response = yield call(api.addPayment,action.payload); 
         yield put({ type: actions.actions.ADD_PAYMENT_SUCCESS, payload: response });
     } catch (error) {
@@ -26,7 +26,7 @@ function* addPayment(action) {
 
 function* updatePayment(action) {
     try {
-        console.log("je rentre dans le updatePayment", action.payload);
+        //console.log("je rentre dans le updatePayment", action.payload);
         yield call(api.updatePayment(action.payload));
 
         //je rappel getPayment pour la mise à jour du store
@@ -39,7 +39,7 @@ function* updatePayment(action) {
 
 function* deletePayment(action) {
     try {
-        console.log("je rentre dans le deletePayment", action.payload);
+        //console.log("je rentre dans le deletePayment", action.payload);
         yield call(api.deletePayment(action.payload));
         
         //je rappel getPayment pour la mise à jour du store

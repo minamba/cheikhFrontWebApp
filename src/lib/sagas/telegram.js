@@ -5,11 +5,11 @@ import * as api from '../api/telegrams';
 
 function* sendTelegramMessage(action) {
     try {
-        console.log("j'envoie le message via le bot", action.payload);
+        //console.log("j'envoie le message via le bot", action.payload);
         const response = yield call(api.sendMessage, action.payload);
         yield put({ type: actions.actionsTelegram.SEND_TELEGRAM_MESSAGE_SUCCESS, payload: response });
     } catch (error) {
-        console.log("Erreur attrapée dans la saga :", error.message);
+        //console.log("Erreur attrapée dans la saga :", error.message);
         yield put({ type: actions.actionsTelegram.SEND_TELEGRAM_MESSAGE_FAILURE, payload: error.message });
     }
 }

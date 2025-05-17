@@ -37,7 +37,7 @@ export const RegistrationAdmin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addRegistrationRequest(formData));
-    
+
     setTimeout(() => {
       dispatch(getRegistrationPageRequest());
     }, 1000);
@@ -59,7 +59,7 @@ export const RegistrationAdmin = () => {
     dispatch(updateRegistrationPageRequest({ Id : registrationPage.id, Title : registrationPage.title, IsClosed: checked }));
     setTimeout(() => {
       dispatch(getRegistrationPageRequest());
-    }, 1000);
+    }, 2000);
   };
 
 

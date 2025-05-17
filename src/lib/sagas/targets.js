@@ -6,7 +6,7 @@ import * as api from '../api/targets';
 function* getTargets() {
     try {
         const response = yield call(api.getTargets);
-        console.log("je rentre dans le getTargets", response);
+        //console.log("je rentre dans le getTargets", response);
         yield put(actions.getTargetsSuccess({targets : response.data}));
     } catch (error) {
         yield put(actions.getTargetsFailure({ error : error.response.data }));   
@@ -15,7 +15,7 @@ function* getTargets() {
 
 function* addTarget(action) {
     try {
-        console.log("je rentre dans le addTarget", action.payload);
+        //console.log("je rentre dans le addTarget", action.payload);
         const response = yield call(api.addTarget,action.payload);
         yield put(actions.addTargetsSuccess({target : response.data}));
     } catch (error) {
@@ -25,7 +25,7 @@ function* addTarget(action) {
 
 function* updateTarget(action) {
     try {
-        console.log("je rentre dans le updateTarget", action.payload);
+        //console.log("je rentre dans le updateTarget", action.payload);
         yield call(api.updateTarget,action.payload);
 
         //je rappel getSeminaire pour la mise à jour du store
@@ -38,7 +38,7 @@ function* updateTarget(action) {
 
 function* deleteTarget(action) {
     try {
-        console.log("je rentre dans le deleteTarget", action.payload);
+        //console.log("je rentre dans le deleteTarget", action.payload);
         yield call(api.deleteTarget,action.payload);
         
         //je rappel getSeminaire pour la mise à jour du store

@@ -159,7 +159,7 @@ console.log("paymentPage", paymentPage);
       <section className="styled-section">
         <div className="container">
           <div className="payment-card p-4 rounded shadow-lg mx-auto" style={{ maxWidth: '700px', backgroundColor: '#ffffff10', backdropFilter: 'blur(10px)' }}>
-            <h2 className="text-center mb-4">Détails de votre facture</h2>
+            <h2 className="text-center subtitle mb-4">Détails de votre facture</h2>
 
             <form onSubmit={handleSubmit} className="contact-form mb-4">
               <div className="mb-3">
@@ -177,8 +177,13 @@ console.log("paymentPage", paymentPage);
                   <option value="+33">🇫🇷 +33</option>
                   <option value="+212">🇲🇦 +212</option>
                   <option value="+213">🇩🇿 +213</option>
+                  <option value="+223">🇲🇱 +223</option>
+                  <option value="+221">🇸🇳 +221</option> 
                   <option value="+1">🇺🇸 +1</option>
-                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+44">🇬🇧 +44</option> 
+            
+
+                  
                 </select>
 
                 <input

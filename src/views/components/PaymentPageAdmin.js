@@ -34,9 +34,6 @@ export const PaymentPageAdmin = () => {
     const handleUpdate = () => {
       //console.log("Mise à jjour :", selectedItem);
       dispatch(updatePaymentPageRequest({id : selectedItem.id, Title : selectedItem.title, IdBanner : selectedItem.banner.id}));
-      setTimeout(() => {
-        dispatch(getPaymentPageRequest());
-      }, 2000);
       setShowModal(false);
     };
   

@@ -7,14 +7,19 @@ import { sendTelegramMessageRequest } from '../../lib/actions/TelegramActions';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useRef } from 'react';
 
 export const Inscriptions = () => {
   const dispatch = useDispatch();
+  const [countryCode, setCountryCode] = useState('+33'); // 🇫🇷 par défaut
+const [localPhone, setLocalPhone] = useState('');
   const showSuccessPopup = useSelector(state => state.ui.showSuccessPopup);
   const showErrorPopup = useSelector(state => state.ui.showErrorPopup); 
   const registrationPages = useSelector((state) => state.registrationPage);
   const registrationPage = registrationPages.registrationPage.find((registrationPage) => registrationPage.id === 1);
   const closeRegistration = registrationPage?.isClosed;
+  const registrations = useSelector((state) => state.registrations.registrations);
+  const tempFormData = useRef(null); // permet de garder le formData avant reinitialisation
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,8 +56,34 @@ export const Inscriptions = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addRegistrationRequest(formData));
+
+
+    const cleanedPhone = localPhone.startsWith('0') ? localPhone.slice(1) : localPhone;
+    const fullPhone = `${countryCode}${cleanedPhone}`;
+    const phoneRegex = /^\+?[0-9]{8,15}$/;
+    if (!phoneRegex.test(fullPhone)) {
+      alert("Numéro de téléphone invalide.");
+      return;
+    }
+
+    //controle si user exist 
+    var registration = registrations.find((registration) => registration.email === formData.email);
+    if (registration) {
+        alert("Cet utilisateur est déjà inscrit pour une demande d'entretient");
+        return;
+    }
+
+    //envoi telegram
     dispatch(sendTelegramMessageRequest(entretien));
+
+    const finalData = {
+      ...formData,
+      phoneNumber: fullPhone,
+      sendedtobot: true,
+    };
+
+    tempFormData.current = finalData;
+    dispatch(addRegistrationRequest(finalData));
     console.log("showSuccessPopup valeur", showSuccessPopup);
     setFormData({
       lastName: '',
@@ -70,7 +101,7 @@ export const Inscriptions = () => {
     <Fragment>
     <section className="hero-section-with-image d-flex align-items-center text-white">
         <div className="container">
-        <h1 className="hero-title text-center mb-4">Entretien Téléphonique</h1>
+        <h1 className="hero-title-open-inscription text-center mb-4">Entretien Téléphonique</h1>
           <div className="inscription-card shadowed-card p-4 mx-auto" style={{ maxWidth: '700px' }}>
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -79,8 +110,33 @@ export const Inscriptions = () => {
               <div className="mb-3">
                 <input type="text" className="form-control" placeholder="Prénom" required name="firstName" value={formData.firstName} onChange={handleChange} />
               </div>
-              <div className="mb-3">
-                <input type="tel" className="form-control" placeholder="N° de téléphone" required name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+              <div className="mb-3 d-flex gap-2">
+                <select
+                  className="form-select w-auto"
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                >
+                  <option value="+33">🇫🇷 +33</option>
+                  <option value="+212">🇲🇦 +212</option>
+                  <option value="+213">🇩🇿 +213</option>
+                  <option value="+223">🇲🇱 +223</option>
+                  <option value="+221">🇸🇳 +221</option> 
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option> 
+            
+
+                  
+                </select>
+
+                <input
+                  type="tel"
+                  className="form-control"
+                  placeholder="Numéro sans indicatif"
+                  value={localPhone}
+                  onChange={(e) => setLocalPhone(e.target.value)}
+                  required
+                  maxLength={10}
+                />
               </div>
               <div className="mb-4">
                 <input type="email" className="form-control" placeholder="Adresse email" required name="email" value={formData.email} onChange={handleChange} />

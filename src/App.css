@@ -140,12 +140,34 @@ body {
 }
 
 .hero-title {
+  font-size: clamp(1.5rem, 5vw, 5rem);
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  color: var(--white);
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.hero-title-close-inscription {
   font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   color: var(--white);
   text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
+}
+
+.hero-title-open-inscription {
+  font-size: clamp(1.7rem, 5vw, 5rem);
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  color: var(--white);
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: clamp(1.5rem, 3vw, 4rem);
 }
 
 .calligraphic-glow {
