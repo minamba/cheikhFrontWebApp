@@ -1,11 +1,15 @@
 import {takeEvery,takeLatest, call, put, fork} from 'redux-saga/effects';
 import * as actions from '../actions/RegistrationActions';
 import * as api from '../api/registrations';
+import localStorageService from '../storage/storageService';
 
 
 function* getRegistrations() {
     try {
         const response = yield call(api.getRegistrations);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("registrations", response.data);
         //console.log("je rentre dans le getRegistration", response);
         yield put(actions.getRegistrationsSuccess({ registrations : response.data}));
     } catch (error) {
@@ -19,6 +23,9 @@ function* addRegistrations(action) {
         //console.log("je rentre dans le addRegistration", action.payload);
         yield call(api.addRegistration(action.payload));
         const response = yield call(api.getRegistrations);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("registrations", response.data);
         yield put(actions.getRegistrationsSuccess({ registrations: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -32,6 +39,9 @@ function* updateRegistrations(action) {
 
         //je rappel getRegistration pour la mise à jour du store
         const response = yield call(api.getRegistrations);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("registrations", response.data);
         yield put(actions.getRegistrationsSuccess({ registrations: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -45,6 +55,9 @@ function* deleteRegistrations(action) {
         
         //je rappel getRegistration pour la mise à jour du store
         const response = yield call(api.getRegistrations);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("registrations", response.data);
         yield put(actions.getRegistrationsSuccess({ registrations: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});

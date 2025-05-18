@@ -1,7 +1,8 @@
 import { actions } from "../actions/SessionActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    sessions : []
+    sessions : localStorageService.load("sessions") || []
 }
 
 function SessionReducers(state = initialState, action) {

@@ -1,7 +1,8 @@
 import { actions } from "../actions/PaymentPageActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    paymentPage : []
+    paymentPage : localStorageService.load("paymentPage") || []
 }
 
 function PaymentPageReducers(state = initialState, action) {

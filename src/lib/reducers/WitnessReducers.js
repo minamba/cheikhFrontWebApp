@@ -1,7 +1,8 @@
 import { actions } from "../actions/WitnessActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    witnesses : []
+    witnesses : localStorageService.load("witnesses") || []
 }
 
 function WitnessReducers(state = initialState, action) {

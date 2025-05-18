@@ -1,12 +1,16 @@
 import {takeEvery,takeLatest, call, put, fork} from 'redux-saga/effects';
 import * as actions from '../actions/SeminaireUsersActions';
 import * as api from '../api/seminairesUsers';
+import localStorageService from '../storage/storageService';
 
 
 function* getSeminaires() {
     try {
         const response = yield call(api.getSeminaires);
         //console.log("je rentre dans le getSeminairesUser", response);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("seminairesUsers", response.data);
         yield put(actions.getSeminairesUserSuccess({seminairesUsers : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -17,6 +21,9 @@ function* addSeminaires(action) {
     try {
         //console.log("je rentre dans le addSeminaireUserr", action.payload);
         const response = yield call(api.addSeminaire,action.payload);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("seminairesUsers", response.data);
         yield put(actions.addSeminaireUserSuccess({seminairesUser : response.data}));
     } catch (error) {
         yield put(actions.addSeminaireUserFailure({error : error.response.data}));
@@ -30,6 +37,9 @@ function* updateSeminaire(action) {
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getSeminaires);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("seminairesUsers", response.data);
         yield put(actions.getSeminairesUserSuccess({ seminairesUsers: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -43,6 +53,9 @@ function* deleteSeminaire(action) {
         
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getSeminaires);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("seminairesUsers", response.data);
         yield put(actions.getSeminairesUserSuccess({ seminairesUsers: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});

@@ -1,7 +1,8 @@
 import { actions } from "../actions/ThemeActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    themes : []
+    themes : localStorageService.load("themes") || []
 }
 
 function ThemeReducers(state = initialState, action) {

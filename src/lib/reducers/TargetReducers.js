@@ -1,7 +1,8 @@
 import { actions } from "../actions/TargetActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    targets : []
+    targets : localStorageService.load("targets") || []
 }
 
 function TargetReducers(state = initialState, action) {

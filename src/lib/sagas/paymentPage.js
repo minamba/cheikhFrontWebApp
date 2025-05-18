@@ -1,10 +1,14 @@
 import { takeEvery, takeLatest, call, put, fork } from 'redux-saga/effects';
 import * as actions from '../actions/PaymentPageActions';
 import * as api from '../api/paymentpage';
+import localStorageService from '../storage/storageService';
 
 function* getPaymentPage() {
     try {
         const response = yield call(api.getPaymentPage);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("paymentPage", response.data);
        // console.log("je rentre dans le getPaymentPage", response);
         yield put(actions.getPaymentPageSuccess({ paymentPage : response.data}));
     } catch (error) {
@@ -19,6 +23,9 @@ function* updatePaymentPage(action) {
 
         //je rappel getPaymentPage pour la mise à jour du store
         const response = yield call(api.getPaymentPage);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("paymentPage", response.data);
         yield put(actions.getPaymentPageSuccess({ paymentPage: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_CLOSE_INSCRIPTION_FAILURE, payload: error});

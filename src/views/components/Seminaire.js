@@ -191,7 +191,6 @@ const graphic = activeSeminaire?.graphic?.url;
             </div>
         </div>
         </section>
-      )}
     </Fragment>
   );
 };

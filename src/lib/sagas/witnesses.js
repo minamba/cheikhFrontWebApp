@@ -1,12 +1,16 @@
 import {takeEvery,takeLatest, call, put, fork} from 'redux-saga/effects';
 import * as actions from '../actions/WitnessActions';
 import * as api from '../api/witnesses';
+import localStorageService from '../storage/storageService';
 
 
 function* getWitnesses() {
     try {
         const response = yield call(api.getWitnesses);
         //console.log("je rentre dans le getWitnesses", response);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("witnesses", response.data);
         yield put(actions.getWitnessesSuccess({witnesses : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -17,6 +21,9 @@ function* addWitnesses(action) {
     try {
         //console.log("je rentre dans le addWitnesses", action.payload);
         const response = yield call(api.addWitness,action.payload);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("witnesses", response.data);
         yield put(actions.addWitnessesSuccess({witness : response.data}));
     } catch (error) {
         yield put(actions.addWitnessesFailure({error : error.response.data}));
@@ -30,6 +37,9 @@ function* updateWitness(action) {
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getWitnesses);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("witnesses", response.data);
         yield put(actions.getWitnessesSuccess({ witness: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -43,6 +53,9 @@ function* deleteWitness(action) {
         
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getWitnesses);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("witnesses", response.data);
         yield put(actions.getWitnessesSuccess({ witness: response.data }));
     } catch (error) {
         yield put(actions.getWitnessesFailure({ error : error.response.data }));   

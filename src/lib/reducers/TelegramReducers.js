@@ -1,7 +1,8 @@
 import { actionsTelegram } from "../actions/TelegramActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-  messages: []
+  messages: localStorageService.load("messages") || []
 };
 
 function TelegramReducers(state = initialState, action) {

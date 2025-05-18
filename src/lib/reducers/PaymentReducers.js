@@ -1,7 +1,8 @@
 import { actions } from "../actions/PaymentActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    payments : [],
+    payments : localStorageService.load("payments") || [],
 }
 
 function PaymentReducers(state = initialState, action) {

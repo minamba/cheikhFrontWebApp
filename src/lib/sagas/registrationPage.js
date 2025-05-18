@@ -1,11 +1,15 @@
 import { takeEvery, takeLatest, call, put, fork } from 'redux-saga/effects';
 import * as actions from '../actions/RegistrationPageActions';
 import * as api from '../api/registrationPage';
+import localStorageService from '../storage/storageService';
 
 function* getRegistrationPage() {
     try {
         const response = yield call(api.getRegistrationPage);
         console.log("je rentre dans le getRegistrationPage", response);
+
+        // sauvegarde dans le localStorage
+        localStorageService.save("registrationPage", response.data);
         yield put(actions.getRegistrationPageSuccess({ registrationPage : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -19,6 +23,9 @@ function* updateRegistrationPage(action) {
 
         //je rappel getRegistration pour la mise à jour du store
         const response = yield call(api.getRegistrationPage);
+
+        // sauvegarde dans le localStorage
+        localStorageService.save("registrationPage", response.data);
         yield put(actions.getRegistrationPageSuccess({ registrationPage: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});

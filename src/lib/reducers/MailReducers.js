@@ -1,8 +1,9 @@
 import { actionsMail } from "../actions/MailActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-  recipient: [],
-  recipientList: [],
+  recipient: localStorageService.load("recipient") || [],
+  recipientList: localStorageService.load("recipientList") || [],
 };
 
 function MailReducers(state = initialState, action) {

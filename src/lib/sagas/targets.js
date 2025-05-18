@@ -1,12 +1,16 @@
 import {takeEvery,takeLatest, call, put, fork} from 'redux-saga/effects';
 import * as actions from '../actions/TargetActions';
 import * as api from '../api/targets';
+import localStorageService from '../storage/storageService';
 
 
 function* getTargets() {
     try {
         const response = yield call(api.getTargets);
         //console.log("je rentre dans le getTargets", response);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("targets", response.data);
         yield put(actions.getTargetsSuccess({targets : response.data}));
     } catch (error) {
         yield put(actions.getTargetsFailure({ error : error.response.data }));   
@@ -17,6 +21,9 @@ function* addTarget(action) {
     try {
         //console.log("je rentre dans le addTarget", action.payload);
         const response = yield call(api.addTarget,action.payload);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("targets", response.data);
         yield put(actions.addTargetsSuccess({target : response.data}));
     } catch (error) {
         yield put(actions.addTargetsFailure({error : error.response.data}));
@@ -30,6 +37,9 @@ function* updateTarget(action) {
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getTargets);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("targets", response.data);
         yield put(actions.getTargetsSuccess({ target: response.data }));
     } catch (error) {
         yield put(actions.getTargetsFailure({ error : error.response.data }));   
@@ -43,6 +53,9 @@ function* deleteTarget(action) {
         
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getTargets);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("targets", response.data);
         yield put(actions.getTargetsSuccess({ target: response.data }));
     } catch (error) {
         yield put(actions.getTargetsFailure({ error : error.response.data }));   

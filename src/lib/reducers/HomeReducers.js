@@ -1,7 +1,8 @@
 import { actions } from "../actions/HomeActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    homes : []
+    homes : localStorageService.load("homes") || []
 }
 
 function HomeReducers(state = initialState, action) {

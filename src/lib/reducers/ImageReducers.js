@@ -1,7 +1,8 @@
 import { actions } from "../actions/ImageActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    images : []
+    images : localStorageService.load("images") || []
 }
 
 function ImageReducers(state = initialState, action) {

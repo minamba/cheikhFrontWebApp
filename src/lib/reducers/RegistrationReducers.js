@@ -1,7 +1,8 @@
 import { actions } from "../actions/RegistrationActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    registrations : []
+    registrations : localStorageService.load("registrations") || []
 }
 
 function RegistrationReducers(state = initialState, action) {

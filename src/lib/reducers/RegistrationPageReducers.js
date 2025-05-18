@@ -1,7 +1,8 @@
 import { actions } from "../actions/RegistrationPageActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    registrationPage : []
+    registrationPage : localStorageService.load("registrationPage") || []
 }
 
 function RegistrationPageReducers(state = initialState, action) {

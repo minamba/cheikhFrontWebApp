@@ -1,7 +1,8 @@
 import { actionsSeminaire } from "../actions/SeminaireActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-  seminaires: []
+  seminaires: localStorageService.load("seminaires") || []
 };
 
 function SeminaireReducers(state = initialState, action) {

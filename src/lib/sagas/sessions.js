@@ -1,12 +1,16 @@
 import {takeEvery,takeLatest, call, put, fork} from 'redux-saga/effects';
 import * as actions from '../actions/SessionActions';
 import * as api from '../api/sessions';
+import localStorageService from '../storage/storageService';
 
 
 function* getSessions() {
     try {
         const response = yield call(api.getSessions);
         //console.log("je rentre dans le getSessions", response);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("sessions", response.data);
         yield put(actions.getSessionsSuccess({sessions : response.data}));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -17,6 +21,9 @@ function* addSessions(action) {
     try {
         //console.log("je rentre dans le addSessions", action.payload);
         const response = yield call(api.addSession,action.payload);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("sessions", response.data);
         yield put(actions.addSessionsSuccess({session : response.data}));
     } catch (error) {
         yield put(actions.addSessionsFailure({error : error.response.data}));
@@ -30,6 +37,9 @@ function* updateSession(action) {
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getSessions);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("sessions", response.data);
         yield put(actions.getSessionsSuccess({ session: response.data }));
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
@@ -42,6 +52,11 @@ function* deleteSession(action) {
         yield call(api.deleteSession,action.payload);
         
         //je rappel getSeminaire pour la mise à jour du store
+        const response = yield call(api.getSessions);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("sessions", response.data);
+        yield put(actions.getSessionsSuccess({ session: response.data }));
     } catch (error) {
         yield put(actions.getSessionsFailure({ error : error.response.data }));   
     }

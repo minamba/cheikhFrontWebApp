@@ -1,7 +1,8 @@
 import { actions } from "../actions/MediaActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    medias : []
+    medias : localStorageService.load("medias") || []
 }
 
 function MediaReducers(state = initialState, action) {

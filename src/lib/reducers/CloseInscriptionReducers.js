@@ -1,7 +1,8 @@
 import { actions } from "../actions/CloseInscriptionActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-    closeInscription : []
+    closeInscription : localStorageService.load("closeInscription") || []
 }
 
 function CloseInscriptionReducers(state = initialState, action) {

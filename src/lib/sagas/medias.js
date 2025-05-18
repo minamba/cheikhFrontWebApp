@@ -1,13 +1,18 @@
 import {takeEvery,takeLatest, call, put, fork} from 'redux-saga/effects';
 import * as actions from '../actions/MediaActions';
 import * as api from '../api/medias';
+import localStorageService from '../storage/storageService';
 
 
 function* getMedias() {
     try {
         const response = yield call(api.getMedias);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("medias", response.data);
         //console.log("je rentre dans le getMedias", response);
         yield put(actions.getMediasSuccess({medias : response.data}));
+
     } catch (error) {
         //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
     }
@@ -17,6 +22,10 @@ function* addMedias(action) {
     try {
         //console.log("je rentre dans le addMedias", action.payload);
         const response = yield call(api.addMedia,action.payload);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("medias", response.data);
+
         yield put(actions.addMediasSuccess({media : response.data}));
     } catch (error) {
         yield put(actions.addMediasFailure({error : error.response.data}));
@@ -30,6 +39,10 @@ function* updateMedia(action) {
 
         //je rappel getSeminaire pour la mise à jour du store
         const response = yield call(api.getMedias);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("medias", response.data);
+
         yield put(actions.updateMediasSuccess({ media: response.data }));
     } catch (error) {
         yield put(actions.updateMediasFailure({ error : error.response.data }));
@@ -48,6 +61,9 @@ function* deleteMedia(action) {
   
       // Optionnel : rafraîchir la liste
       const response = yield call(api.getMedias);
+
+      //sauvegarde dans le localStorage
+      localStorageService.save("medias", response.data);
       yield put(actions.getMediasSuccess({ medias: response.data }));
       
     } catch (error) {

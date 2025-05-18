@@ -1,7 +1,8 @@
 import { actionsSeminaire } from "../actions/SeminaireUsersActions";
+import localStorageService from "../storage/storageService";
 
 const initialState = {
-  seminairesUsers: [],
+  seminairesUsers: localStorageService.load("seminairesUsers") || [],
   addSeminairSuccess : false,
   addSeminairError : false,
   errorMessageAddSeminaireUser : null

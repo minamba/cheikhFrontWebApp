@@ -1,11 +1,15 @@
 import {takeEvery,takeLatest, call, put, fork} from 'redux-saga/effects';
 import * as actions from '../actions/PaymentActions';
 import * as api from '../api/payments';
+import localStorageService from '../storage/storageService';
 
 
 function* getPayments() {
     try {
         const response = yield call(api.getPayments);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("payments", response.data);
         //console.log("je rentre dans le getPayment", response);
         yield put(actions.getPaymentsSuccess({ payments : response.data }));
     } catch (error) {
@@ -18,6 +22,7 @@ function* addPayment(action) {
     try {
         //console.log("je rentre dans le addPayment", action.payload);
         const response = yield call(api.addPayment,action.payload); 
+
         yield put({ type: actions.actions.ADD_PAYMENT_SUCCESS, payload: response });
     } catch (error) {
         yield put(actions.addPaymentFailure({ error : error.response.data }));
