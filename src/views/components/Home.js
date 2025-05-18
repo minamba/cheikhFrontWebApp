@@ -40,6 +40,9 @@ console.log("videoUrl",videoUrl);
           {videoUrl ? (
               <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
                 <video
+                  controls
+                  controlsList='nodownload'
+                  onContextMenu={(e) => e.preventDefault()}
                   autoPlay
                   muted
                   loop

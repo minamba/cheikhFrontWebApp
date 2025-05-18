@@ -47,7 +47,7 @@ const graphic = activeSeminaire?.graphic?.url;
           <h1 className="hero-title-seminaire mb-4">{activeSeminaire?.title}</h1>
           {activeSeminaire?.video?.url ? (
           <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
-          <video controls className="img-fluid" width="100%">
+          <video controls controlsList='nodownload' onContextMenu={(e) => e.preventDefault()} autoPlay muted loop playsInline className="img-fluid" width="100%">
                     <source src={activeSeminaire?.video?.url} type="video/mp4" />
            </video>
           </div>

@@ -121,7 +121,7 @@ export const Footer = () => {
                       <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                         <i className="bi bi-facebook" style={{ fontSize: '1.5rem' }}></i>
                       </a>
-                      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+                      <a href="https://www.youtube.com/@HatimAl-Maliki" target="_blank" rel="noopener noreferrer">
                         <i className="bi bi-youtube" style={{ fontSize: '1.5rem' }}></i>
                       </a>
                       <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
