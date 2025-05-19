@@ -102,7 +102,7 @@ export const HomeAdmin = () => {
           </button>
         </div>
       </div>
-
+      <div className="table-responsive">
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>
@@ -110,7 +110,7 @@ export const HomeAdmin = () => {
             <th>Banniere</th>
             <th>Graphique</th>
             <th>Vidéo</th>
-            <th>Actions</th>
+            <th className='size-column-update-and-delete'>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -123,21 +123,22 @@ export const HomeAdmin = () => {
                 <img src={homes.image?.url} alt="" className="img-fluid" />
               </td>
               <td>
-                <video controls className="img-fluid" width="150">
+                <video controls className="img-fluid" width="100%">
                   <source src={homes.media?.url} type="video/mp4" />
                 </video>
               </td>
-              <td>
+              <td className="d-flex flex-column gap-2">
                 <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditClick(homes)}>
                   <i className="bi bi-pencil"></i>
                 </button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(homes.id)}>
+                <button className="btn btn-danger btn-sm me-2" onClick={() => handleDelete(homes.id)}>
                   <i className="bi bi-x"></i>
                 </button>
               </td>
             </tr>
         </tbody>
       </table>
+      </div>
 
       {showModal && (
         <div className="modal fade show d-block" tabIndex="-1">

@@ -150,6 +150,7 @@ export const SeminairePageAdmin = () => {
         </div>
       </div>
 
+      <div className="table-responsive">
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>
@@ -159,7 +160,7 @@ export const SeminairePageAdmin = () => {
             <th>Graphique</th>
             <th>Video URL</th>
             <th>Active</th>
-            <th>Actions</th>
+            <th className='size-column-update-and-delete'>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -185,11 +186,11 @@ export const SeminairePageAdmin = () => {
                   onChange={() => handleToggleActive(s)}
                 />
               </td>
-              <td>
+              <td className="d-flex flex-column gap-2">
                 <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditClick(s)}>
                   <i className="bi bi-pencil"></i>
                 </button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(s.id)}>
+                <button className="btn btn-danger btn-sm me-2" onClick={() => handleDelete(s.id)}>
                   <i className="bi bi-x"></i>
                 </button>
               </td>
@@ -197,7 +198,7 @@ export const SeminairePageAdmin = () => {
           ))}
         </tbody>
       </table>
-
+      </div>
       {showModal && (
         <div className="modal fade show d-block" tabIndex="-1" role="dialog">
           <div className="modal-dialog modal-dialog-centered" role="document">

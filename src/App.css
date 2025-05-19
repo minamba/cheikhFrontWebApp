@@ -517,6 +517,12 @@ footer .bi:hover {
   background-color: #256429;
 }
 
+
+
+.size-column-update-and-delete{
+    width: 120px;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }

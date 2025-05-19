@@ -86,28 +86,29 @@ const ImageAdmin = () => {
         </button>
       </div>
 
+      <div className="table-responsive">
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>
             <th>Visuel</th>
             <th>Titre</th>
             <th>URL</th>
-            <th>Actions</th>
+            <th className="size-column-update-and-delete">Actions</th>
           </tr>
         </thead>
         <tbody>
           {images.map((img) => (
             <tr key={img.id}>
               <td>
-                <img src={img.url} alt={img.title} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+                <img src={img.url} alt={img.title} style={{ width: '90px', height: '90px', objectFit: 'cover' }} />
               </td>
               <td>{img.title}</td>
               <td>{img.url}</td>
-              <td>
+              <td className="d-flex flex-column gap-2">
                 <button className="btn btn-sm btn-warning me-2" onClick={() => handleEditClick(img)}>
                   <i className="bi bi-pencil"></i>
                 </button>
-                <button className="btn btn-sm btn-danger" onClick={() => handleDeleteClick(img.id)}>
+                <button className="btn btn-sm btn-danger me-2" onClick={() => handleDeleteClick(img.id)}>
                   <i className="bi bi-x"></i>
                 </button>
               </td>
@@ -115,7 +116,7 @@ const ImageAdmin = () => {
           ))}
         </tbody>
       </table>
-
+      </div>
       {showModal && (
         <div className="modal fade show d-block" tabIndex="-1" role="dialog">
           <div className="modal-dialog modal-dialog-centered" role="document">

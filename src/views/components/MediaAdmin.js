@@ -70,13 +70,14 @@ const MediaAdmin = () => {
           Ajouter
         </button>
       </div>
+      <div className="table-responsive">
       <table className="table table-bordered">
         <thead className="table-dark">
           <tr>
             <th>Titre</th>
             <th>URL</th>
             <th>Type</th>
-            <th>Actions</th>
+            <th className="size-column-update-and-delete">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -85,11 +86,11 @@ const MediaAdmin = () => {
               <td>{media.title}</td>
               <td>{media.url}</td>
               <td>{media.type}</td>
-              <td>
+              <td className="d-flex flex-column gap-2">
                 <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditClick(media)}>
                   ✎
                 </button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(media.id)}>
+                <button className="btn btn-danger btn-sm me-2" onClick={() => handleDelete(media.id)}>
                   ✖
                 </button>
               </td>
@@ -97,7 +98,7 @@ const MediaAdmin = () => {
           ))}
         </tbody>
       </table>
-
+      </div>
       {showModal && (
         <div className="modal fade show d-block" tabIndex="-1" role="dialog">
           <div className="modal-dialog modal-dialog-centered" role="document">

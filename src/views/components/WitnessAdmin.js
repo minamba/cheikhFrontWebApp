@@ -80,13 +80,14 @@ const WitnessAdmin = () => {
       <button className="btn btn-success mb-3" onClick={handleAdd}>
         Ajouter
       </button>
+      <div className="table-responsive">
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>
             <th>Titre</th>
             <th>Description</th>
             <th>Media</th>
-            <th>Actions</th>
+            <th className="size-column-update-and-delete">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -95,7 +96,7 @@ const WitnessAdmin = () => {
               <td>{witness.title}</td>
               <td>{witness.description}</td>
               <td>{witness.media?.url}</td>
-              <td>
+              <td className="d-flex flex-column gap-2">
                 <button
                   className="btn btn-warning btn-sm me-2"
                   onClick={() => handleEdit(witness)}
@@ -103,7 +104,7 @@ const WitnessAdmin = () => {
                   <i className="bi bi-pencil"></i>
                 </button>
                 <button
-                  className="btn btn-danger btn-sm"
+                  className="btn btn-danger btn-sm me-2"
                   onClick={() => handleDelete(witness.id)}
                 >
                   <i className="bi bi-x"></i>
@@ -113,7 +114,7 @@ const WitnessAdmin = () => {
           ))}
         </tbody>
       </table>
-
+      </div>
       {showModal && (
         <div className="modal fade show d-block" tabIndex="-1" role="dialog">
           <div className="modal-dialog modal-dialog-centered" role="document">
