@@ -5,7 +5,9 @@ import rootSaga from '../sagas/Index';
 import axios from 'axios';
 
 axios.defaults.withCredentials = false;
-axios.defaults.baseURL = 'https://localhost:7025';
+
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || '/';
+// axios.defaults.baseURL = 'http://localhost:7025';
 //axios.defaults.baseURL = 'http://192.168.1.34:5161';
 
 // Création du middleware
