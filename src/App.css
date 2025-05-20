@@ -523,6 +523,20 @@ footer .bi:hover {
     width: 120px;
 }
 
+
+.video-wrapper video {
+  transition: transform 0.3s ease-in-out;
+}
+
+.video-wrapper video:hover {
+  transform: scale(1.02);
+}
+
+.calligraphic-glow {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }

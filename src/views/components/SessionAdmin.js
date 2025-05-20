@@ -5,6 +5,7 @@ import { updateSessionsRequest } from '../../lib/actions/SessionActions';
 import { addSessionsRequest } from '../../lib/actions/SessionActions';
 import { deleteSessionsRequest } from '../../lib/actions/SessionActions';
 import { useState } from 'react';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const SessionAdmin = () => {
     const [search, setSearch] = useState('');
@@ -97,6 +98,7 @@ export const SessionAdmin = () => {
   
     return (
       <div className="container py-4">
+        <AdminProtectedPage>
         <h2 className="fw-bold text-center mb-4">Les sessions</h2>
   
         {/* Barre de recherche + bouton ajouter */}
@@ -216,6 +218,7 @@ export const SessionAdmin = () => {
           </div>
         )}
         {showModal && <div className="modal-backdrop fade show"></div>}
+        </AdminProtectedPage>
       </div>
     );
 };

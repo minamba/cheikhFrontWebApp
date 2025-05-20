@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addWitnessesRequest, updateWitnessesRequest, deleteWitnessesRequest, getWitnessesRequest } from '../../lib/actions/WitnessActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 const WitnessAdmin = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,7 @@ const WitnessAdmin = () => {
 
   return (
     <div className="container py-4">
+      <AdminProtectedPage>
       <h2 className="mb-4">Gestion des témoignages</h2>
       <button className="btn btn-success mb-3" onClick={handleAdd}>
         Ajouter
@@ -180,6 +182,7 @@ const WitnessAdmin = () => {
         </div>
       )}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };

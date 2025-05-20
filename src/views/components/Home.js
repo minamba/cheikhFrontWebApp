@@ -38,22 +38,28 @@ console.log("videoUrl",videoUrl);
         <div className="container text-center">
           <h1 className="calligraphic-glow mb-5">{homes.homes?.title}</h1>
           {videoUrl ? (
-              <div className="ratio ratio-16x9 shadowed-video mx-auto" style={{ maxWidth: '900px' }}>
-                <video
-                  controls
-                  controlsList='nodownload'
-                  onContextMenu={(e) => e.preventDefault()}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-100 h-100"
-                  style={{ objectFit: 'cover' }}
-                >
-                  <source src={videoUrl} type="video/mp4" />
-                  Votre navigateur ne supporte pas la balise vidéo.
-                </video>
-              </div>
+            <div
+              className="video-wrapper mx-auto shadow-lg rounded overflow-hidden"
+              style={{
+                maxWidth: '900px',
+                border: '3px solid rgba(255, 255, 255, 0.2)',
+              }}
+            >
+              <video
+                controls
+                controlsList="nodownload"
+                onContextMenu={(e) => e.preventDefault()}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="img-fluid w-100"
+                style={{ borderRadius: '8px' }}
+              >
+                <source src={videoUrl} type="video/mp4" />
+                Votre navigateur ne supporte pas la balise vidéo.
+              </video>
+            </div>
             ) : (
               <div style={{ height: '500px' }} className="d-flex align-items-center justify-content-center text-white">
                 Chargement de la vidéo...

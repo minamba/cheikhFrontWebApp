@@ -7,6 +7,7 @@ import {
   deleteHomesRequest,
   getHomesRequest
 } from '../../lib/actions/HomeActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const HomeAdmin = () => {
   const dispatch = useDispatch();
@@ -89,6 +90,7 @@ useEffect(() => {
 
   return (
     <div className="container py-5">
+      <AdminProtectedPage>
       <div className="row align-items-center mb-3">
         <div className="col-md-8 mb-2 mb-md-0">
           <input
@@ -225,6 +227,7 @@ useEffect(() => {
         </div>
       )}
       {showModal && <div className="modal-backdrop fade show" />}
+      </AdminProtectedPage>
     </div>
   );
 };

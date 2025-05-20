@@ -6,6 +6,7 @@ import {
   getThemesRequest,
   deleteThemesRequest    
 } from '../../lib/actions/ThemeActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const ThemeAdmin = () => {
   const [search, setSearch] = useState('');
@@ -94,6 +95,7 @@ export const ThemeAdmin = () => {
 
   return (
     <div className="container py-4">
+      <AdminProtectedPage>
       <h2 className="fw-bold text-center mb-4">Les thèmes</h2>
 
       {/* Barre de recherche + bouton ajouter */}
@@ -213,6 +215,7 @@ export const ThemeAdmin = () => {
         </div>
       )}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };

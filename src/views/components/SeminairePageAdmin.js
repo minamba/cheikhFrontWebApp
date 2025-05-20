@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSeminaireRequest, addSeminaireRequest, deleteSeminaireRequest, getSeminairesRequest } from '../../lib/actions/SeminaireActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const SeminairePageAdmin = () => {
   const dispatch = useDispatch();
@@ -128,6 +129,7 @@ export const SeminairePageAdmin = () => {
 
   return (
     <div className="container py-5">
+      <AdminProtectedPage>
       <div className="row align-items-center mb-3">
       <h2 className="fw-bold text-center mb-4">Gestion des séminaires</h2>
         <div className="col-6 col-md-6 mb-2 mb-md-0">
@@ -164,39 +166,52 @@ export const SeminairePageAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredSeminaires.map((s) => (
-            <tr key={s.id || `${s.title}-${Math.random()}`}>
-              <td>{s.title}</td>
-              <td>{s.amount} €</td>
-              <td>
-                <img src={s.banner.url} alt="Banner" className="img-fluid" />
-              </td>
-              <td>
-                <img src={s.graphic.url} alt="Graphique" className="img-fluid" />
-              </td>
-              <td>
-              <video controls className="img-fluid" width="100%">
-                    <source src={s.video.url} type="video/mp4" />
-              </video>
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={s.active || false}
-                  onChange={() => handleToggleActive(s)}
-                />
-              </td>
-              <td className="d-flex flex-column gap-2">
-                <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditClick(s)}>
-                  <i className="bi bi-pencil"></i>
-                </button>
-                <button className="btn btn-danger btn-sm me-2" onClick={() => handleDelete(s.id)}>
-                  <i className="bi bi-x"></i>
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+            {filteredSeminaires.map((s) => (
+              <tr key={s.id || `${s.title}-${Math.random()}`}>
+                <td>{s.title}</td>
+                <td>{s.amount} €</td>
+                <td>
+                  {s.banner?.url ? (
+                    <img src={s.banner.url} alt="Banner" className="img-fluid" />
+                  ) : (
+                    <span className="text-muted">Aucune</span>
+                  )}
+                </td>
+                <td>
+                  {s.graphic?.url ? (
+                    <img src={s.graphic.url} alt="Graphique" className="img-fluid" />
+                  ) : (
+                    <span className="text-muted">Aucune</span>
+                  )}
+                </td>
+                <td>
+                  {s.video?.url ? (
+                    <video controls className="img-fluid" width="100%">
+                      <source src={s.video.url} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <span className="text-muted">Aucune</span>
+                  )}
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={s.active || false}
+                    onChange={() => handleToggleActive(s)}
+                  />
+                </td>
+                <td className="d-flex flex-column gap-2">
+                  <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditClick(s)}>
+                    <i className="bi bi-pencil"></i>
+                  </button>
+                  <button className="btn btn-danger btn-sm me-2" onClick={() => handleDelete(s.id)}>
+                    <i className="bi bi-x"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+
       </table>
       </div>
       {showModal && (
@@ -283,6 +298,7 @@ export const SeminairePageAdmin = () => {
         </div>
       )}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };

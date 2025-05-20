@@ -7,6 +7,7 @@ import {
   addPaymentPageRequest
 } from '../../lib/actions/PaymentPageActions';
 import { getImagesRequest } from '../../lib/actions/ImageActions'; 
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const PaymentPageAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -66,6 +67,7 @@ export const PaymentPageAdmin = () => {
 
   return (
     <div className="container py-4">
+      <AdminProtectedPage>
       <h2 className="fw-bold text-center mb-4">Page de paiement admin</h2>
 
       <div className="text-end mb-3">
@@ -142,6 +144,7 @@ export const PaymentPageAdmin = () => {
           <Button variant="primary" onClick={handleUpdate}>{editMode ? 'Modifier' : 'Ajouter'}</Button>
         </Modal.Footer>
       </Modal>
+      </AdminProtectedPage>
     </div>
   );
 };

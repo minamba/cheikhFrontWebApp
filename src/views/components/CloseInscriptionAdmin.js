@@ -7,6 +7,7 @@ import {
   addCloseInscriptionRequest
 } from '../../lib/actions/CloseInscriptionActions';
 import { getImagesRequest } from '../../lib/actions/ImageActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const CloseInscriptionAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -67,6 +68,7 @@ export const CloseInscriptionAdmin = () => {
 
   return (
     <div className="container py-4">
+      <AdminProtectedPage>
       <h2 className="fw-bold text-center mb-4">Inscription fermées</h2>
 
       <div className="mb-3 text-end">
@@ -140,6 +142,7 @@ export const CloseInscriptionAdmin = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      </AdminProtectedPage>
     </div>
   );
 };

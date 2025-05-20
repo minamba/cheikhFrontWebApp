@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addImagesRequest, updateImagesRequest, deleteImagesRequest } from '../../lib/actions/ImageActions';
 import { getImagesRequest } from '../../lib/actions/ImageActions';
 import { postUploadRequest } from '../../lib/actions/UploadActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 
 
@@ -77,6 +78,7 @@ const ImageAdmin = () => {
 
   return (
     <div className="container py-4">
+      <AdminProtectedPage>
       <h2 className="fw-bold text-center mb-4">Gestion des images</h2>
       <div className="text-end mb-3">
         <button className="btn btn-success" onClick={handleOpenAdd}>
@@ -158,6 +160,7 @@ const ImageAdmin = () => {
         </div>
       )}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMediasRequest, updateMediasRequest, getMediasRequest, deleteMediasRequest } from '../../lib/actions/MediaActions';
 import { postUploadRequest } from '../../lib/actions/UploadActions';
 import { useEffect } from 'react';
+import AdminProtectedPage from './AdminProtectedPage';
 
 const MediaAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -80,6 +81,7 @@ const MediaAdmin = () => {
 
   return (
     <div className="container py-4">
+      <AdminProtectedPage>
       <h2 className="fw-bold text-center mb-4">Gestion des Médias</h2>
       <div className="mb-3 text-end">
         <button className="btn btn-success" onClick={handleAddClick}>
@@ -180,6 +182,7 @@ const MediaAdmin = () => {
         </div>
       )}
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </AdminProtectedPage>
     </div>
   );
 };

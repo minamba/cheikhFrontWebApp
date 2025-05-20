@@ -5,6 +5,7 @@ import { getTargetsRequest } from '../../lib/actions/TargetActions';
 import { updateTargetsRequest } from '../../lib/actions/TargetActions';
 import { addTargetsRequest } from '../../lib/actions/TargetActions';
 import { deleteTargetsRequest } from '../../lib/actions/TargetActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const TargetAdmin = () => {
     const [search, setSearch] = useState('');
@@ -97,6 +98,7 @@ console.log("bizarre",seminaires.seminaires)
   
     return (
       <div className="container py-4">
+        <AdminProtectedPage>
         <h2 className="fw-bold text-center mb-4">Les Objectifs</h2>
   
         {/* Barre de recherche + bouton ajouter */}
@@ -216,6 +218,7 @@ console.log("bizarre",seminaires.seminaires)
           </div>
         )}
         {showModal && <div className="modal-backdrop fade show"></div>}
+        </AdminProtectedPage>
       </div>
     );
 };

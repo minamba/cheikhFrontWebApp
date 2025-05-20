@@ -7,6 +7,7 @@ import {
   addRegistrationPageRequest
 } from '../../lib/actions/RegistrationPageActions';
 import { getImagesRequest } from '../../lib/actions/ImageActions';
+import AdminProtectedPage from './AdminProtectedPage';
 
 export const RegistrationPageAdmin = () => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -77,6 +78,7 @@ export const RegistrationPageAdmin = () => {
 
   return (
     <div className="container py-4">
+      <AdminProtectedPage>
       <h2 className="fw-bold text-center mb-4">Page d'admin de demande d'entretien</h2>
 
       <div className="text-end mb-3">
@@ -203,6 +205,7 @@ export const RegistrationPageAdmin = () => {
           <Button variant="success" onClick={handleAdd}>Ajouter</Button>
         </Modal.Footer>
       </Modal>
+      </AdminProtectedPage>
     </div>
   );
 };
