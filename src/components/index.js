@@ -39,7 +39,7 @@ const isClosed = datas.registrationPage.find((registrationPage) => registrationP
   <nav className="navbar navbar-expand-lg custom-navbar-light sticky-top">
     <div className="container-fluid">
       <Link to="/" className="navbar-brand" aria-current="page">
-      <img src="/Images/channels4_profile.jpg" alt="Logo" className="navbar-logo"/>
+      <img src="https://i.imgur.com/sD2FBtP.jpeg" alt="Logo" className="navbar-logo"/>
       </Link>
       <button
         className="navbar-toggler"
@@ -101,7 +101,7 @@ export const Footer = () => {
 
                   {/* Colonne 1 : Logo */}
                   <div className="col-md-4 mb-4 text-center text-md-start">
-                    <img src="/Images/channels4_profile.jpg" alt="Logo" className="navbar-logo"/>
+                    <img src="https://i.imgur.com/sD2FBtP.jpeg" alt="Logo" className="navbar-logo"/>
                   </div>
 
                   {/* Colonne 2 : Liens utiles */}
