@@ -523,7 +523,7 @@ footer .bi:hover {
     width: 120px;
 }
 
-
+/* video */
 .video-wrapper video {
   transition: transform 0.3s ease-in-out;
 }
@@ -535,6 +535,7 @@ footer .bi:hover {
 .calligraphic-glow {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
 }
+/* video */
 
 
 /* Animations */
