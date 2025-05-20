@@ -131,7 +131,8 @@ console.log("videoUrl",videoUrl);
             >
             {/* Slide 1 */}
            
-            {witnesses.witnesses.map((witness) => (
+            {Array.isArray(witnesses?.witnesses) &&
+              witnesses.witnesses.map((witness) => (
               <SwiperSlide key={witness.id}>
                 <div className="testimonial-card p-4 h-100 rounded">
                   <div className="ratio ratio-16x9 mb-3">
