@@ -39,12 +39,7 @@ const [localPhone, setLocalPhone] = useState('');
     sendedtobot: false,
   });
 
-  const entretien = {
-    lastName : formData.lastName,
-    firstName : formData.firstName,
-    phoneNumber : formData.phoneNumber,
-    mail : formData.email,
-  }
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -72,6 +67,14 @@ const [localPhone, setLocalPhone] = useState('');
     if (registration) {
         alert("Cet utilisateur est déjà inscrit pour une demande d'entretient");
         return;
+    }
+
+
+    const entretien = {
+      lastName : formData.lastName,
+      firstName : formData.firstName,
+      phoneNumber : String(fullPhone),
+      mail : formData.email,
     }
 
     //envoi telegram

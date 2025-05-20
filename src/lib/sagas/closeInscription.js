@@ -32,7 +32,7 @@ function* updateCloseInscription(action) {
 
 function* addCloseInscription(action) {
     try {
-        //console.log("je rentre dans le addCloseInscription", action.payload);
+        console.log("je rentre dans le addCloseInscription", action.payload);
         yield call(api.addCloseInscription,action.payload);
 
         //je rappel getCloseInscription pour la mise à jour du store
