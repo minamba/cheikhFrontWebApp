@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import {
   addHomesRequest,
   updateHomesRequest,
@@ -12,7 +13,7 @@ export const HomeAdmin = () => {
   const homes = useSelector((state) => state.homes?.homes);
   const images = useSelector((state) => state.images.images || []);
   const videos = useSelector((state) => state.medias.medias || []);
-
+  const homeAddSuccess = useSelector((state) => state.homes.homeAddSuccess);
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -27,6 +28,15 @@ export const HomeAdmin = () => {
 //   const filteredHomes = homes?.filter((h) =>
 //     h.title?.toLowerCase().includes(searchTerm.toLowerCase())
 //   );
+
+
+useEffect(() => {
+    if (homeAddSuccess) {
+        dispatch(getHomesRequest());
+        setShowModal(false);
+    }
+}, [homeAddSuccess]);
+
 
   const handleEditClick = (home) => {
     setForm({

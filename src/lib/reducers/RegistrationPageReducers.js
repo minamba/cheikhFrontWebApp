@@ -26,6 +26,13 @@ function RegistrationPageReducers(state = initialState, action) {
                 }
             })
 
+        // Ajout
+        case actions.ADD_REGISTRATION_PAGE_SUCCESS:
+            return {
+                ...state,
+                registrationPage: [...state.registrationPage, action.payload.registrationPage],
+              };
+
         default:
             return state
     }

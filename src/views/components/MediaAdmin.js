@@ -2,15 +2,26 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMediasRequest, updateMediasRequest, getMediasRequest, deleteMediasRequest } from '../../lib/actions/MediaActions';
 import { postUploadRequest } from '../../lib/actions/UploadActions';
+import { useEffect } from 'react';
 
 const MediaAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState({ title: '', file: null, type: '' });
   const [selectedMedia2, setSelectedMedia2] = useState({file: null});
+  const succesUpload = useSelector((state) => state.upload.showSuccessUpload);
 
   const data = useSelector((state) => state.medias.medias || []);
   const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    if (succesUpload && !isEditMode) {
+      dispatch(getMediasRequest());
+      setShowModal(false); // Fermer la modale seulement une fois l'upload terminé
+    }
+  }, [succesUpload]);
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -25,7 +36,12 @@ const MediaAdmin = () => {
   };
 
   const handleEditClick = (media) => {
-    setSelectedMedia(media);
+    setSelectedMedia({
+      title: media.title || '',
+      url: media.url || '',
+      type: media.type || '',
+      id: media.id, // utile pour update
+    });
     setIsEditMode(true);
     setShowModal(true);
   };
@@ -42,12 +58,12 @@ const MediaAdmin = () => {
 
     if (isEditMode) {
         dispatch(updateMediasRequest({Id : selectedMedia.id, Title : selectedMedia.title, Url : selectedMedia.url, Type : typeString}));
+        setTimeout(() => {
+            dispatch(getMediasRequest());
+        }, 1000);
       } else {
-        dispatch(addMediasRequest({Title : selectedMedia.title, Url : selectedMedia.url, Type : typeString}));
-
         const typeMedia = String(selectedMedia.type) === "1" ? "VIDEO" : "AUDIO";
         dispatch(postUploadRequest({File : selectedMedia2.file, Type : typeMedia}));
-
       }
 
 
@@ -114,7 +130,7 @@ const MediaAdmin = () => {
                     <input
                       type="text"
                       className="form-control"
-                      value={selectedMedia.title}
+                      value={selectedMedia.title || ''}
                       onChange={(e) => setSelectedMedia({ ...selectedMedia, title: e.target.value })}
                       required
                     />
@@ -124,7 +140,7 @@ const MediaAdmin = () => {
                     <input
                       type="text"
                       className="form-control"
-                      value={selectedMedia.url}
+                      value={selectedMedia.url || ''}
                       onChange={(e) => setSelectedMedia({ ...selectedMedia, url: e.target.value })}
                       required
                     />
@@ -134,7 +150,7 @@ const MediaAdmin = () => {
                     <input
                       type="text"
                       className="form-control"
-                      value={selectedMedia.type}
+                      value={selectedMedia.type || ''}
                       onChange={(e) => setSelectedMedia({ ...selectedMedia, type: e.target.value })}
                       required
                     />

@@ -9,7 +9,7 @@ function* getHomes() {
         console.log("je rentre dans le getHomes", response);
 
         //sauvegarde dans le localStorage
-        localStorageService.save("homes", response.data);
+        //localStorageService.save("homes", response.data);
         yield put(actions.getHomesSuccess({homes : response.data}));
     } catch (error) {
     //    yield put(actions.getHomesFailure({ error : error.response.data }));
@@ -18,11 +18,11 @@ function* getHomes() {
 
 function* addHomes(action) {
     try {
-        //console.log("je rentre dans le addHomessssssssssssssssssssss", action.payload);
+        console.log("je rentre dans le addHomessssssssssssssssssssss", action.payload);
         const response = yield call(api.addHome,action.payload);
 
         //sauvegarde dans le localStorage
-        localStorageService.save("homes", response.data);
+        //localStorageService.save("homes", response.data);
         yield put(actions.addHomesSuccess({home : response.data}));
     } catch (error) {
         yield put(actions.addHomesFailure({error : error.response.data}));
@@ -40,7 +40,7 @@ function* updateHome(action) {
       const response = yield call(api.getHomes);
 
       //sauvegarde dans le localStorage
-      localStorageService.save("homes", response.data);
+      //localStorageService.save("homes", response.data);
   
       // On envoie uniquement les données utiles dans le store
       yield put(actions.updateHomesSuccess({ home: response.data }));

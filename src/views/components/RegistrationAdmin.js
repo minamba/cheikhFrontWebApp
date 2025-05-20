@@ -10,8 +10,7 @@ export const RegistrationAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const registrationPages = useSelector((state) => state.registrationPage);
-  const registrationPage = registrationPages.registrationPage.find((registrationPage) => registrationPage.id === 1);
-  
+  const registrationPage = registrationPages.registrationPage[0];
 
   const dispatch = useDispatch();
 
@@ -56,7 +55,18 @@ export const RegistrationAdmin = () => {
 
   const handleActivate = (e) => {
     const checked = e.target.checked;
-    dispatch(updateRegistrationPageRequest({ Id : registrationPage.id, Title : registrationPage.title, IsClosed: checked }));
+  
+    if (!registrationPage || !registrationPage.id) {
+      console.warn("Données de registrationPage non disponibles");
+      return;
+    }
+  
+    dispatch(updateRegistrationPageRequest({
+      Id: registrationPage.id,
+      Title: registrationPage.title,
+      IsClosed: checked
+    }));
+  
     setTimeout(() => {
       dispatch(getRegistrationPageRequest());
     }, 2000);

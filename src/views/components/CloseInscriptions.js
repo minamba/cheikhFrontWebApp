@@ -54,6 +54,8 @@ const dispatch = useDispatch();
     },[]);
   };
 
+
+  console.log("hasActiveSeminaire", hasActiveSeminaire);
   const handleButtonClick = () => {
     if (hasActiveSeminaire) {
       navigate("/seminaire"); // ou <Link>, mais ici on le fait programmé

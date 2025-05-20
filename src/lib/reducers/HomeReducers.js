@@ -2,7 +2,8 @@ import { actions } from "../actions/HomeActions";
 import localStorageService from "../storage/storageService";
 
 const initialState = {
-    homes : localStorageService.load("homes") || []
+    homes : [],
+    homeAddSuccess : false
 }
 
 function HomeReducers(state = initialState, action) {
@@ -17,22 +18,34 @@ function HomeReducers(state = initialState, action) {
 
         // Mise à jour
         case actions.UPDATE_HOMES_SUCCESS:
-            state.homes.map(home => {
-                if(home.id === action.payload.id) {
-                    return {...home, ...action.payload.home}
-                }
-                else{
-                    return home
-                }
-            })
+        return {
+            ...state,
+            homes: state.homes.map(home =>
+                home.id === action.payload.home.id
+                    ? { ...home, ...action.payload.home }
+                    : home
+            )
+        };
 
         // Suppression
         case actions.DELETE_HOMES_SUCCESS:
-              return state.homes.filter(home => home.id !== action.payload)
+            return {
+                ...state,
+                homes: state.homes.filter(home => home.id !== action.payload)
+            };
 
         // Ajout
         case actions.ADD_HOMES_SUCCESS:
-            return [...state.homes, action.payload.home]
+            return {
+                ...state,
+                homes: [...state.homes, action.payload.home],
+                homeAddSuccess : true
+            };
+        case actions.ADD_HOMES_FAILURE:
+            return {
+                ...state,
+                homeAddSuccess : false
+            };
         default:
             return state
     }

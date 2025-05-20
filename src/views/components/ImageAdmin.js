@@ -64,7 +64,6 @@ const ImageAdmin = () => {
       payload.append('id', selectedImage.id);
       dispatch(updateImagesRequest({Id : selectedImage.id, Title : formData.title, Url : selectedImage.url}));
     } else {
-      dispatch(addImagesRequest({Title : formData.title, Url : formData.file}));
       dispatch(postUploadRequest({File : formData.file, Type : "IMAGE"}));
     }
 

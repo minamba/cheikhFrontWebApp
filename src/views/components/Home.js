@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 export const Home = () => {
 const dispatch = useDispatch();
 const datas = useSelector((state) => state.registrationPage);
-const isClosed = datas.registrationPage.find((registrationPage) => registrationPage.id === 1)?.isClosed;
+const isClosed = datas.registrationPage[0]?.isClosed;
 const homes = useSelector((state) => state.homes);
 const witnesses = useSelector((state) => state.witnesses);
 

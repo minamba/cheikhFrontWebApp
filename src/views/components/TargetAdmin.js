@@ -16,6 +16,10 @@ export const TargetAdmin = () => {
     const seminaires = useSelector((state) => state.seminaires) || { seminaires: [] };
     const dispatch = useDispatch();
   
+
+
+console.log("bizarre",seminaires.seminaires)
+
     // Charger les thèmes à l'initialisation
     useEffect(() => {
       dispatch(getTargetsRequest());
@@ -87,7 +91,7 @@ export const TargetAdmin = () => {
     };
   
     // Loader si les séminaires ou thèmes ne sont pas prêts
-    if (!seminaires.seminaires?.length || !targets.targets?.length) {
+    if (!seminaires.seminaires || !targets.targets) {
       return <div className="text-center my-5">Chargement...</div>;
     }
   

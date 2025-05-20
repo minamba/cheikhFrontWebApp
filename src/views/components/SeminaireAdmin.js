@@ -47,6 +47,10 @@ export const SeminaireAdmin = () => {
         mailSent: false
       },[]);
       setShowModal(false);
+
+      setTimeout(() => {
+        dispatch(getSeminairesUserRequest());
+      }, 3000);
     };
 
   
@@ -64,7 +68,7 @@ export const SeminaireAdmin = () => {
 
           setTimeout(() => {
             dispatch(getSeminairesUserRequest());
-          }, 2000);
+          }, 1000);
         }
       });
     };

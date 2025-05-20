@@ -34,7 +34,8 @@ export const AppContainer = connect(
             stripePaymentSuccess : state.stripePaymentSuccess,
             stripePaymentFailure : state.stripePaymentFailure,
             sessionUrl : state.sessionUrl,
-            errorStripePayment : state.errorStripePayment
+            errorStripePayment : state.errorStripePayment,
+            homeAddSuccess : state.homeAddSuccess
         }
     })
     (BaseApp);

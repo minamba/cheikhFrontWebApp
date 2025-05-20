@@ -9,3 +9,7 @@ export const updateRegistrationPage = (registrationPage) => {
     return axios.put("/registrationPage", registrationPage);
 }
 
+export const addRegistrationPage = (registrationPage) => {
+    console.log("ce que j'envoie a l'api", registrationPage);
+    return axios.post("/registrationPage", registrationPage);
+}

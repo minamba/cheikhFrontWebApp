@@ -88,7 +88,7 @@ export const ThemeAdmin = () => {
   };
 
   // Loader si les séminaires ou thèmes ne sont pas prêts
-  if (!seminaires.seminaires?.length || !themes.themes?.length) {
+  if (!seminaires.seminaires || !themes.themes) {
     return <div className="text-center my-5">Chargement...</div>;
   }
 

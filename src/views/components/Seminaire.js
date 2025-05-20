@@ -22,7 +22,7 @@ const targets = useSelector((state) => state.targets.targets);
 const sessions = useSelector((state) => state.sessions.sessions);
 const themes = useSelector((state) => state.themes.themes);
 const seminaires = useSelector((state) => state.seminaires) || [];
-const registrationPage = useSelector((state) => state.registrationPage.registrationPage.find((registrationPage) => registrationPage.id === 1));
+const registrationPage = useSelector((state) => state.registrationPage.registrationPage[0]);
 const closeRegistration = registrationPage?.isClosed;
 
 

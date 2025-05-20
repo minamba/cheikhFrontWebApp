@@ -16,7 +16,7 @@ const [localPhone, setLocalPhone] = useState('');
   const showSuccessPopup = useSelector(state => state.ui.showSuccessPopup);
   const showErrorPopup = useSelector(state => state.ui.showErrorPopup); 
   const registrationPages = useSelector((state) => state.registrationPage);
-  const registrationPage = registrationPages.registrationPage.find((registrationPage) => registrationPage.id === 1);
+  const registrationPage = registrationPages.registrationPage[0];
   const closeRegistration = registrationPage?.isClosed;
   const registrations = useSelector((state) => state.registrations.registrations);
   const tempFormData = useRef(null); // permet de garder le formData avant reinitialisation
@@ -102,7 +102,7 @@ const [localPhone, setLocalPhone] = useState('');
     <Fragment>
         <section className="hero-section-with-image d-flex align-items-center text-white" style={{backgroundImage: image ? `url("${image}")` : 'none'}}>
         <div className="container">
-        <h1 className="hero-title-open-inscription text-center mb-4">Entretien Téléphonique</h1>
+        <h1 className="hero-title-open-inscription text-center mb-4">{registrationPage?.title}</h1>
           <div className="inscription-card shadowed-card p-4 mx-auto" style={{ maxWidth: '700px' }}>
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="mb-3">

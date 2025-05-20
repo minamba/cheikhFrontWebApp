@@ -91,7 +91,7 @@ export const SessionAdmin = () => {
     };
   
     // Loader si les séminaires ou thèmes ne sont pas prêts
-    if (!seminaires.seminaires?.length || !sessions.sessions?.length) {
+    if (!seminaires.seminaires || !sessions.sessions) {
       return <div className="text-center my-5">Chargement...</div>;
     }
   

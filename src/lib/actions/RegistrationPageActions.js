@@ -7,6 +7,10 @@ export const actions = {
     UPDATE_REGISTRATION_PAGE_REQUEST : "UPDATE_REGISTRATION_PAGE_REQUEST",
     UPDATE_REGISTRATION_PAGE_SUCCESS : "UPDATE_REGISTRATION_PAGE_SUCCESS",
     UPDATE_REGISTRATION_PAGE_FAILURE : "UPDATE_REGISTRATION_PAGE_FAILURE",
+
+    ADD_REGISTRATION_PAGE_REQUEST : "ADD_REGISTRATION_PAGE_REQUEST",
+    ADD_REGISTRATION_PAGE_SUCCESS : "ADD_REGISTRATION_PAGE_SUCCESS",
+    ADD_REGISTRATION_PAGE_FAILURE : "ADD_REGISTRATION_PAGE_FAILURE",
 }
 
 
@@ -54,3 +58,27 @@ export function updateRegistrationPageFailure(error) {
     }
 
 }
+
+
+//add
+export function addRegistrationPageRequest(registrationPage) {
+    return {
+        type : actions.ADD_REGISTRATION_PAGE_REQUEST,
+        payload : registrationPage
+    }
+}
+
+export function addRegistrationPageSuccess(registrationPage) {
+    return {
+        type : actions.ADD_REGISTRATION_PAGE_SUCCESS,
+        payload : registrationPage
+    }
+}
+
+export function addRegistrationPageFailure(error) {
+    return {
+        type : actions.ADD_REGISTRATION_PAGE_FAILURE,
+        payload : error
+    }
+}
+
