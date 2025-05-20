@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Modal, Button } from 'react-bootstrap';
-import { getCloseInscriptionRequest, updateCloseInscriptionRequest } from '../../lib/actions/CloseInscriptionActions';
+import {
+  getCloseInscriptionRequest,
+  updateCloseInscriptionRequest,
+  addCloseInscriptionRequest
+} from '../../lib/actions/CloseInscriptionActions';
+import { getImagesRequest } from '../../lib/actions/ImageActions';
 
 export const CloseInscriptionAdmin = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({ title: '', banner: null });
 
   const dispatch = useDispatch();
 
   const datas = useSelector((state) => state.closeInscription.closeInscription);
-  const data = datas.CloseInscriptionAdmin;
-  const images = useSelector((state) => state.images.images || []); // <-- Liste des images
+  const images = useSelector((state) => state.images.images || []);
 
-console.log("data", datas);
+  useEffect(() => {
+    dispatch(getCloseInscriptionRequest());
+    dispatch(getImagesRequest());
+  }, [dispatch]);
 
   const handleEditClick = (item) => {
     setSelectedItem(item);
+    setEditMode(true);
+    setShowModal(true);
+  };
+
+  const handleAddClick = () => {
+    setSelectedItem({ title: '', banner: null });
+    setEditMode(false);
     setShowModal(true);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
     if (name === 'banner') {
       const selectedBanner = images.find((img) => img.id === parseInt(value));
       setSelectedItem((prev) => ({ ...prev, banner: selectedBanner }));
@@ -31,18 +45,35 @@ console.log("data", datas);
     }
   };
 
-  const handleUpdate = () => {
-    console.log("Mise à jjour :", selectedItem);
-    dispatch(updateCloseInscriptionRequest({id : selectedItem.id, Title : selectedItem.title, IdBanner : selectedItem.banner.id}));
+  const handleSubmit = () => {
+    if (editMode) {
+      dispatch(updateCloseInscriptionRequest({
+        id: selectedItem.id,
+        Title: selectedItem.title,
+        IdBanner: selectedItem.banner?.id
+      }));
+    } else {
+      dispatch(addCloseInscriptionRequest({
+        Title: selectedItem.title,
+        IdBanner: selectedItem.banner?.id
+      }));
+    }
+
+    setShowModal(false);
     setTimeout(() => {
       dispatch(getCloseInscriptionRequest());
-    }, 2000);
-    setShowModal(false);
+    }, 1000);
   };
 
   return (
     <div className="container py-4">
       <h2 className="fw-bold text-center mb-4">Inscription fermées</h2>
+
+      <div className="mb-3 text-end">
+        <button className="btn btn-success" onClick={handleAddClick}>
+          Ajouter
+        </button>
+      </div>
 
       <Table bordered>
         <thead className="table-dark text-center">
@@ -53,24 +84,23 @@ console.log("data", datas);
           </tr>
         </thead>
         <tbody>
-            <tr className="text-center">
-              <td>{datas.title}</td>
-              <td>
-                <img src={datas.banner?.url} alt="Banner" className="img-fluid" />
-              </td>
-              <td>
-                <button className="btn btn-warning btn-sm" onClick={() => handleEditClick(datas)}>
-                  ✏️
-                </button>
-              </td>
-            </tr>
+          <tr className="text-center">
+            <td>{datas?.title}</td>
+            <td>
+              <img src={datas?.banner?.url} alt="Banner" className="img-fluid" />
+            </td>
+            <td>
+              <button className="btn btn-warning btn-sm" onClick={() => handleEditClick(datas)}>
+                ✏️
+              </button>
+            </td>
+          </tr>
         </tbody>
       </Table>
 
-      {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Modifier</Modal.Title>
+          <Modal.Title>{editMode ? 'Modifier' : 'Ajouter'} une bannière</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -80,7 +110,7 @@ console.log("data", datas);
                 type="text"
                 className="form-control"
                 name="title"
-                value={selectedItem?.title || datas.title}
+                value={selectedItem?.title || ''}
                 onChange={handleChange}
               />
             </div>
@@ -88,24 +118,26 @@ console.log("data", datas);
             <div className="mb-3">
               <label className="form-label">Bannière</label>
               <select
-                  className="form-select"
-                  name="banner"
-                  value={selectedItem?.banner?.id || datas.banner?.id || ''}
-                  onChange={handleChange}
-                >
-                  <option value="">-- Sélectionner une bannière --</option>
-                  {images.map((img) => (
-                    <option key={img.id} value={img.id}>
-                      {img.title || img.url}
-                    </option>
-                  ))}
-                </select>
+                className="form-select"
+                name="banner"
+                value={selectedItem?.banner?.id || ''}
+                onChange={handleChange}
+              >
+                <option value="">-- Sélectionner une bannière --</option>
+                {images.map((img) => (
+                  <option key={img.id} value={img.id}>
+                    {img.title || img.url}
+                  </option>
+                ))}
+              </select>
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Fermer</Button>
-          <Button variant="primary" onClick={handleUpdate}>Modifier</Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            {editMode ? 'Modifier' : 'Ajouter'}
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

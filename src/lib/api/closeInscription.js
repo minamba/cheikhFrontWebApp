@@ -9,3 +9,7 @@ export const updateCloseInscription = (closeInscription) => {
     return axios.put("/closeinscription", closeInscription);
 }
 
+export const addCloseInscription = (closeInscription) => {
+    console.log("ce que j'envoie a l'api", closeInscription);
+    return axios.post("/closeinscription", closeInscription);
+}

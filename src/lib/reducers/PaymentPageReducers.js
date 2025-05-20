@@ -26,6 +26,13 @@ function PaymentPageReducers(state = initialState, action) {
                 }
             })
 
+        // Ajout
+        case actions.ADD_PAYMENT_PAGE_SUCCESS:
+            return {
+                ...state,
+                paymentPage: [...state.paymentPage, action.payload.paymentPage],
+              };
+
         default:
             return state
     }

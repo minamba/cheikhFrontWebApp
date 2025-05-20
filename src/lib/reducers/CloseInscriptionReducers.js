@@ -26,6 +26,13 @@ function CloseInscriptionReducers(state = initialState, action) {
                 }
             })
 
+        // Ajout
+        case actions.ADD_CLOSE_INSCRIPTION_SUCCESS:
+            return {
+                ...state,
+                closeInscription: [...state.closeInscription, action.payload.closeInscription],
+              };
+
         default:
             return state
     }

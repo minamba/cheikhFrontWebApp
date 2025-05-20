@@ -6,7 +6,11 @@ export const actions = {
 
     UPDATE_CLOSE_INSCRIPTION_REQUEST : "UPDATE_CLOSE_INSCRIPTION_REQUEST",
     UPDATE_CLOSE_INSCRIPTION_SUCCESS : "UPDATE_CLOSE_INSCRIPTION_SUCCESS",
-    UPDATE_CLOSE_INSCRIPTION_FAILURE : "UPDATE_CLOSE_INSCRIPTION_FAILURE",   
+    UPDATE_CLOSE_INSCRIPTION_FAILURE : "UPDATE_CLOSE_INSCRIPTION_FAILURE",
+
+    ADD_CLOSE_INSCRIPTION_REQUEST : "ADD_CLOSE_INSCRIPTION_REQUEST",
+    ADD_CLOSE_INSCRIPTION_SUCCESS : "ADD_CLOSE_INSCRIPTION_SUCCESS",
+    ADD_CLOSE_INSCRIPTION_FAILURE : "ADD_CLOSE_INSCRIPTION_FAILURE",
 }
 
 
@@ -53,3 +57,26 @@ export function updateCloseInscriptionFailure(error) {
         payload : error
     }
 }
+
+//add
+export function addCloseInscriptionRequest(closeInscription) {
+    return {
+        type : actions.ADD_CLOSE_INSCRIPTION_REQUEST,
+        payload : closeInscription
+    }
+}
+
+export function addCloseInscriptionSuccess(closeInscription) {
+    return {
+        type : actions.ADD_CLOSE_INSCRIPTION_SUCCESS,
+        payload : closeInscription
+    }
+}
+
+export function addCloseInscriptionFailure(error) {
+    return {
+        type : actions.ADD_CLOSE_INSCRIPTION_FAILURE,
+        payload : error
+    }
+}
+

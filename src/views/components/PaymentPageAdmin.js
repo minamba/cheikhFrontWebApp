@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Modal, Button } from 'react-bootstrap';
-import { getPaymentPageRequest, updatePaymentPageRequest } from '../../lib/actions/PaymentPageActions';
+import {
+  getPaymentPageRequest,
+  updatePaymentPageRequest,
+  addPaymentPageRequest
+} from '../../lib/actions/PaymentPageActions';
+import { getImagesRequest } from '../../lib/actions/ImageActions'; 
 
 export const PaymentPageAdmin = () => {
   const [showModal, setShowModal] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const dispatch = useDispatch();
   const datas = useSelector((state) => state.paymentPage.paymentPage);
   const images = useSelector((state) => state.images.images || []);
 
+  useEffect(() => {
+    dispatch(getPaymentPageRequest());
+    dispatch(getImagesRequest());
+  }, [dispatch]);
+
   const handleEditClick = (item) => {
     setSelectedItem(item);
+    setEditMode(true);
+    setShowModal(true);
+  };
+
+  const handleAddClick = () => {
+    setSelectedItem({ title: '', banner: null });
+    setEditMode(false);
     setShowModal(true);
   };
 
@@ -29,20 +47,32 @@ export const PaymentPageAdmin = () => {
 
   const handleUpdate = () => {
     if (!selectedItem || !selectedItem.banner) return;
-    dispatch(updatePaymentPageRequest({
-      id: selectedItem.id,
-      Title: selectedItem.title,
-      IdBanner: selectedItem.banner.id
-    }));
+
+    if (editMode) {
+      dispatch(updatePaymentPageRequest({
+        id: selectedItem.id,
+        Title: selectedItem.title,
+        IdBanner: selectedItem.banner.id
+      }));
+    } else {
+      dispatch(addPaymentPageRequest({
+        Title: selectedItem.title,
+        IdBanner: selectedItem.banner.id
+      }));
+    }
+
     setShowModal(false);
   };
-
-  // ✅ Corrigé ici :
-  console.log("data", datas?.banner?.url);
 
   return (
     <div className="container py-4">
       <h2 className="fw-bold text-center mb-4">Page de paiement admin</h2>
+
+      <div className="text-end mb-3">
+        <button className="btn btn-success" onClick={handleAddClick}>
+          Ajouter
+        </button>
+      </div>
 
       <Table bordered>
         <thead className="table-dark text-center">
@@ -74,7 +104,7 @@ export const PaymentPageAdmin = () => {
       {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Modifier</Modal.Title>
+          <Modal.Title>{editMode ? 'Modifier' : 'Ajouter'} une entrée</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -84,7 +114,7 @@ export const PaymentPageAdmin = () => {
                 type="text"
                 className="form-control"
                 name="title"
-                value={selectedItem?.title || datas?.title || ''}
+                value={selectedItem?.title || ''}
                 onChange={handleChange}
               />
             </div>
@@ -94,7 +124,7 @@ export const PaymentPageAdmin = () => {
               <select
                 className="form-select"
                 name="banner"
-                value={selectedItem?.banner?.id || datas?.banner?.id || ''}
+                value={selectedItem?.banner?.id || ''}
                 onChange={handleChange}
               >
                 <option value="">-- Sélectionner une bannière --</option>
@@ -109,9 +139,10 @@ export const PaymentPageAdmin = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Fermer</Button>
-          <Button variant="primary" onClick={handleUpdate}>Modifier</Button>
+          <Button variant="primary" onClick={handleUpdate}>{editMode ? 'Modifier' : 'Ajouter'}</Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 };
+

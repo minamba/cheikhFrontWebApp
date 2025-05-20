@@ -9,7 +9,6 @@ import { postUploadRequest } from '../../lib/actions/UploadActions';
 const ImageAdmin = () => {
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images.images || []);
-
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);

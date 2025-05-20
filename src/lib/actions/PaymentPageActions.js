@@ -6,7 +6,11 @@ export const actions = {
 
     UPDATE_PAYMENT_PAGE_REQUEST : "UPDATE_PAYMENT_PAGE_REQUEST",
     UPDATE_PAYMENT_PAGE_SUCCESS : "UPDATE_PAYMENT_PAGE_SUCCESS",
-    UPDATE_PAYMENT_PAGE_FAILURE : "UPDATE_PAYMENT_PAGE_FAILURE",   
+    UPDATE_PAYMENT_PAGE_FAILURE : "UPDATE_PAYMENT_PAGE_FAILURE",
+    
+    ADD_PAYMENT_PAGE_REQUEST : "ADD_PAYMENT_PAGE_REQUEST",
+    ADD_PAYMENT_PAGE_SUCCESS : "ADD_PAYMENT_PAGE_SUCCESS",
+    ADD_PAYMENT_PAGE_FAILURE : "ADD_PAYMENT_PAGE_FAILURE",
 }
 
 
@@ -53,3 +57,26 @@ export function updatePaymentPageFailure(error) {
         payload : error
     }
 }
+
+//add
+export function addPaymentPageRequest(paymentPage) {
+    return {
+        type : actions.ADD_PAYMENT_PAGE_REQUEST,
+        payload : paymentPage
+    }
+}
+
+export function addPaymentPageSuccess(paymentPage) {
+    return {
+        type : actions.ADD_PAYMENT_PAGE_SUCCESS,
+        payload : paymentPage
+    }
+}
+
+export function addPaymentPageFailure(error) {
+    return {
+        type : actions.ADD_PAYMENT_PAGE_FAILURE,
+        payload : error
+    }
+}
+

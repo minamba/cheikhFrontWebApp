@@ -32,6 +32,22 @@ function* updatePaymentPage(action) {
     }
 }
 
+function* addPaymentPage(action) {
+    try {
+        //console.log("je rentre dans le addPaymentPage", action.payload);
+        yield call(api.addPaymentPage,action.payload);
+
+        //je rappel getPaymentPage pour la mise à jour du store
+        const response = yield call(api.getPaymentPage);
+
+        //sauvegarde dans le localStorage
+        localStorageService.save("paymentPage", response.data);
+        yield put(actions.getPaymentPageSuccess({ paymentPage: response.data }));
+    } catch (error) {
+        //yield put({type: actions.GET_CLOSE_INSCRIPTION_FAILURE, payload: error});
+    }
+}
+
 
 
 function* watchGetPaymentPageRequest() {
@@ -42,9 +58,14 @@ function* watchUpdatePaymentPageRequest() {
     yield takeLatest(actions.actions.UPDATE_PAYMENT_PAGE_REQUEST,updatePaymentPage);
 }
 
+function* watchAddPaymentPageRequest() {
+    yield takeLatest(actions.actions.ADD_PAYMENT_PAGE_REQUEST,addPaymentPage);
+}
+
 const paymentPageSagas = [
     fork(watchGetPaymentPageRequest),
-    fork(watchUpdatePaymentPageRequest)
+    fork(watchUpdatePaymentPageRequest),
+    fork(watchAddPaymentPageRequest)
 ];
 
 export default paymentPageSagas;
