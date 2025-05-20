@@ -32,8 +32,10 @@ export const Navbar = () => {
   const isRegistrationPageAdmin = location.pathname === "/admin/registrationPage";
   const dispatch = useDispatch();
 
-const datas = useSelector((state) => state.registrationPage);
-const isClosed = datas.registrationPage.find((registrationPage) => registrationPage.id === 1)?.isClosed;
+  const datas = useSelector((state) => state.registrationPage);
+  const registrationList = Array.isArray(datas.registrationPage) ? datas.registrationPage : [];
+  
+  const isClosed = registrationList[0]?.isClosed;
 
   return (
   <nav className="navbar navbar-expand-lg custom-navbar-light sticky-top">
