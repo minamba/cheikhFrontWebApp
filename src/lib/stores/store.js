@@ -7,8 +7,8 @@ import axios from 'axios';
 axios.defaults.withCredentials = false;
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL || '/';
- //axios.defaults.baseURL = 'https://www.hatimalmaliki.com';
- axios.defaults.baseURL = 'http://192.168.1.34:5161';
+ axios.defaults.baseURL = 'https://www.hatimalmaliki.com';
+ //axios.defaults.baseURL = 'http://192.168.1.34:5161';
 
 // Création du middleware
 const sagaMiddleware = createSagaMiddleware();
