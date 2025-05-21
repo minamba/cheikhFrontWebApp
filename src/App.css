@@ -318,7 +318,7 @@ footer .bi:hover {
 }
 
 /* Ombre plus forte sur chaque card */
-.testimonial-card {
+/* .testimonial-card {
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
@@ -329,8 +329,63 @@ footer .bi:hover {
 .testimonial-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+} */
+
+/*CARD HOME*/
+.testimonial-card {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff, #f1f1f1); /* dégradé blanc */
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.testimonial-badge {
+  background-color: #40afb5;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 10px;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+.testimonial-card h5 {
+  color: #004e4c;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.testimonial-desc {
+  font-style: italic;
+  color: #666;
+}
+/*CARD HOME*/
+
+/*section card home */
+.bg-grayon {
+  background-color: #1e568d; /* Vert-gris très doux, plus foncé que #f8f8f8 */
+}
+/*section card home */
+
+
+section.styled-section:nth-of-type(3) {
+  background-color: #f8f8f8;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
 
 
 /* Formulaire contact */

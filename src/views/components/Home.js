@@ -113,8 +113,8 @@ console.log("videoUrl",videoUrl);
       </div>
 
       {/* Section 3: Témoignages avec Swiper */}
-      <section className="styled-section">
-        <div className="container text-center">
+      <section className="styled-section bg-grayon">
+        <div className="container text-center ">
           <h2 className="mb-5 subtitle">Témoignages</h2>
           <Swiper
         modules={[Autoplay]}
@@ -135,6 +135,7 @@ console.log("videoUrl",videoUrl);
               witnesses.witnesses.map((witness) => (
               <SwiperSlide key={witness.id}>
                 <div className="testimonial-card p-4 h-100 rounded">
+                  <div className="testimonial-badge">{witness.title}</div> {/* Nouveau badge */}
                   <div className="ratio ratio-16x9 mb-3">
                     {witness.media.type === 1 ? (
                       <video controls className="w-100 rounded shadowed-video">
@@ -147,10 +148,11 @@ console.log("videoUrl",videoUrl);
                       </audio>
                     )}
                   </div>
-                  <h5 className="mb-1">{witness.title}</h5>
+                  <hr />
                   <p className="testimonial-desc mb-0">{witness.description}</p>
                 </div>
               </SwiperSlide>
+
             ))}
           </Swiper>
         </div>
