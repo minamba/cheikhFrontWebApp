@@ -388,6 +388,12 @@ section.styled-section:nth-of-type(3) {
 }
 
 
+.background-light-gray {
+  background-color: #1c1b1b;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
 /* Formulaire contact */
 .contact-form input {
   border-radius: 30px;
@@ -606,7 +612,7 @@ section.styled-section:nth-of-type(3) {
 
 
 
-
+/* positionnement de la video home sur mobile */
 @media (max-width: 576px) {
   .hero-section-with-image {
     height: auto;
@@ -635,5 +641,98 @@ section.styled-section:nth-of-type(3) {
     margin-top: -30px !important;
   }
 }
+
+/* positionnement de la video seminaire sur mobile */
+
+@media (max-width: 576px) {
+  .hero-section-seminaire-with-image {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    min-height: auto !important;
+  }
+
+  .hero-section-seminaire-with-image .hero-title-seminaire {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .video-wrapper {
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+
+  .video-wrapper video {
+    border-radius: 12px;
+  }
+
+  .subscribe-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .bio-card {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .bio-card .bio-image {
+    margin-bottom: 16px;
+  }
+}
+
+
+/* close inscription mobile  */
+/* Design mobile pour la boîte d'inscription fermée */
+.close-inscription-mobile-box {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+}
+
+/* Spécifique mobile */
+@media (max-width: 576px) {
+  .hero-title-close-inscription {
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .close-inscription-mobile-box {
+    padding: 1.5rem 1.2rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  .close-inscription-mobile-box .hero-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .subscribe-btn {
+    font-size: 1.1rem;
+    padding: 12px 24px;
+    width: 100%;
+  }
+}
+
+
+/* seminaire mobile */
+@media (max-width: 768px) {
+  .bio-image img {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  .bio-text p {
+    font-size: 0.95rem !important;
+  }
+
+  .bio-card {
+    text-align: center !important;
+  }
+}
+
 
 

@@ -3,11 +3,12 @@ import '../../App.css';
 import { useDispatch } from 'react-redux';
 import { addRegistrationRequest } from '../../lib/actions/RegistrationActions';
 import { useState } from 'react';
-import { sendTelegramMessageRequest } from '../../lib/actions/TelegramActions';
+import { sendTelegramMessageRequest, sendTelegramMessageFailure } from '../../lib/actions/TelegramActions';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+
 
 export const Inscriptions = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const [localPhone, setLocalPhone] = useState('');
   const tempFormData = useRef(null); // permet de garder le formData avant reinitialisation
   const navigate = useNavigate();
   const image = registrationPage?.image?.url;
+  const showErrorAddRegistration = useSelector(state => state.ui.showErrorAddRegistration);
+  const errorMessageAddRegistration = useSelector(state => state.registrations.errorMessageAddRegistration);
 
   useEffect(() => {
     if (closeRegistration) {
@@ -50,6 +53,12 @@ const [localPhone, setLocalPhone] = useState('');
   };
 
 
+useEffect(() => {
+  console.log("errorMessageAddRegistration", errorMessageAddRegistration);
+}, [errorMessageAddRegistration]);
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -70,21 +79,19 @@ const [localPhone, setLocalPhone] = useState('');
     }
 
 
-    const entretien = {
-      lastName : formData.lastName,
-      firstName : formData.firstName,
-      phoneNumber : String(fullPhone),
-      mail : formData.email,
-    }
 
-    //envoi telegram
-    dispatch(sendTelegramMessageRequest(entretien));
 
     const finalData = {
       ...formData,
       phoneNumber: fullPhone,
       sendedtobot: true,
     };
+
+    if(errorMessageAddRegistration !== null){
+      dispatch(addRegistrationRequest(finalData));
+      alert(errorMessageAddRegistration);
+      return;
+    }
 
     tempFormData.current = finalData;
     dispatch(addRegistrationRequest(finalData));
@@ -98,6 +105,27 @@ const [localPhone, setLocalPhone] = useState('');
       isContacted: false,
       sendedtobot: false,
     },[]);
+
+
+    const entretien = {
+      lastName : formData.lastName,
+      firstName : formData.firstName,
+      phoneNumber : String(fullPhone),
+      mail : formData.email,
+    }
+
+   const limit= registrationPage?.limit;
+   const counter = registrationPage?.counter;
+
+    if(limit  <= counter){
+      console.log("Le nombre maximum d'inscriptions a été atteint");
+      dispatch(sendTelegramMessageFailure("Le nombre maximum d'inscriptions a été atteint"));
+    }
+    else{
+      //envoi telegram
+      dispatch(sendTelegramMessageRequest(entretien));
+    }
+
   };
   
   
@@ -126,10 +154,7 @@ const [localPhone, setLocalPhone] = useState('');
                   <option value="+223">🇲🇱 +223</option>
                   <option value="+221">🇸🇳 +221</option> 
                   <option value="+1">🇺🇸 +1</option>
-                  <option value="+44">🇬🇧 +44</option> 
-            
-
-                  
+                  <option value="+44">🇬🇧 +44</option>          
                 </select>
 
                 <input
@@ -161,10 +186,10 @@ const [localPhone, setLocalPhone] = useState('');
                   </div>
                 </div>
               )}
-              {showErrorPopup && (
+              {(showErrorPopup) && (
                   <div className="popup-overlay">
                     <div className="popup-error-card">
-                      <p className="popup-message-error">❌ Une erreur est survenue, veuillez réessayer plus tard.</p>
+                      <p className="popup-message-error">❌ {errorMessageAddRegistration}</p>
                       <button className="popup-close-btn" onClick={() => dispatch({ type: "HIDE_POPUP" })}>
                         Fermer
                       </button>

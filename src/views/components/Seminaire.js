@@ -178,26 +178,31 @@ export const Seminaire = () => {
       {/* Section 3 : Bio */}
       <section className="styled-section text-white">
         <div className="container d-flex justify-content-center">
-          <div className="bio-card d-flex flex-column flex-md-row align-items-center p-4 rounded shadowed-card">
+          <div className="bio-card d-flex flex-column flex-md-row align-items-center p-4 rounded shadowed-card w-100" style={{ maxWidth: '800px' }}>
             <div className="bio-image mb-3 mb-md-0 me-md-4 text-center">
               <img
                 src="/Images/Seminaires/S1/cheikh.JPG"
                 alt="Cheikh Hatem"
                 className="img-fluid rounded-circle"
-                style={{ width: '180px', height: '180px', objectFit: 'cover' }}
+                style={{
+                  width: '140px',
+                  height: '140px',
+                  objectFit: 'cover',
+                }}
               />
             </div>
             <div className="bio-text text-md-start text-center">
-              <p className="mb-1" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
+              <p className="mb-1" style={{ fontSize: '1rem', lineHeight: '1.6' }}>
                 Enseignant ayant étudié au Maroc, en Égypte, en Mauritanie, au Yémen et d'autres pays auprès de nombreux savants.<br />
                 Passionné des fondements du droit et du droit Musulman ainsi que de la réflexion au service de la spiritualité.<br />
                 Enseignant et imam depuis 18 ans.<br />
-                <strong className="fs-5">شَيْخ Hatem</strong>
+                <strong className="fs-5">شَيْخ Hatim</strong>
               </p>
             </div>
           </div>
         </div>
       </section>
+
     </Fragment>
   );
 };

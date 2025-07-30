@@ -20,17 +20,21 @@ function* getRegistrations() {
 
 function* addRegistrations(action) {
     try {
-        //console.log("je rentre dans le addRegistration", action.payload);
-        yield call(api.addRegistration(action.payload));
-        const response = yield call(api.getRegistrations);
-
-        //sauvegarde dans le localStorage
-        localStorageService.save("registrations", response.data);
-        yield put(actions.getRegistrationsSuccess({ registrations: response.data }));
+      yield call(api.addRegistration, action.payload);
+  
+      const response = yield call(api.getRegistrations);
+      localStorageService.save("registrations", response.data);
+  
+      yield put(actions.getRegistrationsSuccess({ registrations: response.data }));
+      yield put({ type: actions.actions.ADD_REGISTRATION_SUCCESS, payload: { registration: action.payload } });
+      yield put({ type: 'SHOW_SUCCESS_POPUP' });
     } catch (error) {
-        //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
+      console.error("Erreur addRegistration :", error);
+      yield put(actions.addRegistrationFailure({ error: error.response?.data || "Erreur inconnue" }));
+      yield put({ type: 'SHOW_ERROR_POPUP' });
     }
-}
+  }
+  
 
 function* updateRegistrations(action) {
     try {

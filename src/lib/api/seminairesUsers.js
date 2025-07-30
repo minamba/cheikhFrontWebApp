@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getSeminaires = () => {
-    return axios.get("/seminaireUsers");
+    return axios.get(`/seminaireUsers`);
 }
 
 export const addSeminaire = async (seminaire) => {

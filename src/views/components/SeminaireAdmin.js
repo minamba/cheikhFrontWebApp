@@ -6,6 +6,7 @@ import { sendMailGroupRequest } from '../../lib/actions/MailActions';
 import { useSelector } from 'react-redux';
 import AdminProtectedPage from './AdminProtectedPage';
 import { getSeminairesUserRequest } from '../../lib/actions/SeminaireUsersActions';
+import { getSeminaires } from '../../lib/api/seminaires';
 
 export const SeminaireAdmin = () => {
   const [showModal, setShowModal] = useState(false);
@@ -14,10 +15,13 @@ export const SeminaireAdmin = () => {
   const datas = useSelector((state) => state.seminairesUsers) || [];
   const seminaires = useSelector((state) => state.seminaires) || [];
   const activeSeminaire = seminaires.seminaires.find((s) => s.active === true) || null;
+
+  console.log("semianire users", datas.seminairesUsers);
   
   const mailList = (datas?.seminairesUsers || [])
-  .filter((data) => !!data.email && data.seminaire === null)
+  .filter((data) => !!data.email && data.seminaire === null && data.mailSent === false)
   .map((data) => data.email);
+
 
     const [formData, setFormData] = useState({
       lastName: '',

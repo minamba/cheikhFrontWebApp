@@ -2,7 +2,9 @@ import { actions } from "../actions/RegistrationActions";
 import localStorageService from "../storage/storageService";
 
 const initialState = {
-    registrations : localStorageService.load("registrations") || []
+    registrations : localStorageService.load("registrations") || [],
+    errorMessageAddRegistration : null,
+    showErrorAddRegistration : false,
 }
 
 function RegistrationReducers(state = initialState, action) {
@@ -32,7 +34,18 @@ function RegistrationReducers(state = initialState, action) {
 
         // Ajout
         case actions.ADD_REGISTRATION_SUCCESS:
-            return [...state.registrations, action.payload.registration]
+            return {
+                ...state,
+                registrations: [...state.registrations, action.payload.registration],
+                errorMessageAddRegistration: null,
+                showErrorAddRegistration: false
+            };
+
+        case actions.ADD_REGISTRATION_FAILURE:
+            return {...state, errorMessageAddRegistration : action.payload.error, showErrorAddRegistration : true}
+
+        case actions.RESET_ADD_REGISTRATION:
+            return {...state, errorMessageAddRegistration : null, showErrorAddRegistration : false}
         default:
             return state
     }

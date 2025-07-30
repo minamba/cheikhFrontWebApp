@@ -76,7 +76,7 @@ console.log("banniere",banniere);
       <section className="hero-section-with-image d-flex align-items-center text-white"     style={{backgroundImage: {banniere} ? `url("${banniere}")` : 'none'}}>
         <div className="container text-center">
           <h1 className="hero-title-close-inscription mb-4">{closeInscription?.title}</h1>
-          <div className="seminaire-card shadowed-card mt-4 p-4 mx-auto" style={{ maxWidth: '800px' }}>
+          <div className="seminaire-card shadowed-card mt-4 p-4 mx-auto close-inscription-mobile-box" style={{ maxWidth: '800px' }}>
             <p className="hero-subtitle m-0">
               Malheureusement les inscriptions sont fermées pour le moment, mais vous avez la possibilité
               de nous laisser vos coordonnées afin que l'on puisse vous recontacter lorsqu'elles se réouvriront.

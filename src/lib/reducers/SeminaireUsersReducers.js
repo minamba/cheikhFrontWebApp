@@ -8,6 +8,7 @@ const initialState = {
   errorMessageAddSeminaireUser : null
 };
 
+
 function SeminaireUsersReducers(state = initialState, action) {
   switch (action.type) {
     // ✅ Récupération

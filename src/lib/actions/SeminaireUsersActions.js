@@ -19,11 +19,14 @@ export const actionsSeminaire = {
 
 
 //get
-export function getSeminairesUserRequest() {
+export function getSeminairesUserRequest(params = {}) {
+    const { pageNumber = 1, pageSize = 10 } = params;
+  
     return {
-        type : actionsSeminaire.GET_SEMINAIRE_USER_REQUEST,
-    }
-}
+      type: actionsSeminaire.GET_SEMINAIRE_USER_REQUEST,
+      payload: { pageNumber, pageSize }
+    };
+  }
 
 export function getSeminairesUserSuccess({seminairesUsers}) {
     return {

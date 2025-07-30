@@ -58,7 +58,8 @@ export const RegistrationPageAdmin = () => {
       Id: selectedItem?.id,
       Title: selectedItem?.title,
       IdBanner: selectedItem?.image?.id,
-      IsClosed: selectedItem?.isClosed
+      IsClosed: selectedItem?.isClosed,
+      Limit: selectedItem?.limit
     }));
     setTimeout(() => dispatch(getRegistrationPageRequest()), 2000);
     setShowEditModal(false);
@@ -68,11 +69,12 @@ export const RegistrationPageAdmin = () => {
     dispatch(addRegistrationPageRequest({
       Title: newItem.title,
       IdBanner: newItem.image?.id,
-      IsClosed: newItem.isClosed
+      IsClosed: newItem.isClosed,
+      Limit: newItem.limit
     }));
     setTimeout(() => dispatch(getRegistrationPageRequest()), 2000);
     setShowAddModal(false);
-    setNewItem({ title: '', image: null, isClosed: false });
+    setNewItem({ title: '', image: null, isClosed: false, limit: 0 });
   };
 
 
@@ -91,6 +93,7 @@ export const RegistrationPageAdmin = () => {
             <th>Titre</th>
             <th>Bannière</th>
             <th>Est fermée</th>
+            <th>Limite</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -102,6 +105,7 @@ export const RegistrationPageAdmin = () => {
                 <img src={item?.image?.url || '/placeholder.png'} alt="Banner" className="img-fluid" />
               </td>
               <td>{item.isClosed ? 'Oui' : 'Non'}</td>
+              <td>{item.limit}</td>
               <td>
                 <Button className="btn btn-warning btn-sm" onClick={() => handleEditClick(item)}>✏️</Button>
               </td>
@@ -148,6 +152,15 @@ export const RegistrationPageAdmin = () => {
                 name="isClosed"
                 checked={selectedItem?.isClosed || false}
                 onChange={(e) => setSelectedItem(prev => ({ ...prev, isClosed: e.target.checked }))}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Limite</Form.Label>
+              <Form.Control
+                type="number"
+                name="limit"
+                value={selectedItem?.limit ?? 0}
+                onChange={handleEditChange}
               />
             </Form.Group>
           </Form>
@@ -198,6 +211,16 @@ export const RegistrationPageAdmin = () => {
                 onChange={handleAddChange}
               />
             </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Limite</Form.Label>
+              <Form.Control
+                type="number"
+                name="limit"
+                value={newItem.limit}
+                onChange={handleAddChange}
+              />
+            </Form.Group>
+
           </Form>
         </Modal.Body>
         <Modal.Footer>

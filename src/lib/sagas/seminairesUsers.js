@@ -4,16 +4,21 @@ import * as api from '../api/seminairesUsers';
 import localStorageService from '../storage/storageService';
 
 
-function* getSeminaires() {
+function* getSeminaires(action) {
     try {
         const response = yield call(api.getSeminaires);
-        //console.log("je rentre dans le getSeminairesUser", response);
 
-        //sauvegarde dans le localStorage
+        // sauvegarde dans le localStorage (optionnel)
         localStorageService.save("seminairesUsers", response.data);
-        yield put(actions.getSeminairesUserSuccess({seminairesUsers : response.data}));
+
+        yield put(
+            actions.getSeminairesUserSuccess({ seminairesUsers: response.data })
+        );
+
+        // 💡 on peut stocker totalCount ailleurs si besoin
+        // yield put(setTotalCount(response.data.totalCount));
     } catch (error) {
-        //yield put({type: actions.GET_REGISTRATION_FAILURE, payload: error});
+        yield put(actions.getSeminairesUserFailure(error));
     }
 }
 

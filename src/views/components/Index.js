@@ -56,7 +56,7 @@ const dispatch = useDispatch();
 
 useEffect(() => {
   dispatch(getRegistrationsRequest());
-  dispatch(getSeminairesUserRequest()); 
+  dispatch(getSeminairesUserRequest({ pageNumber: 1, pageSize: 1 })); 
   dispatch(getSeminairesRequest());
   dispatch(getPaymentsRequest());
   dispatch(getRegistrationPageRequest());
