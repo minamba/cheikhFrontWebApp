@@ -42,6 +42,7 @@ import {PaymentPageAdmin} from './PaymentPageAdmin';
 import {Success} from './Success';
 import {Cancel} from './Cancel';
 import {RegistrationPageAdmin} from './RegistrationPageAdmin';
+import {Construction} from './Construction';
 
 
 
@@ -85,7 +86,8 @@ useEffect(() => {
         <Navbar />
         {/* Routes */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Construction />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/CloseInscriptions" element={<CloseInscriptions />} />
           <Route path="/inscription" element={<Inscriptions />} />
           <Route path="/seminaire" element={<Seminaire />} />
@@ -107,7 +109,6 @@ useEffect(() => {
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
           <Route path="/admin/registrationPage" element={<RegistrationPageAdmin />} />
-          
         </Routes>
         <Footer />
       </Router>
