@@ -11,6 +11,7 @@ import {getRegistrationPageRequest } from '../lib/actions/RegistrationPageAction
 import {getRegistrationsRequest } from '../lib/actions/RegistrationActions';  
 import {getPaymentsRequest } from '../lib/actions/PaymentActions';
 import {getSeminairesUserRequest } from '../lib/actions/SeminaireUsersActions';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
 
@@ -32,10 +33,20 @@ export const Navbar = () => {
   const isRegistrationPageAdmin = location.pathname === "/admin/registrationPage";
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
   const datas = useSelector((state) => state.registrationPage);
   const registrationList = Array.isArray(datas.registrationPage) ? datas.registrationPage : [];
   
   const isClosed = registrationList[0]?.isClosed;
+
+
+  useEffect(() => {
+    // Si on n'est pas en admin, on redirige toujours vers Construction
+    if (!location.pathname.startsWith("/admin")) {
+      navigate("/", { replace: true });
+    }
+  }, [location, navigate]);
+
 
   return (
   <nav className="navbar navbar-expand-lg custom-navbar-light sticky-top">
