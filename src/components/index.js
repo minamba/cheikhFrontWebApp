@@ -40,12 +40,12 @@ export const Navbar = () => {
   const isClosed = registrationList[0]?.isClosed;
 
 
-  useEffect(() => {
-    // Si on n'est pas en admin, on redirige toujours vers Construction
-    if (!location.pathname.startsWith("/admin")) {
-      navigate("/", { replace: true });
-    }
-  }, [location, navigate]);
+  // useEffect(() => {
+  //   // Si on n'est pas en admin, on redirige toujours vers Construction
+  //   if (!location.pathname.startsWith("/admin")) {
+  //     navigate("/", { replace: true });
+  //   }
+  // }, [location, navigate]);
 
 
   return (

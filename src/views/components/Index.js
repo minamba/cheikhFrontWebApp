@@ -86,7 +86,7 @@ useEffect(() => {
         <Navbar />
         {/* Routes */}
         <Routes>
-          <Route path="/" element={<Construction />} />
+          {/* <Route path="/" element={<Construction />} /> */}
           <Route path="/Home" element={<Home />} />
           <Route path="/CloseInscriptions" element={<CloseInscriptions />} />
           <Route path="/inscription" element={<Inscriptions />} />
